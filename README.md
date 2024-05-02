@@ -1,12 +1,12 @@
 # Design Document
 
 
-## Classes
+# Classes
 
-### Bag
+## Bag
 This class holds data about a bag.
 
-#### Instance Variables
+### Instance Variables
 
 private String bagID - bagID of the bag.
 
@@ -14,7 +14,7 @@ private String bagColor - Color of the bag.
 
 private double bagWeight - Weight of the bag.
 
-#### Methods
+### Methods
 
 public String getBagID() - Returns the bagID.
 
@@ -23,10 +23,10 @@ public String getBagColor() - Returns the color of the bag.
 public double getBagWeight() - Returns the weight of the bag.
 
 
-### Passenger
+## Passenger
 This class holds data about the passenger.
 
-#### Instance Variables
+### Instance Variables
 
 private String bookingID - bookingID of the passenger.
 
@@ -36,7 +36,7 @@ private String fullName - Full name of the passenger.
 
 private Bag[] bags - Bags of the passenger.
 
-#### Methods
+### Methods
 
 public Passenger(String bookingID, int passportNumber, String fullName, Bag[] bags[]) - Creates a Passenger object to hold data.
 
@@ -48,16 +48,16 @@ public String getFullName() - Returns the full name.
 
 public Bag getBag(int index) - Returns the bag at int INDEX, returns null, if the bag index doesn't exist.
 
-### KioskCheckInModel
+## KioskCheckInModel
 This class represents the model for kiosk check in.
 
-#### Instance Variables
+### Instance Variables
 
 private int numberOfPassengers - The number of passengers to check in.
 
 private Passenger[] passenger - Array of passengers, used to keep track of different passengers data.
 
-#### Methods
+### Methods
 
 public KioskCheckInModel() - Creates a KioskCheckInModel object to be used.
 
@@ -77,10 +77,10 @@ public String getBagColor(int passengerIndex, int bagIndex) - Returns the bag co
 
 public String getBagWeight(int passengerIndex, int bagIndex) - Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
 
-### MainMenuView
+## MainMenuView
 This class represents the view for the main menu.
 
-#### Instance Variables
+### Instance Variables
 
 private JPanel mainMenuViewPanel - JPanel for the MainMenuView.
 
@@ -88,7 +88,7 @@ private JButton checkInCounterButton - JButton to change the view to CounterView
 
 private JButton checkInKioskButton - JButton to change the view to CheckInOptionView.
 
-#### Methods
+### Methods
 
 public MainMenuView() - Creates a MainMenuView object.
 
@@ -100,16 +100,16 @@ public void addCheckInCounterButtonListener(ActionListener listenForCheckInCount
 
 public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton) - Adds an ActionListener to the JButton checkInKioskButton.
 
-### CounterView
+## CounterView
 This class represents the view for showing the user their designated physical counter, after choosing to check in physically.
 
-#### Instance Variables
+### Instance Variables
 
 private JPanel counterViewPanel - JPanel for the CounterView.
 
 private JButton mainMenuButton - JButton that changes the view to the MainMenuView.
 
-#### Methods
+### Methods
 
 public CounterView() - Creates a CounterView object.
 
@@ -119,10 +119,10 @@ public JPanel getCounterViewPanel() - Returns the counterViewPanel.
 
 public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) - Adds an ActionListener to the JButton mainMenuButton.
 
-### CheckInOptionView
+## CheckInOptionView
 This class represents the view for choosing the check in options, this allows the user to choose between single and group check in.
 
-#### Instance Variablles
+### Instance Variablles
 
 private JPanel checkInOptionViewPanel - JPanel for the CheckInOptionView.
 
@@ -134,7 +134,7 @@ private JButton groupCheckInButton - JButton that changes the view to CheckInVie
 
 private JButton mainMenuButton - JButton that changes the view to MainMenuView, for user to return to main menu.
 
-#### Methods
+### Methods
 
 public CheckInOptionView() - Creates a CheckInOptionView Object.
 
