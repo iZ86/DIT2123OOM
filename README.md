@@ -1,9 +1,12 @@
-# Classes
+# Design Document
 
-## Bag
+
+## Classes
+
+### Bag
 This class holds data about a bag.
 
-### Instance Variables
+#### Instance Variables
 
 private String bagID - bagID of the bag.
 
@@ -11,7 +14,7 @@ private String bagColor - Color of the bag.
 
 private double bagWeight - Weight of the bag.
 
-### Methods
+#### Methods
 
 public String getBagID() - Returns the bagID.
 
@@ -20,10 +23,10 @@ public String getBagColor() - Returns the color of the bag.
 public double getBagWeight() - Returns the weight of the bag.
 
 
-## Passenger
+### Passenger
 This class holds data about the passenger.
 
-### Instance Variables
+#### Instance Variables
 
 private String bookingID - bookingID of the passenger.
 
@@ -33,7 +36,7 @@ private String fullName - Full name of the passenger.
 
 private Bag[] bags - Bags of the passenger.
 
-### Methods
+#### Methods
 
 public Passenger(String bookingID, int passportNumber, String fullName, Bag[] bags[]) - Creates a Passenger object to hold data.
 
@@ -45,15 +48,15 @@ public String getFullName() - Returns the full name.
 
 public Bag getBag(int index) - Returns the bag at int INDEX, returns null, if the bag index doesn't exist.
 
-## KioskCheckInModel
+### KioskCheckInModel
 
-### Instance Variables
+#### Instance Variables
 
 private int numberOfPassengers - The number of passengers to check in.
 
 private Passenger[] passenger - Array of passengers, used to keep track of different passengers data.
 
-### Methods
+#### Methods
 
 public KioskCheckInModel() - Creates a KioskCheckInModel object to be used.
 
