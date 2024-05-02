@@ -1,0 +1,13 @@
+# Java class files
+*.class
+
+# Vim temp files
+*.swp
+
+# Visual Studio
+.vs/
+
+#Intellij
+*.iml
+.idea/
+out/
