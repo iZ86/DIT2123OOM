@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        InformationInputView i = new InformationInputView();
+        CheckInView i = new CheckInView();
         
         JFrame f = new JFrame();
 
