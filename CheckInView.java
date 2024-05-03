@@ -58,7 +58,7 @@ public class CheckInView {
         fullNameTextField.setText(fullName);
     }
 
-    public void addBagButtonListener(ActionListener listenForAddBagButton) {
+    public void addAddBagButtonListener(ActionListener listenForAddBagButton) {
         addBagButton.addActionListener(listenForAddBagButton);
     }
 
