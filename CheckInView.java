@@ -2,14 +2,14 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;    
 
-public class InformationInputView {
+public class CheckInView {
     private final JButton continueButton = new JButton("Continue");
     private final JButton addBaggageButton = new JButton("Add a Baggage");
     private final BasicArrowButton rightButton = new BasicArrowButton(BasicArrowButton.EAST);
     private final BasicArrowButton leftButton = new BasicArrowButton(BasicArrowButton.WEST);
     private final JPanel informationInputPagePanel = new JPanel(new GridBagLayout());
 
-    public InformationInputView() {
+    public CheckInView() {
         setupInformationPageViewPanel();
     }
 
