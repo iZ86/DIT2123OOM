@@ -16,6 +16,8 @@ private double bagWeight - Weight of the bag.
 
 ### Methods
 
+public Bag(String bagID, String bagColor, double bagWeight) -  Creates a bag object to hold data about a bag.
+
 public String getBagID() - Returns the bagID.
 
 public String getBagColor() - Returns the color of the bag.
