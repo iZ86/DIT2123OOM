@@ -7,18 +7,18 @@ import java.util.LinkedList;
 public class CheckInView {
     private JButton checkInButton = new JButton("Check In");
     private JButton addBagButton = new JButton("Add a Baggage");
-    private BasicArrowButton nextPassengerButton = new BasicArrowButton(BasicArrowButton.EAST);
-    private BasicArrowButton previousPassengerButton = new BasicArrowButton(BasicArrowButton.WEST);
+    private JButton nextPassengerButton = new JButton("Next");
+    private JButton previousPassengerButton = new JButton("Previous");
     private JPanel checkInViewPanel = new JPanel(new GridBagLayout());
     private KioskCheckInModel kioskCheckInModel;
     private JTextField bookingIDTextField;
     private JTextField passportNumberTextField;
     private JTextField fullNameTextField;
     private LinkedList <JPanel> bagPartialViewPanels;
-    private JButton checkInOptionViewButton;
-    private JButton mainMenuButton;
+    private JButton checkInOptionViewButton = new JButton("Back To Last Page");
+    private JButton mainMenuButton = new JButton("Main Menu");
 
-    public CheckInView(KioskCheckInModel kioskCheckInModel) {
+    public CheckInView() {
         setupViewPanel();
     }
 
@@ -58,6 +58,30 @@ public class CheckInView {
         fullNameTextField.setText(fullName);
     }
 
+    public void addBagButtonListener(ActionListener listenForAddBagButton) {
+        addBagButton.addActionListener(listenForAddBagButton);
+    }
+
+    public void addPreviousPassengerButtonListener(ActionListener listenForAddPreviousPassengerButton) {
+        previousPassengerButton.addActionListener(listenForAddPreviousPassengerButton);
+    }
+
+    public void addNextPassengerButtonListener(ActionListener listenForAddNextButtonListener) {
+        nextPassengerButton.addActionListener(listenForAddNextButtonListener);
+    }
+
+    public void addCheckInButtonListener(ActionListener listenForAddCheckInButton) {
+        checkInButton.addActionListener(listenForAddCheckInButton);
+    }
+
+    public void addCheckInOptionButtonListener(ActionListener listenForAddCheckInOptionButton) {
+        checkInOptionViewButton.addActionListener(listenForAddCheckInOptionButton);
+    }
+
+    public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
+        mainMenuButton.addActionListener(listenForMainMenuButton);
+    }
+
     private void setupViewPanel() {
         JPanel textFieldPanel = setupViewTextFieldPanel();
         JPanel buttonPanel = setupViewButtonPanel();
@@ -66,7 +90,7 @@ public class CheckInView {
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
 
         constraintsForTextFieldPanel.gridy = 0;
-        constraintsForTextFieldPanel.insets = new Insets(0, 0, 150, 0);
+        constraintsForTextFieldPanel.insets = new Insets(0, 0, 120, 0);
         
         constraintsForButtonPanel.gridy = 1;       
         constraintsForButtonPanel.insets = new Insets(20, 0, 0, 0);
@@ -76,6 +100,9 @@ public class CheckInView {
     }
 
     private JPanel setupViewTextFieldPanel() {
+        int horizontalSizeOfTextField = 155;
+        int verticalSizeOfTextField = 5;
+
         JPanel textFieldPanel = new JPanel(new GridBagLayout());
 
         JLabel passportLabel = new JLabel("Passport Number");
@@ -94,8 +121,10 @@ public class CheckInView {
         GridBagConstraints gridBagConstraintsForTextFields = new GridBagConstraints();
         gridBagConstraintsForTextFields.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraintsForTextFields.weightx = 1;
+        gridBagConstraintsForTextFields.ipadx = horizontalSizeOfTextField;
+        gridBagConstraintsForTextFields.ipady = verticalSizeOfTextField;
         gridBagConstraintsForTextFields.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraintsForTextFields.insets = new Insets(0, 0, 15, 0);
+        gridBagConstraintsForTextFields.insets = new Insets(0, 20, 15, 0);
         
         textFieldPanel.add(passportLabel, gridBagConstraintsForLabels);
         textFieldPanel.add(passportNumberTextField, gridBagConstraintsForTextFields);
@@ -104,7 +133,7 @@ public class CheckInView {
         textFieldPanel.add(fullNameLabel, gridBagConstraintsForLabels);
         textFieldPanel.add(fullNameTextField, gridBagConstraintsForTextFields);
 
-        textFieldPanel.setPreferredSize(new Dimension(360, 150)); 
+        textFieldPanel.setPreferredSize(new Dimension(350, 150)); 
 
         return textFieldPanel;
     }
@@ -112,22 +141,43 @@ public class CheckInView {
     private JPanel setupViewButtonPanel() {
         JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
 
-        int horizontalSizeOfArrowButton = 20;
-        int verticalSizeOfArrowButton = 20;
+        int horizontalSizeOfButton = 20;
+        int verticalSizeOfButton = 4;
         
         GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
-        GridBagConstraints constraintsForLeftAndRightArrowButton = new GridBagConstraints();
+        GridBagConstraints constraintsForNextAndPreviousButton = new GridBagConstraints();
+        GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
+        GridBagConstraints constraintsForBackToCheckInOptionView = new GridBagConstraints();
+        GridBagConstraints constraintsForCheckInButton = new GridBagConstraints();
         constraintsForAddBaggageButton.gridx = 0;
+        constraintsForAddBaggageButton.gridy = 0;
 
-       
-        constraintsForLeftAndRightArrowButton.ipadx = horizontalSizeOfArrowButton;
-        constraintsForLeftAndRightArrowButton.ipady = verticalSizeOfArrowButton;
-        constraintsForLeftAndRightArrowButton.insets = new Insets(0, 15, 0, 15);
+        constraintsForAddBaggageButton.ipadx = horizontalSizeOfButton;
+        constraintsForAddBaggageButton.ipady = verticalSizeOfButton;
+
+        constraintsForNextAndPreviousButton.ipadx = horizontalSizeOfButton;
+        constraintsForNextAndPreviousButton.ipady = verticalSizeOfButton;
+        constraintsForNextAndPreviousButton.insets = new Insets(0, 10, 0, 10);
+        
+        constraintsForNextAndPreviousButton.gridy = 1;
+        constraintsForCheckInButton.gridy = 1;
+        constraintsForMainMenuButton.ipadx = horizontalSizeOfButton;
+        constraintsForMainMenuButton.ipady = verticalSizeOfButton;
+
+        constraintsForBackToCheckInOptionView.ipadx = horizontalSizeOfButton;
+        constraintsForBackToCheckInOptionView.ipady = verticalSizeOfButton;
+
+        constraintsForCheckInButton.ipadx = horizontalSizeOfButton;
+        constraintsForCheckInButton.ipady = verticalSizeOfButton;
 
         informationPageButtonPanel.add(addBagButton, constraintsForAddBaggageButton);
-        informationPageButtonPanel.add(previousPassengerButton, constraintsForLeftAndRightArrowButton);
-        informationPageButtonPanel.add(nextPassengerButton, constraintsForLeftAndRightArrowButton);
-        informationPageButtonPanel.add(checkInButton);
+        informationPageButtonPanel.add(previousPassengerButton, constraintsForNextAndPreviousButton);
+        informationPageButtonPanel.add(nextPassengerButton, constraintsForNextAndPreviousButton);
+        informationPageButtonPanel.add(checkInButton, constraintsForCheckInButton);
+        informationPageButtonPanel.add(mainMenuButton, constraintsForMainMenuButton);
+        informationPageButtonPanel.add(checkInOptionViewButton, constraintsForBackToCheckInOptionView);
+      
+        
 
         return informationPageButtonPanel;
     }
