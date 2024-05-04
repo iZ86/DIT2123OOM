@@ -62,20 +62,20 @@ public class CheckInView {
         addBagButton.addActionListener(listenForAddBagButton);
     }
 
-    public void addPreviousPassengerButtonListener(ActionListener listenForAddPreviousPassengerButton) {
-        previousPassengerButton.addActionListener(listenForAddPreviousPassengerButton);
+    public void addPreviousPassengerButtonListener(ActionListener listenForPreviousPassengerButton) {
+        previousPassengerButton.addActionListener(listenForPreviousPassengerButton);
     }
 
-    public void addNextPassengerButtonListener(ActionListener listenForAddNextButtonListener) {
-        nextPassengerButton.addActionListener(listenForAddNextButtonListener);
+    public void addNextPassengerButtonListener(ActionListener listenForNextButtonListener) {
+        nextPassengerButton.addActionListener(listenForNextButtonListener);
     }
 
-    public void addCheckInButtonListener(ActionListener listenForAddCheckInButton) {
-        checkInButton.addActionListener(listenForAddCheckInButton);
+    public void addCheckInButtonListener(ActionListener listenForCheckInButton) {
+        checkInButton.addActionListener(listenForCheckInButton);
     }
 
-    public void addCheckInOptionButtonListener(ActionListener listenForAddCheckInOptionButton) {
-        checkInOptionViewButton.addActionListener(listenForAddCheckInOptionButton);
+    public void addCheckInOptionViewButtonListener(ActionListener listenForCheckInOptionViewButton) {
+        checkInOptionViewButton.addActionListener(listenForCheckInOptionViewButton);
     }
 
     public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
