@@ -14,7 +14,7 @@ public class CheckInView {
     private JTextField bookingIDTextField;
     private JTextField passportNumberTextField;
     private JTextField fullNameTextField;
-    private LinkedList <JPanel> bagPartialViewPanels;
+    private LinkedList <BagPartialView> bagPartialViews;
     private JButton checkInOptionViewButton = new JButton("Back To Last Page");
     private JButton mainMenuButton = new JButton("Main Menu");
 
@@ -22,11 +22,11 @@ public class CheckInView {
         setupViewPanel();
     }
 
-    public void createBagPartialViewPanel(ActionListener listenForCloseBagPartialViewButton) {
+    public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
 
     }
 
-    public void removeBagPartialViewPanel(int index) {
+    public void removeBagPartialView(int index) {
 
     }
 
