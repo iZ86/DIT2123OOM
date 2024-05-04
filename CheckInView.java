@@ -15,7 +15,7 @@ public class CheckInView {
     private JTextField passportNumberTextField;
     private JTextField fullNameTextField;
     private LinkedList <BagPartialView> bagPartialViews;
-    private JButton checkInOptionViewButton = new JButton("Back To Last Page");
+    private JButton checkInKioskButton = new JButton("Back To Last Page");
     private JButton mainMenuButton = new JButton("Main Menu");
 
     public CheckInView() {
@@ -74,8 +74,8 @@ public class CheckInView {
         checkInButton.addActionListener(listenForCheckInButton);
     }
 
-    public void addCheckInOptionViewButtonListener(ActionListener listenForCheckInOptionViewButton) {
-        checkInOptionViewButton.addActionListener(listenForCheckInOptionViewButton);
+    public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton) {
+        checkInKioskButton.addActionListener(listenForCheckInKioskButton);
     }
 
     public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
@@ -175,7 +175,7 @@ public class CheckInView {
         informationPageButtonPanel.add(nextPassengerButton, constraintsForNextAndPreviousButton);
         informationPageButtonPanel.add(checkInButton, constraintsForCheckInButton);
         informationPageButtonPanel.add(mainMenuButton, constraintsForMainMenuButton);
-        informationPageButtonPanel.add(checkInOptionViewButton, constraintsForBackToCheckInOptionView);
+        informationPageButtonPanel.add(checkInKioskButton, constraintsForBackToCheckInOptionView);
       
         
 
