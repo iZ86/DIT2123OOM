@@ -30,7 +30,7 @@ public class CheckInView {
 
     }
 
-    public JPanel getCheckViewPanel() {
+    public JPanel getCheckInViewPanel() {
         return checkInViewPanel;
     };
 
