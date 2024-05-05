@@ -4,84 +4,54 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;    
 
+/** This class represents the view for users to check in. */
 public class CheckInView {
-    private JButton checkInButton = new JButton("Check In");
-    private JButton addBagButton = new JButton("Add a Baggage");
-    private JButton nextPassengerButton = new JButton("Next");
-    private JButton previousPassengerButton = new JButton("Previous");
+    /** JPanel for the CheckInView. */
     private JPanel checkInViewPanel = new JPanel(new GridBagLayout());
+    /** The model that holds the passenger and their bag data. */
     private KioskCheckInModel kioskCheckInModel;
+    /** The text field where user enters their bookingID. */
     private JTextField bookingIDTextField;
+    /** The text field where user enters their passport number. */
     private JTextField passportNumberTextField;
+    /** The text field where the user enters their full name. */
     private JTextField fullNameTextField;
+    /** A Linked List of BagPartialView that each asks the user for information for a different bag,
+     *  LinkedList used because it does not allow gaps between data.
+     *  For example, a list of 3, if I remove the 2nd element, the 3rd element will now become the 2nd element.
+     *  Therefore, no null is made.
+     */
     private LinkedList <BagPartialView> bagPartialViews;
+    /** JButton that creates a BagPartialView and adds its viewPanel to LinkedList<JPanel> bagPartialViewPanels. */
+    private JButton addBagButton = new JButton("Add a Baggage");
+    /** JButton that changes the CheckInView to display the previous Passenger information.
+     * This button will not be displayed when showing the FIRST Passenger's data.
+     */
+    private JButton previousPassengerButton = new JButton("Previous");
+    /** JButton that changes the CheckInView to display an empty CheckInView,
+     * if the Passenger information hasn't been added yet.
+     * Otherwise, shows the Passenger information that has been added.
+     * This button will not be displayed when showing the LAST Passenger data.
+     */
+    private JButton nextPassengerButton = new JButton("Next");
+    /** JButton that checks in all the Passengers and their data,
+     * changing the view to the BoardingPassView.
+     * For user to check in, once all sufficient data is added.
+     * An error will be shown, if there is a Passenger information not filled.
+     */
+    private JButton checkInButton = new JButton("Check In");
+    /** JButton that changes the view back to CheckInOptionView. */
     private JButton checkInKioskButton = new JButton("Back To Last Page");
+    /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
 
-    public CheckInView() {
+    /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel. */
+    public CheckInView(KioskCheckInModel kioskCheckInModel) {
+        this.kioskCheckInModel = kioskCheckInModel;
         setupViewPanel();
     }
 
-    public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
-
-    }
-
-    public void removeBagPartialView(int index) {
-
-    }
-
-    public JPanel getCheckInViewPanel() {
-        return checkInViewPanel;
-    };
-
-    public String getBookingIDFromTextField() {
-        return bookingIDTextField.getText();
-    }
-
-    public void setBookingIDTextField(String bookingID) {
-        bookingIDTextField.setText(bookingID);;
-    }
-
-    public String getPassportNumberFromTextField() {
-        return passportNumberTextField.getText();
-    }
-
-    public void setPassportNumberTextField(String passportNumber) {
-        passportNumberTextField.setText(passportNumber);
-    }
-
-    public String getFullNameFromTextField() {
-        return fullNameTextField.getText();
-    }
-
-    public void setFullNameTextField(String fullName) {
-        fullNameTextField.setText(fullName);
-    }
-
-    public void addAddBagButtonListener(ActionListener listenForAddBagButton) {
-        addBagButton.addActionListener(listenForAddBagButton);
-    }
-
-    public void addPreviousPassengerButtonListener(ActionListener listenForPreviousPassengerButton) {
-        previousPassengerButton.addActionListener(listenForPreviousPassengerButton);
-    }
-
-    public void addNextPassengerButtonListener(ActionListener listenForNextButtonListener) {
-        nextPassengerButton.addActionListener(listenForNextButtonListener);
-    }
-
-    public void addCheckInButtonListener(ActionListener listenForCheckInButton) {
-        checkInButton.addActionListener(listenForCheckInButton);
-    }
-
-    public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton) {
-        checkInKioskButton.addActionListener(listenForCheckInKioskButton);
-    }
-
-    public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
-        mainMenuButton.addActionListener(listenForMainMenuButton);
-    }
-
+    /** Sets up the checkInViewPanel. */
     private void setupViewPanel() {
         JPanel textFieldPanel = setupViewTextFieldPanel();
         JPanel buttonPanel = setupViewButtonPanel();
@@ -91,14 +61,92 @@ public class CheckInView {
 
         constraintsForTextFieldPanel.gridy = 0;
         constraintsForTextFieldPanel.insets = new Insets(0, 0, 120, 0);
-        
-        constraintsForButtonPanel.gridy = 1;       
+
+        constraintsForButtonPanel.gridy = 1;
         constraintsForButtonPanel.insets = new Insets(20, 0, 0, 0);
 
         checkInViewPanel.add(textFieldPanel, constraintsForTextFieldPanel);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
     }
 
+    /** Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton added to the JButton closeBagPartialViewButton,
+     and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews, and adds its viewPanel to the checkInViewPanel. */
+    public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
+
+    }
+
+    /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews and remove it from the checkInViewPanel. */
+    public void removeBagPartialView(int index) {
+
+    }
+
+    /** Returns the checkInViewPanel. */
+    public JPanel getCheckInViewPanel() {
+        return checkInViewPanel;
+    };
+
+    /** Returns the bookingID from the text field set by the user. */
+    public String getBookingIDFromTextField() {
+        return bookingIDTextField.getText();
+    }
+
+    /** Sets the bookingIDTextField with String bookingID. */
+    public void setBookingIDTextField(String bookingID) {
+        bookingIDTextField.setText(bookingID);;
+    }
+
+    /** Returns the passport number from the text field set by the user. */
+    public String getPassportNumberFromTextField() {
+        return passportNumberTextField.getText();
+    }
+
+    /** Sets the passportNumberTextField with String passportNumber. */
+    public void setPassportNumberTextField(String passportNumber) {
+        passportNumberTextField.setText(passportNumber);
+    }
+
+    /** Returns the full name from the text field set by the user. */
+    public String getFullNameFromTextField() {
+        return fullNameTextField.getText();
+    }
+
+    /** Sets the fullNameTextField with String fullName. */
+    public void setFullNameTextField(String fullName) {
+        fullNameTextField.setText(fullName);
+    }
+
+    /** Adds an ActionListener to addBagButton. */
+    public void addAddBagButtonListener(ActionListener listenForAddBagButton) {
+        addBagButton.addActionListener(listenForAddBagButton);
+    }
+
+    /** Adds an ActionListener to previousPassengerButton. */
+    public void addPreviousPassengerButtonListener(ActionListener listenForPreviousPassengerButton) {
+        previousPassengerButton.addActionListener(listenForPreviousPassengerButton);
+    }
+
+    /** Adds an ActionListener to nextPassengerButton. */
+    public void addNextPassengerButtonListener(ActionListener listenForNextButtonListener) {
+        nextPassengerButton.addActionListener(listenForNextButtonListener);
+    }
+
+    /** Adds an ActionListener to checkInButton. */
+    public void addCheckInButtonListener(ActionListener listenForCheckInButton) {
+        checkInButton.addActionListener(listenForCheckInButton);
+    }
+
+    /** Adds an ActionListener to checkInKioskButton. */
+    public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton) {
+        checkInKioskButton.addActionListener(listenForCheckInKioskButton);
+    }
+
+    /** Adds an ActionListener to mainMenuButton. */
+    public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
+        mainMenuButton.addActionListener(listenForMainMenuButton);
+    }
+
+
+    /** Sets up the JTextField, JLabel and adjusting micro position for JLabel and JTextFields. */
     private JPanel setupViewTextFieldPanel() {
         int horizontalSizeOfTextField = 155;
         int verticalSizeOfTextField = 5;
@@ -138,6 +186,7 @@ public class CheckInView {
         return textFieldPanel;
     }
 
+    /** Sets up JButtons and adjusting. */
     private JPanel setupViewButtonPanel() {
         JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
 
