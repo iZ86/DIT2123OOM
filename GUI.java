@@ -29,7 +29,7 @@ public class GUI {
     }
 
     /** Displays the GUI JFrame window. */
-    public void displayy() {
+    public void display() {
         // TODO: Display the JFrame.
     }
 
