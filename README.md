@@ -293,7 +293,7 @@ This class is the GUI of the program, it creates a window to display all the nec
 
 ### Instance Variables
 
-private JFrame GUI - The JFrame of the GUI.
+private JFrame GUI - The JFrame of the GUI, creates a window for the program.
 
 private JPanel GUIViewPanel - The GUI view panel that will occupy the JFrame, it uses a CardLayout to switch to other view panels.
 
@@ -309,7 +309,7 @@ private BoardingPassView boardingPassView - the boarding pass view.
 
 ### Methods
 
-public GUI(KioskCheckInModel kioskCheckInModel) - GUI is created, takes in KioskCheckInModel kioskCheckInModel for the view to use.
+public GUI(KioskCheckInModel kioskCheckInModel) - Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use.
 
 private void setupGUI() - Sets up the GUIViewPanel.
 
