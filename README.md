@@ -220,6 +220,10 @@ public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskBu
 
 public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) - Adds an ActionListener to mainMenuButton.
 
+private JPanel setupViewTextFieldPanel() - Sets up the JTextField, JLabel and adjusting micro position for JLabel and JTextFields.
+
+private JPanel setupViewButtonPanel() - Sets up JButtons and adjusting.
+
 ## BagPartialView
 This class is a partial view for the CheckInView class.
 
