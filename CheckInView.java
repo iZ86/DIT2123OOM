@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;    
@@ -21,7 +20,7 @@ public class CheckInView {
      *  For example, a list of 3, if I remove the 2nd element, the 3rd element will now become the 2nd element.
      *  Therefore, no null is made.
      */
-    private LinkedList <BagPartialView> bagPartialViews;
+    private LinkedList<BagPartialView> bagPartialViews;
     /** JButton that creates a BagPartialView and adds its viewPanel to LinkedList<JPanel> bagPartialViewPanels. */
     private JButton addBagButton = new JButton("Add a Baggage");
     /** JButton that changes the CheckInView to display the previous Passenger information.
@@ -69,13 +68,18 @@ public class CheckInView {
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
     }
 
-    /** Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton added to the JButton closeBagPartialViewButton,
-     and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews, and adds its viewPanel to the checkInViewPanel. */
+    /** Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton,
+     * that is added to the JButton closeBagPartialViewButton,
+     and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews,
+     and adds its viewPanel to the checkInViewPanel.
+     */
     public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
 
     }
 
-    /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews and remove it from the checkInViewPanel. */
+    /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews,
+     * and remove it from the checkInViewPanel.
+     */
     public void removeBagPartialView(int index) {
 
     }
@@ -92,7 +96,7 @@ public class CheckInView {
 
     /** Sets the bookingIDTextField with String bookingID. */
     public void setBookingIDTextField(String bookingID) {
-        bookingIDTextField.setText(bookingID);;
+        bookingIDTextField.setText(bookingID);
     }
 
     /** Returns the passport number from the text field set by the user. */
