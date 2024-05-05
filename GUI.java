@@ -28,6 +28,11 @@ public class GUI {
         // TODO: Setup.
     }
 
+    /** Displays the GUI JFrame window. */
+    public void displayy() {
+        // TODO: Display the JFrame.
+    }
+
     /** Terminates the program and closes the GUI. */
     public void exit() {
         // TODO: Closes the JFrame GUI and terminates the program.
