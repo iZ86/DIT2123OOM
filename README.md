@@ -313,6 +313,8 @@ public GUI(KioskCheckInModel kioskCheckInModel) - Creates a GUI object that take
 
 private void setupGUI() - Sets up the GUIViewPanel.
 
+public void display() - Displays the GUI JFrame window.
+
 public void exit() - Terminates the program and closes the GUI.
 
 public void changeView(String index) - Changes the view of the CardLayout in GUIViewPanel.
@@ -360,4 +362,6 @@ private KioskCheckInModel kioskCheckInModel - The model to hold all the data.
 
 ### Methods
 
-public Controller(GUI gui, KioskCheckInModel kioskCheckInModel) - Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel.
+public Controller(GUI gui, KioskCheckInModel kioskCheckInModel) - Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
+acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
+controlling the workflow. 
