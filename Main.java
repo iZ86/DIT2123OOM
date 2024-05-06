@@ -16,7 +16,7 @@ public class Main {
     }
      */
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         JFrame frame = new JFrame();
         JLabel iptTopic = new JLabel(" Input Personal Information ");
         iptTopic.setBounds(100,20,230,30);
@@ -57,6 +57,6 @@ public class Main {
         frame.setResizable(false);
         frame.setLayout(null);
         frame.setVisible(true);
-    }
+    }*/
 
 }

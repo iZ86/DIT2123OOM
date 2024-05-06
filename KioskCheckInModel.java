@@ -32,7 +32,7 @@ public class KioskCheckInModel {
 
     /**Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
     public Bag getBagID(int passengerIndex, int bagIndex) {
-        return null;
+        return this.passenger[passengerIndex].getBag(bagIndex);
     }
 
     /**Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
