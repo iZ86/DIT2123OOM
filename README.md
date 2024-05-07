@@ -59,13 +59,15 @@ private int numberOfPassengers - The number of passengers to check in.
 
 private Passenger[] passenger - Array of passengers, used to keep track of different passengers data.
 
+private int passengerIndex - Index for the passenger array.
+
 ### Methods
 
 public KioskCheckInModel() - Creates a KioskCheckInModel object to be used.
 
 public void setNumberOfPassengers(int numberOfPassengers) - Sets the number of passengers to be checked in.
 
-public void createPassenger(String bookingID, int passportNumber, String fullName, Bag[] bags) - Creates a passenger object that holds the data to be stored.
+public void insertPassenger(Passenger) - Inserts the passenger data's that needs to be stored.
 
 public String getBookingID(int passengerIndex) - Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex.
 

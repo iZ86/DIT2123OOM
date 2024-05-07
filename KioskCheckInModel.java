@@ -2,7 +2,13 @@ public class KioskCheckInModel {
     /**The number of passengers to check in */
     private int numberOfPassengers; 
     /**Array of passengers, used to keep track of different passengers data */
-    private Passenger[] passenger; 
+    private Passenger[] passenger;
+    /** Index of the passenger. */
+    private int passengerIndex;
+
+    public KioskCheckInModel() {
+        passengerIndex = 0;
+    }
    
     /**Sets the number of passengers to be checked in */
     public void setNumberOfPassenger(int numberOfPassengers) {
@@ -10,8 +16,8 @@ public class KioskCheckInModel {
         this.passenger = new Passenger[numberOfPassengers];
     }
 
-    /**Creates a passenger object that holds the data to be stored */
-    public void createPassenger(String bookingID, int passportNumber, String fullName, Bag[] bag) {
+    /** Inserts the passenger data's that needs to be stored. */
+    public void insertPassenger(Passenger passenger) {
 
     }
 
