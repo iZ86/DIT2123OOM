@@ -22,7 +22,7 @@ public class CheckInView {
      */
     private LinkedList<BagPartialView> bagPartialViews;
     /** JButton that creates a BagPartialView and adds its viewPanel to LinkedList<JPanel> bagPartialViewPanels. */
-    private JButton addBagButton = new JButton("Add a Baggage");
+    private JButton addBagButton = new JButton("Add Baggage");
     /** JButton that changes the CheckInView to display the previous Passenger information.
      * This button will not be displayed when showing the FIRST Passenger's data.
      */
@@ -40,7 +40,7 @@ public class CheckInView {
      */
     private JButton checkInButton = new JButton("Check In");
     /** JButton that changes the view back to CheckInOptionView. */
-    private JButton checkInKioskButton = new JButton("Back To Last Page");
+    private JButton checkInKioskButton = new JButton("Last Page");
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
 
@@ -52,6 +52,7 @@ public class CheckInView {
 
     /** Sets up the checkInViewPanel. */
     private void setupViewPanel() {
+        // TODO: MOVE ADD BAGGAGE BUTTON TO HERE AND MAKE IT INTO A JPANEL
         JPanel textFieldPanel = setupViewTextFieldPanel();
         JPanel buttonPanel = setupViewButtonPanel();
 
@@ -59,10 +60,10 @@ public class CheckInView {
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
 
         constraintsForTextFieldPanel.gridy = 0;
-        constraintsForTextFieldPanel.insets = new Insets(0, 0, 120, 0);
+        constraintsForTextFieldPanel.insets = new Insets(120, 0, 0, 0);
 
         constraintsForButtonPanel.gridy = 1;
-        constraintsForButtonPanel.insets = new Insets(20, 0, 0, 0);
+        constraintsForButtonPanel.insets = new Insets(180, 0, 0, 0);
 
         checkInViewPanel.add(textFieldPanel, constraintsForTextFieldPanel);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
@@ -193,44 +194,67 @@ public class CheckInView {
     /** Sets up JButtons and adjusting. */
     private JPanel setupViewButtonPanel() {
         JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
+        JPanel panelForNextAndPreviousButton = new JPanel(new FlowLayout());
 
         int horizontalSizeOfButton = 20;
         int verticalSizeOfButton = 4;
-        
+
         GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
-        GridBagConstraints constraintsForNextAndPreviousButton = new GridBagConstraints();
+        GridBagConstraints constraintsForNextButton = new GridBagConstraints();
+        GridBagConstraints constraintsForPreviousButton = new GridBagConstraints();
         GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
         GridBagConstraints constraintsForBackToCheckInOptionView = new GridBagConstraints();
         GridBagConstraints constraintsForCheckInButton = new GridBagConstraints();
-        constraintsForAddBaggageButton.gridx = 0;
+        //GridBagConstraints constraintsForNextAndPreviousButtonPanel = new GridBagConstraints();
+
+        constraintsForAddBaggageButton.gridx = 1;
         constraintsForAddBaggageButton.gridy = 0;
 
         constraintsForAddBaggageButton.ipadx = horizontalSizeOfButton;
         constraintsForAddBaggageButton.ipady = verticalSizeOfButton;
 
-        constraintsForNextAndPreviousButton.ipadx = horizontalSizeOfButton;
-        constraintsForNextAndPreviousButton.ipady = verticalSizeOfButton;
-        constraintsForNextAndPreviousButton.insets = new Insets(0, 10, 0, 10);
-        
-        constraintsForNextAndPreviousButton.gridy = 1;
-        constraintsForCheckInButton.gridy = 1;
-        constraintsForMainMenuButton.ipadx = horizontalSizeOfButton;
-        constraintsForMainMenuButton.ipady = verticalSizeOfButton;
+        constraintsForNextButton.ipadx = horizontalSizeOfButton;
+        constraintsForNextButton.ipady = verticalSizeOfButton;
+
+        constraintsForPreviousButton.ipadx = horizontalSizeOfButton;
+        constraintsForPreviousButton.ipady = verticalSizeOfButton;
 
         constraintsForBackToCheckInOptionView.ipadx = horizontalSizeOfButton;
         constraintsForBackToCheckInOptionView.ipady = verticalSizeOfButton;
 
+        constraintsForMainMenuButton.ipadx = horizontalSizeOfButton;
+        constraintsForMainMenuButton.ipady = verticalSizeOfButton;
+
         constraintsForCheckInButton.ipadx = horizontalSizeOfButton;
         constraintsForCheckInButton.ipady = verticalSizeOfButton;
 
+
+        constraintsForNextButton.gridx = 0;
+
+        constraintsForPreviousButton.gridx = 1;
+
+        constraintsForCheckInButton.gridy = 2;
+        constraintsForMainMenuButton.gridy = 2;
+        constraintsForBackToCheckInOptionView.gridy = 2;
+
+        //constraintsForNextAndPreviousButtonPanel.gridy = 1;
+        //constraintsForNextAndPreviousButtonPanel.gridx = 1;
+
+        constraintsForNextButton.insets = new Insets(0,0,0,50);
+        constraintsForPreviousButton.insets = new Insets(0,50,0,0);
         informationPageButtonPanel.add(addBagButton, constraintsForAddBaggageButton);
-        informationPageButtonPanel.add(previousPassengerButton, constraintsForNextAndPreviousButton);
-        informationPageButtonPanel.add(nextPassengerButton, constraintsForNextAndPreviousButton);
-        informationPageButtonPanel.add(checkInButton, constraintsForCheckInButton);
+
+
+        panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
+        panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
+
+        informationPageButtonPanel.add(panelForNextAndPreviousButton,constraintsForNextAndPreviousButtonPanel);
+
         informationPageButtonPanel.add(mainMenuButton, constraintsForMainMenuButton);
         informationPageButtonPanel.add(checkInKioskButton, constraintsForBackToCheckInOptionView);
-      
-        
+        informationPageButtonPanel.add(checkInButton, constraintsForCheckInButton);
+
+
 
         return informationPageButtonPanel;
     }
