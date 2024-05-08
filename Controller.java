@@ -15,6 +15,23 @@ public class Controller {
     public Controller(GUI gui, KioskCheckInModel kioskCheckInModel) {
         this.gui = gui;
         this.kioskCheckInModel = kioskCheckInModel;
+        addActionListeners();
+    }
+
+    /** Adds all the ActionListeners to the GUI respectively. */
+    private void addActionListeners() {
+        gui.addAllCheckInCounterButtonsListener(new CheckInCounterButtonListener());
+        gui.addAllCheckInKioskButtonsListener(new CheckInKioskButtonListener());
+        gui.addAllSingleCheckInButtonsListener(new SingleCheckInButtonListener());
+        gui.addAllGroupCheckInButtonsListener(new GroupCheckInButtonListener());
+        gui.addAllAddBagButtonsListener(new AddBagButtonListener());
+        gui.addAllPreviousPassengerButtonsListener(new PreviousPassengerButtonListener());
+        gui.addAllNextPassengerButtonsListener(new NextPassengerButtonListener());
+        gui.addAllCheckInButtonsListener(new CheckInButtonListener());
+        gui.addAllPreviousBoardingPassButtonsListener(new PreviousBoardingPassButtonListener());
+        gui.addAllNextBoardingPassButtonsListener(new NextBoardingPassButtonListener());
+        gui.addAllPrintBoardingPassButtonsListener(new PrintBoardingPassButtonListener());
+        gui.addAllMainMenuButtonsListener(new MainMenuButtonListener());
     }
 
     // TODO: Add comments and TODO's for all the listener class.
@@ -50,7 +67,7 @@ public class Controller {
     public class AddBagButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            gui.getCheckInView().createBagPartialView(new CloseBagPartialViewButtonListener());
         }
     }
 

@@ -3,6 +3,12 @@ public class KioskCheckInModel {
     private int numberOfPassengers; 
     /**Array of passengers, used to keep track of different passengers data */
     private Passenger[] passengers;
+    /** Index of the passenger. */
+    private int passengerIndex;
+
+    public KioskCheckInModel() {
+        passengerIndex = 0;
+    }
    
     /**Sets the number of passengers to be checked in */
     public void setNumberOfPassengers(int numberOfPassengers) {
@@ -10,8 +16,8 @@ public class KioskCheckInModel {
         this.passengers = new Passenger[numberOfPassengers];
     }
 
-    /**Creates a passenger object that holds the data to be stored */
-    public void createPassenger(String bookingID, int passportNumber, String fullName, Bag[] bag) {
+    /** Inserts the passenger data's that needs to be stored. */
+    public void insertPassenger(Passenger passenger) {
 
     }
 
@@ -32,7 +38,7 @@ public class KioskCheckInModel {
 
     /**Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
     public Bag getBagID(int passengerIndex, int bagIndex) {
-        return null;
+        return this.passengers[passengerIndex].getBag(bagIndex);
     }
 
     /**Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
