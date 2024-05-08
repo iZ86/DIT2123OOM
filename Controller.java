@@ -39,42 +39,48 @@ public class Controller {
     public class CheckInCounterButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
         }
     }
 
     public class CheckInKioskButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // TODO: Changes the view to the GUIViewPanel to checkInOptionView.
         }
     }
 
     public class SingleCheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // TODO: set the kioskCheckInModel number of passengers to 1.
+            // TODO: the kioskCheckInModel should automatically adjust itself
+            // TODO: so no need to touch kioskCheckInModel.
+            // TODO: Changes the GUIViewPanel to checkInView.
         }
     }
 
     public class GroupCheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // TODO: sets the kioskCheckInModel number of passengers to N.
+            // TODO: N must be greater than 2.
+            // TODO: Otherwise, error message, this can be done through JOptionPane.
+            // TODO: Or even better, modify the checkInOptionView and have some kind of feedback.
         }
     }
 
     public class AddBagButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // TODO: Adds a new BagPartialView in the CheckInView.
         }
     }
 
     public class PreviousPassengerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // TODO: Tells the checkInView to show different data
+            // TODO: in the checkInView.
         }
     }
 
