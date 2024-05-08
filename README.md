@@ -57,7 +57,7 @@ This class represents the model for kiosk check in.
 
 private int numberOfPassengers - The number of passengers to check in.
 
-private Passenger[] passenger - Array of passengers, used to keep track of different passengers data.
+private Passenger[] passengers - Array of passengers, used to keep track of different passengers data.
 
 ### Methods
 
