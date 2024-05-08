@@ -67,7 +67,7 @@ public class Controller {
     public class AddBagButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            gui.getCheckInView().createBagPartialView(new CloseBagPartialViewButtonListener());
         }
     }
 
