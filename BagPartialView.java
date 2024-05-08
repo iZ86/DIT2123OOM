@@ -13,13 +13,13 @@ public class BagPartialView {
     /** JButton that deletes this BagPartialView from CheckInView*/
     private JButton closeBagPartialViewButton;
 
-    /** Creates a BagPartialView object with ActionListener listenForCloseBagPartialViewButton*/
+    /** Creates a BagPartialView object. */
     public BagPartialView() {
         bagPartialViewPanel = new JPanel(new GridBagLayout());
         setupViewPanel();
     }
 
-    /** Adds an ActionListener to JButton closeBagPartialViewButton*/
+    /** Adds an ActionListener to JButton closeBagPartialViewButton. */
     public void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) {
         closeBagPartialViewButton.addActionListener(listenForCloseBagPartialViewButton);
     }

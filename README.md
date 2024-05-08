@@ -57,7 +57,7 @@ This class represents the model for kiosk check in.
 
 private int numberOfPassengers - The number of passengers to check in.
 
-private Passenger[] passenger - Array of passengers, used to keep track of different passengers data.
+private Passenger[] passengers - Array of passengers, used to keep track of different passengers data.
 
 private int passengerIndex - Index for the passenger array.
 
@@ -241,9 +241,9 @@ private JButton closeBagPartialViewButton - JButton that deletes this BagPartial
 
 ### Methods
 
-public BagPartialView(ActionListener listenForCloseBagPartialViewButton) - Creates a BagPartialView object with ActionListener listenForCloseBagPartialViewButton.
+public BagPartialView() - Creates a BagPartialView object.
 
-private void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) - Adds an ActionListener to JButton closeBagPartialViewButton.
+public void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) - Adds an ActionListener to JButton closeBagPartialViewButton.
 
 private void setupViewPanel() - Sets up the bagPartialViewPanel.
 
@@ -309,6 +309,16 @@ private CheckInView checkInView - The check in view.
 
 private BoardingPassView boardingPassView - the boarding pass view.
 
+public static final String MAINMENUVIEWINDEX - Index used to access mainMenuView in the GUIViewPanel.
+
+public static final String COUNTERVIEWINDEX - Index used to access counterView in the GUIViewPanel.
+
+public static final String CHECKINOPTIONVIEWINDEX - Index used to access checkInOptionView in the GUIViewPanel.
+
+public static final String CHECKINVIEWINDEX - Index used to access checkInView in the GUIViewPanel.
+
+public static final String BOARDINGPASSVIEWINDEX - Index used to access boardingPassView in the GUIViewPanel.
+
 ### Methods
 
 public GUI(KioskCheckInModel kioskCheckInModel) - Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use.
@@ -326,6 +336,8 @@ public MainMenuView getMainMenuView() - Returns the mainMenuView.
 public CounterView getCounterView() - Returns the counterView.
 
 public CheckInOptionView getCheckInOptionView() - Returns the checkInOptionView.
+
+public CheckInView getCheckInView() - Returns the checkInView.
 
 public BoardingPassView getBoardingPassView() - Returns the boardingPassView.
 
