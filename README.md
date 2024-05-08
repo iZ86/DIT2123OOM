@@ -38,6 +38,8 @@ private String fullName - Full name of the passenger.
 
 private Bag[] bags - Bags of the passenger.
 
+private boolean specialNeed - Special needs status of the passenger. 
+
 ### Methods
 
 public Passenger(String bookingID, int passportNumber, String fullName, Bag[] bags[]) - Creates a Passenger object to hold data.
@@ -50,6 +52,10 @@ public String getFullName() - Returns the full name.
 
 public Bag getBag(int index) - Returns the bag at int INDEX, returns null, if the bag index doesn't exist.
 
+public boolean isSpecialNeed() - Returns specialNeed.
+
+public void setSpecialNeed(boolean specialNeed) - Sets specialNeed.
+
 ## KioskCheckInModel
 This class represents the model for kiosk check in.
 
@@ -59,7 +65,10 @@ private int numberOfPassengers - The number of passengers to check in.
 
 private Passenger[] passengers - Array of passengers, used to keep track of different passengers data.
 
-private int passengerIndex - Index for the passenger array.
+private int passengerIndex - Index for the passenger array whose data should be accessed, Mostly for getter and setter method use.
+
+private int bagIndex - Index of bag in the Passenger whose data should be accessed, Mostly for getter and setter method use.
+
 
 ### Methods
 
@@ -69,17 +78,25 @@ public void setNumberOfPassengers(int numberOfPassengers) - Sets the number of p
 
 public void insertPassenger(Passenger) - Inserts the passenger data's that needs to be stored.
 
-public String getBookingID(int passengerIndex) - Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex.
+public int getPassengerIndex() - Returns the passengerIndex.
 
-public int getPassportNumber(int passengerIndex) - Returns the passport number of the passenger in Passenger[] passengers at passengerIndex.
+public void setPassengerIndex(int passengerIndex) - Sets the passengerIndex.
 
-public String getFullName(int passengerIndex) - Returns the full name of the passenger in Passenger[] passengers at passengerIndex.
+public int getBagIndex() - Returns the bagIndex.
 
-public String getBagID(int passengerIndex, int bagIndex) - Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+public void setBagIndex(int bagIndex) - Sets the bagIndex.
 
-public String getBagColor(int passengerIndex, int bagIndex) - Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+public String getBookingID() - Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex.
 
-public String getBagWeight(int passengerIndex, int bagIndex) - Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+public int getPassportNumber() - Returns the passport number of the passenger in Passenger[] passengers at passengerIndex.
+
+public String getFullName() - Returns the full name of the passenger in Passenger[] passengers at passengerIndex.
+
+public String getBagID() - Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+
+public String getBagColor() - Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+
+public double getBagWeight() - Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
 
 ## MainMenuView
 This class represents the view for the main menu.
