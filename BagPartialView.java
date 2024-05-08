@@ -26,20 +26,52 @@ public class BagPartialView {
 
     /** Sets up the bagPartialViewPanel*/
     private void setupViewPanel() {
-        //TODO the view that's gonna pop up when click's the add baggage button
+        //TODO: Find out how the panel add vetically instead of horizontally
+        //TODO: Add ScrollBar or ScrollPane
+        int horizontalSizeOfTextField = 155;
+        int verticalSizeOfTextField = 5;
+
+        int horizontalSizeOfCloseButton = 18;
+        int verticalSizeOfCloseButton = 3;
+
+        GridBagConstraints gridBagConstraintsForBaggageLabels = new GridBagConstraints();
+        GridBagConstraints gridBagConstraintsForBaggageTextFields = new GridBagConstraints();
+        GridBagConstraints gridBagConstraintsForCloseButton = new GridBagConstraints();
+
+        bagPartialViewPanel.setPreferredSize(new Dimension(350,100));
+
         JLabel labelForBagColor = new JLabel("Bag Color");
         bagColorTextField = new JTextField();
 
-        bagWeightTextField = new JTextField();
         JLabel labelForBagWeight = new JLabel("Bag Weight");
+        bagWeightTextField = new JTextField();
 
         closeBagPartialViewButton = new JButton("Close");
 
-        bagPartialViewPanel.add(labelForBagColor);
-        bagPartialViewPanel.add(bagColorTextField);
-        bagPartialViewPanel.add(labelForBagWeight);
-        bagPartialViewPanel.add(bagWeightTextField);
-        bagPartialViewPanel.add(closeBagPartialViewButton);
+        gridBagConstraintsForBaggageLabels.anchor = GridBagConstraints.WEST;
+        gridBagConstraintsForBaggageLabels.insets = new Insets(0, 0, 15, 45);
+
+        gridBagConstraintsForBaggageTextFields.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraintsForBaggageTextFields.weightx = 1;
+
+        gridBagConstraintsForBaggageTextFields.ipadx = horizontalSizeOfTextField;
+        gridBagConstraintsForBaggageTextFields.ipady = verticalSizeOfTextField;
+
+        gridBagConstraintsForBaggageTextFields.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraintsForBaggageTextFields.insets = new Insets(0, 20, 15, 0);
+
+
+        gridBagConstraintsForCloseButton.ipady = verticalSizeOfCloseButton;
+        gridBagConstraintsForCloseButton.ipadx = horizontalSizeOfCloseButton;
+
+        gridBagConstraintsForCloseButton.gridx = 1;
+        gridBagConstraintsForCloseButton.insets = new Insets(0,70,0,0);
+
+        bagPartialViewPanel.add(labelForBagColor, gridBagConstraintsForBaggageLabels);
+        bagPartialViewPanel.add(bagColorTextField, gridBagConstraintsForBaggageTextFields);
+        bagPartialViewPanel.add(labelForBagWeight, gridBagConstraintsForBaggageLabels);
+        bagPartialViewPanel.add(bagWeightTextField, gridBagConstraintsForBaggageTextFields);
+        bagPartialViewPanel.add(closeBagPartialViewButton, gridBagConstraintsForCloseButton);
     }
 
     /** Returns bagPartialViewPanel*/
