@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class BagPartialView {
@@ -13,18 +14,32 @@ public class BagPartialView {
     private JButton closeBagPartialViewButton;
 
     /** Creates a BagPartialView object with ActionListener listenForCloseBagPartialViewButton*/
-    public BagPartialView(ActionListener listenForCloseBagPartialViewButton) {
-
+    public BagPartialView() {
+        bagPartialViewPanel = new JPanel(new GridBagLayout());
+        setupViewPanel();
     }
 
     /** Adds an ActionListener to JButton closeBagPartialViewButton*/
-    private void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) {
+    public void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) {
         closeBagPartialViewButton.addActionListener(listenForCloseBagPartialViewButton);
     }
 
     /** Sets up the bagPartialViewPanel*/
     private void setupViewPanel() {
         //TODO the view that's gonna pop up when click's the add baggage button
+        JLabel labelForBagColor = new JLabel("Bag Color");
+        bagColorTextField = new JTextField();
+
+        bagWeightTextField = new JTextField();
+        JLabel labelForBagWeight = new JLabel("Bag Weight");
+
+        closeBagPartialViewButton = new JButton("Close");
+
+        bagPartialViewPanel.add(labelForBagColor);
+        bagPartialViewPanel.add(bagColorTextField);
+        bagPartialViewPanel.add(labelForBagWeight);
+        bagPartialViewPanel.add(bagWeightTextField);
+        bagPartialViewPanel.add(closeBagPartialViewButton);
     }
 
     /** Returns bagPartialViewPanel*/
