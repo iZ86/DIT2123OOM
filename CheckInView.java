@@ -88,10 +88,11 @@ public class CheckInView {
         BagPartialView bagPartialView = new BagPartialView();
         GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
         constraintsForBagPartialViewPanel.gridy = 2;
+        constraintsForBagPartialViewPanel.insets = new Insets(20,0,0,0);
         bagPartialViews.addLast(bagPartialView);
-       checkInViewPanel.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
-       checkInViewPanel.revalidate();
-       checkInViewPanel.repaint();
+        checkInViewPanel.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
+        checkInViewPanel.revalidate();
+        checkInViewPanel.repaint();
     }
 
     /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews,
