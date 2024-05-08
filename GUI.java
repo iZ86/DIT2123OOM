@@ -89,6 +89,11 @@ public class GUI {
         return checkInOptionView;
     }
 
+    /** Returns the checkInView. */
+    public CheckInView getCheckInView() {
+        return checkInView;
+    }
+
     /** Returns the boardingPassView. */
     public BoardingPassView getBoardingPassView() {
         return boardingPassView;
