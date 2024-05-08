@@ -69,7 +69,7 @@ public class CheckInView {
         constraintsForAddBaggageButton.gridy = 1;
         constraintsForAddBaggageButton.ipadx = horizontalSizeOfBaggageButton;
         constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
-        constraintsForAddBaggageButton.insets = new Insets(0,0,0,0);
+        constraintsForAddBaggageButton.insets = new Insets(0, 0, 0, 0);
 
         constraintsForButtonPanel.gridy = 3;
         constraintsForButtonPanel.insets = new Insets(180, 0, 0, 0);
@@ -88,7 +88,7 @@ public class CheckInView {
         BagPartialView bagPartialView = new BagPartialView();
         GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
         constraintsForBagPartialViewPanel.gridy = 2;
-        constraintsForBagPartialViewPanel.insets = new Insets(20,0,0,0);
+        constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
         bagPartialViews.addLast(bagPartialView);
         checkInViewPanel.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
         checkInViewPanel.revalidate();
@@ -241,7 +241,7 @@ public class CheckInView {
         // Adjust insets for spacing between next and previous buttons
         constraintsForPreviousButton.insets = new Insets(0, 0, 0, 10); // Add spacing of 10 pixels to the right
         constraintsForNextButton.insets = new Insets(0, 10, 0, 0); // Add spacing of 10 pixels to the left
-        constraintsForNextAndPreviousButtonPanel.insets = new Insets(10,0,10,0);
+        constraintsForNextAndPreviousButtonPanel.insets = new Insets(10, 0, 10, 0);
         constraintsForBackToCheckInOptionView.insets = new Insets(0, 10, 0, 10);
 
         constraintsForPreviousButton.gridx = 0;

@@ -38,7 +38,7 @@ public class BagPartialView {
         GridBagConstraints gridBagConstraintsForBaggageTextFields = new GridBagConstraints();
         GridBagConstraints gridBagConstraintsForCloseButton = new GridBagConstraints();
 
-        bagPartialViewPanel.setPreferredSize(new Dimension(350,100));
+        bagPartialViewPanel.setPreferredSize(new Dimension(350, 100));
 
         JLabel labelForBagColor = new JLabel("Bag Color");
         bagColorTextField = new JTextField();
@@ -65,7 +65,7 @@ public class BagPartialView {
         gridBagConstraintsForCloseButton.ipadx = horizontalSizeOfCloseButton;
 
         gridBagConstraintsForCloseButton.gridx = 1;
-        gridBagConstraintsForCloseButton.insets = new Insets(0,70,0,0);
+        gridBagConstraintsForCloseButton.insets = new Insets(0, 70, 0, 0);
 
         bagPartialViewPanel.add(labelForBagColor, gridBagConstraintsForBaggageLabels);
         bagPartialViewPanel.add(bagColorTextField, gridBagConstraintsForBaggageTextFields);
