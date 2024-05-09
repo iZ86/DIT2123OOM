@@ -207,8 +207,8 @@ public CheckInView(KioskCheckInModel kioskCheckInModel) - Creates a CheckInView 
 
 private void setupViewPanel() - Sets up the checkInViewPanel.
 
-public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) - 
-Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton added to the JButton closeBagPartialViewButton, 
+public void createBagPartialView(ActionListener listenForRemoveBagPartialViewButton) - 
+Creates a BagPartialView object with the ActionListener listenForRemoveBagPartialViewButton added to the JButton removeBagPartialViewButton, 
 and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews, and adds its viewPanel to the checkInViewPanel.
 
 public void removeBagPartialView(int index) - Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews and remove it from the checkInViewPanel.
@@ -254,13 +254,13 @@ private JTextField bagColorTextField - The text field where user enters the bag 
 
 private JTextField bagWeightTextField - The text field where user enters the bag weight.
 
-private JButton closeBagPartialViewButton - JButton that deletes this BagPartialView from CheckInView.
+private JButton removeBagPartialViewButton - JButton that removes this BagPartialView from CheckInView.
 
 ### Methods
 
 public BagPartialView() - Creates a BagPartialView object.
 
-public void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) - Adds an ActionListener to JButton closeBagPartialViewButton.
+public void addRemoveBagPartialViewButtonListener(ActionListener listenForRemoveBagPartialViewButton) - Adds an ActionListener to JButton removeBagPartialViewButton.
 
 private void setupViewPanel() - Sets up the bagPartialViewPanel.
 

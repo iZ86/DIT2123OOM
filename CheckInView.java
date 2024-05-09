@@ -96,12 +96,12 @@ public class CheckInView {
 
     }
 
-    /** Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton,
-     * that is added to the JButton closeBagPartialViewButton,
+    /** Creates a BagPartialView object with the ActionListener listenForRemoveBagPartialViewButton,
+     * that is added to the JButton removeBagPartialViewButton,
      and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews,
      and adds its viewPanel to the checkInViewPanel.
      */
-    public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
+    public void createBagPartialView(ActionListener listenForRemoveBagPartialViewButton) {
         int sizeOfLinkedList = bagPartialViews.size();
 
         BagPartialView bagPartialView = new BagPartialView();

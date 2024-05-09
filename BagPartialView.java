@@ -10,8 +10,8 @@ public class BagPartialView {
     private JTextField bagColorTextField;
     /** The text field where user enters the bag weight*/
     private JTextField bagWeightTextField;
-    /** JButton that deletes this BagPartialView from CheckInView*/
-    private JButton closeBagPartialViewButton;
+    /** JButton that removes this BagPartialView from CheckInView*/
+    private JButton removeBagPartialViewButton;
 
     /** Creates a BagPartialView object. */
     public BagPartialView() {
@@ -19,9 +19,9 @@ public class BagPartialView {
         setupViewPanel();
     }
 
-    /** Adds an ActionListener to JButton closeBagPartialViewButton. */
-    public void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) {
-        closeBagPartialViewButton.addActionListener(listenForCloseBagPartialViewButton);
+    /** Adds an ActionListener to JButton removeBagPartialViewButton. */
+    public void addRemoveBagPartialViewButtonListener(ActionListener listenForRemoveBagPartialViewButton) {
+        removeBagPartialViewButton.addActionListener(listenForRemoveBagPartialViewButton);
     }
 
     /** Sets up the bagPartialViewPanel*/
@@ -45,7 +45,7 @@ public class BagPartialView {
         JLabel labelForBagWeight = new JLabel("Bag Weight");
         bagWeightTextField = new JTextField();
 
-        closeBagPartialViewButton = new JButton("Delete");
+        removeBagPartialViewButton = new JButton("Remove");
 
         gridBagConstraintsForBaggageLabels.anchor = GridBagConstraints.WEST;
         gridBagConstraintsForBaggageLabels.insets = new Insets(0, 0, 15, 45);
@@ -70,7 +70,7 @@ public class BagPartialView {
         bagPartialViewPanel.add(bagColorTextField, gridBagConstraintsForBaggageTextFields);
         bagPartialViewPanel.add(labelForBagWeight, gridBagConstraintsForBaggageLabels);
         bagPartialViewPanel.add(bagWeightTextField, gridBagConstraintsForBaggageTextFields);
-        bagPartialViewPanel.add(closeBagPartialViewButton, gridBagConstraintsForCloseButton);
+        bagPartialViewPanel.add(removeBagPartialViewButton, gridBagConstraintsForCloseButton);
     }
 
     /** Returns bagPartialViewPanel*/

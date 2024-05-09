@@ -70,7 +70,7 @@ public class Controller {
             if(gui.getCheckInView().getNumberOfBagPartialView() >= 4) {
                 gui.getCheckInView().maximumBaggageErrorMessage();
             } else {
-                gui.getCheckInView().createBagPartialView(new CloseBagPartialViewButtonListener());
+                gui.getCheckInView().createBagPartialView(new RemoveBagPartialViewButtonListener());
             }
         }
     }
@@ -124,7 +124,7 @@ public class Controller {
         }
     }
 
-    public class CloseBagPartialViewButtonListener implements ActionListener {
+    public class RemoveBagPartialViewButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
