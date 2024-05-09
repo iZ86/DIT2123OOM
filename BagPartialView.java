@@ -24,6 +24,11 @@ public class BagPartialView {
         removeBagPartialViewButton.addActionListener(listenForRemoveBagPartialViewButton);
     }
 
+    /** Sets the removeBagPartialView property client key of "index" to int index. */
+    public void setIndex(int index) {
+        removeBagPartialViewButton.putClientProperty("index", index);
+    }
+
     /** Sets up the bagPartialViewPanel*/
     private void setupViewPanel() {
         //TODO: Add ScrollBar or ScrollPane
