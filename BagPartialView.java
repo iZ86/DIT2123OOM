@@ -12,6 +12,7 @@ public class BagPartialView {
     private JTextField bagWeightTextField;
     /** JButton that deletes this BagPartialView from CheckInView*/
     private JButton closeBagPartialViewButton;
+
     /** Creates a BagPartialView object. */
     public BagPartialView() {
         bagPartialViewPanel = new JPanel(new GridBagLayout());
@@ -57,6 +58,7 @@ public class BagPartialView {
 
         gridBagConstraintsForBaggageTextFields.gridwidth = GridBagConstraints.REMAINDER;
         gridBagConstraintsForBaggageTextFields.insets = new Insets(0, 20, 15, 0);
+
 
         gridBagConstraintsForCloseButton.ipady = verticalSizeOfCloseButton;
         gridBagConstraintsForCloseButton.ipadx = horizontalSizeOfCloseButton;
