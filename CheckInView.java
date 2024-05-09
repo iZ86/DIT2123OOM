@@ -48,7 +48,7 @@ public class CheckInView {
     /** Panel to add all the JTextFields and BagPartialView,
      * to separate Button Panel to let it stick at the bottom of the view.
      */
-    private JPanel panelForTextFieldAndBagPartialView = new JPanel(new GridBagLayout());
+    private JPanel panelForTextFieldAndBagPartialView;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -62,10 +62,21 @@ public class CheckInView {
         return bagPartialViews.size();
     }
 
+    /** Clears the view. */
+    private void clearView() {
+        checkInViewPanel.removeAll();
+    }
 
+    /** Updates the view. */
+    public void updateView() {
+        checkInViewPanel.revalidate();
+        checkInViewPanel.repaint();
+    }
 
     /** Sets up the checkInViewPanel. */
     private void setupViewPanel() {
+
+        panelForTextFieldAndBagPartialView = new JPanel(new GridBagLayout());
         int horizontalSizeOfBaggageButton = 200;
         int verticalSizeOfBaggageButton = 8;
 
@@ -90,12 +101,22 @@ public class CheckInView {
         constraintsForButtonPanel.anchor = GridBagConstraints.PAGE_END;
         constraintsForTextFieldAndBagPartialViewPanel.gridy = 0;
 
+
+
+        // If there is any bagPartialViews, add them.
+        for (int i = 0; i < bagPartialViews.size(); i++) {
+            GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
+            constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + i;
+            constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
+            bagPartialViews.get(i).setIndex(i);
+            panelForTextFieldAndBagPartialView.add(bagPartialViews.get(i).getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
+        }
+
         panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
         panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
 
         checkInViewPanel.add(panelForTextFieldAndBagPartialView, constraintsForTextFieldAndBagPartialViewPanel);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
-
     }
 
     /** Creates a BagPartialView object with the ActionListener listenForRemoveBagPartialViewButton,
@@ -107,6 +128,9 @@ public class CheckInView {
         int sizeOfLinkedList = bagPartialViews.size();
 
         BagPartialView bagPartialView = new BagPartialView();
+        bagPartialView.addRemoveBagPartialViewButtonListener(listenForRemoveBagPartialViewButton);
+        bagPartialView.setIndex(sizeOfLinkedList);
+
         GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
 
         constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + sizeOfLinkedList;
@@ -114,8 +138,6 @@ public class CheckInView {
         bagPartialViews.addLast(bagPartialView);
         panelForTextFieldAndBagPartialView.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
 
-        checkInViewPanel.revalidate();
-        checkInViewPanel.repaint();
     }
 
     /** Warning method to call when the addBagButton is pressed more than 4 times */
@@ -130,7 +152,9 @@ public class CheckInView {
      * and remove it from the checkInViewPanel.
      */
     public void removeBagPartialView(int index) {
-
+        clearView();
+        bagPartialViews.remove(index);
+        setupViewPanel();
     }
 
     /** Returns the checkInViewPanel. */
