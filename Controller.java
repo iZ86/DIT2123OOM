@@ -67,7 +67,11 @@ public class Controller {
     public class AddBagButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            gui.getCheckInView().createBagPartialView(new CloseBagPartialViewButtonListener());
+            if(gui.getCheckInView().getNumberOfBagPartialView() >= 4) {
+                gui.getCheckInView().maximumBaggageErrorMessage();
+            } else {
+                gui.getCheckInView().createBagPartialView(new CloseBagPartialViewButtonListener());
+            }
         }
     }
 
