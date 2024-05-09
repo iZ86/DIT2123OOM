@@ -43,9 +43,11 @@ public class CheckInView {
     private JButton checkInKioskButton = new JButton("Last Page");
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
-    /** Index to push the BagPartialViewPanel downwards, otherwise it will add horizontally */
-    private int indexToGetGridyOfBagPartialView = 2;
-    /** Panel to add all of the Text Fields and Baggage Partial View, and seperate Button Panel to let it stick on the most bottom */
+    /** Grid Y to push the BagPartialViewPanel downwards, otherwise it will add horizontally. */
+    private int gridYOfBagPartialView = 2;
+    /** Panel to add all the JTextFields and BagPartialView,
+     * to separate Button Panel to let it stick at the bottom of the view.
+     */
     private JPanel panelForTextFieldAndBagPartialView = new JPanel(new GridBagLayout());
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
@@ -55,8 +57,8 @@ public class CheckInView {
         setupViewPanel();
     }
 
-    /** The method to get the size of <LinkedList>.*/
-    public int getNumberOfBagPartialView() {
+    /** The method to get the size of <LinkedList> bagPartialViews.*/
+    public int getNumberOfBagPartialViews() {
         return bagPartialViews.size();
     }
 
@@ -107,7 +109,7 @@ public class CheckInView {
         BagPartialView bagPartialView = new BagPartialView();
         GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
 
-        constraintsForBagPartialViewPanel.gridy = indexToGetGridyOfBagPartialView + sizeOfLinkedList;
+        constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + sizeOfLinkedList;
         constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
         bagPartialViews.addLast(bagPartialView);
         panelForTextFieldAndBagPartialView.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
@@ -116,9 +118,9 @@ public class CheckInView {
         checkInViewPanel.repaint();
     }
 
-    /** Method to call when the baggage button presses more than 4 times */
-    public JLabel maximumBaggageErrorMessage() {
-        JLabel labelForBaggageText = new JLabel("Maximum Baggage Is 4 !!!");
+    /** Warning method to call when the addBagButton is pressed more than 4 times */
+    public JLabel maximumBagErrorMessage() {
+        JLabel labelForBaggageText = new JLabel("Maximum number of bags is 4 !!!");
         labelForBaggageText.setForeground(Color.red);
 
         return labelForBaggageText;
