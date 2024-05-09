@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-09T13:19:26.088Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="niyCSD_xfRCMbcIYajLJ" version="24.3.1" type="device">
+<mxfile host="app.diagrams.net" modified="2024-05-09T13:25:29.582Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="sb2Yxv_qTZyMuPMrnxtS" version="24.3.1" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2261" dy="3118" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -330,10 +330,10 @@
         <mxCell id="glihFPP94L59pCYMsd3V-2" value="+ getNumberOfBagPartialViews(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-63" vertex="1">
           <mxGeometry y="424" width="390" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="xp3HnlePOUaRf_YmovVB-2" value="- clearView(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="WHtjqOz7p3wYwNhFgXPP-63">
+        <mxCell id="xp3HnlePOUaRf_YmovVB-2" value="- clearView(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-63" vertex="1">
           <mxGeometry y="450" width="390" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="xp3HnlePOUaRf_YmovVB-1" value="+ updateView(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="WHtjqOz7p3wYwNhFgXPP-63">
+        <mxCell id="xp3HnlePOUaRf_YmovVB-1" value="+ updateView(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-63" vertex="1">
           <mxGeometry y="476" width="390" height="26" as="geometry" />
         </mxCell>
         <mxCell id="GBVSbXDcs7wIIf2cBlH6-3" value="- setupViewPanel(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-63" vertex="1">
@@ -420,7 +420,7 @@
         <mxCell id="8tXRvkYaEP0Vp48JqqZx-2" value="+ addRemoveBagPartialViewButtonListener&lt;br&gt;(listenForRemoveBagPartialViewButton: ActionListener): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-88" vertex="1">
           <mxGeometry y="160" width="330" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="xp3HnlePOUaRf_YmovVB-0" value="+ setIndex(index: int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="WHtjqOz7p3wYwNhFgXPP-88">
+        <mxCell id="xp3HnlePOUaRf_YmovVB-0" value="+ setIndex(index: int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-88" vertex="1">
           <mxGeometry y="210" width="330" height="26" as="geometry" />
         </mxCell>
         <mxCell id="GBVSbXDcs7wIIf2cBlH6-4" value="- setupViewPanel(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="WHtjqOz7p3wYwNhFgXPP-88" vertex="1">
