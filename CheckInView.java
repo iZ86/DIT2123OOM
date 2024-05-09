@@ -43,6 +43,10 @@ public class CheckInView {
     private JButton checkInKioskButton = new JButton("Last Page");
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
+    /** Index to push the BagPartialViewPanel downwards, otherwise it will add horizontally */
+    private int indexToGetGridyOfBagPartialView = 2;
+    /** Panel to add all of the Text Fields and Baggage Partial View, and seperate Button Panel to let it stick on the most bottom */
+    private JPanel panelForTextFieldAndBagPartialView = new JPanel(new GridBagLayout());
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -50,6 +54,13 @@ public class CheckInView {
         bagPartialViews = new LinkedList<>();
         setupViewPanel();
     }
+
+    /** The method to get the size of <LinkedList>.*/
+    public int getNumberOfBagPartialView() {
+        return bagPartialViews.size();
+    }
+
+
 
     /** Sets up the checkInViewPanel. */
     private void setupViewPanel() {
@@ -62,6 +73,7 @@ public class CheckInView {
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
         GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
+        GridBagConstraints constraintsForTextFieldAndBagPartialViewPanel = new GridBagConstraints();
 
         constraintsForTextFieldPanel.gridy = 0;
         constraintsForTextFieldPanel.insets = new Insets(120, 0, 0, 0);
@@ -71,12 +83,17 @@ public class CheckInView {
         constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
         constraintsForAddBaggageButton.insets = new Insets(0, 0, 0, 0);
 
-        constraintsForButtonPanel.gridy = 3;
+        constraintsForButtonPanel.gridy = 1;
         constraintsForButtonPanel.insets = new Insets(180, 0, 0, 0);
+        constraintsForButtonPanel.anchor = GridBagConstraints.PAGE_END;
+        constraintsForTextFieldAndBagPartialViewPanel.gridy = 0;
 
-        checkInViewPanel.add(addBagButton, constraintsForAddBaggageButton);
-        checkInViewPanel.add(textFieldPanel, constraintsForTextFieldPanel);
+        panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
+        panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
+
+        checkInViewPanel.add(panelForTextFieldAndBagPartialView, constraintsForTextFieldAndBagPartialViewPanel);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
+
     }
 
     /** Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton,
@@ -85,14 +102,26 @@ public class CheckInView {
      and adds its viewPanel to the checkInViewPanel.
      */
     public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
+        int sizeOfLinkedList = bagPartialViews.size();
+
         BagPartialView bagPartialView = new BagPartialView();
         GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
-        constraintsForBagPartialViewPanel.gridy = 2;
+
+        constraintsForBagPartialViewPanel.gridy = indexToGetGridyOfBagPartialView + sizeOfLinkedList;
         constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
         bagPartialViews.addLast(bagPartialView);
-        checkInViewPanel.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
+        panelForTextFieldAndBagPartialView.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
+
         checkInViewPanel.revalidate();
         checkInViewPanel.repaint();
+    }
+
+    /** Method to call when the baggage button presses more than 4 times */
+    public JLabel maximumBaggageErrorMessage() {
+        JLabel labelForBaggageText = new JLabel("Maximum Baggage Is 4 !!!");
+        labelForBaggageText.setForeground(Color.red);
+
+        return labelForBaggageText;
     }
 
     /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews,
