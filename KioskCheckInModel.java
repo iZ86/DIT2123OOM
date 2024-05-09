@@ -13,6 +13,8 @@ public class KioskCheckInModel {
     private int bagIndex;
 
     public KioskCheckInModel() {
+        // An edge case fix for now.
+        passengers = new Passenger[]{new Passenger(null, 0, null, new Bag[]{new Bag(null, null, 0)})};
         passengerIndex = 0;
         bagIndex = 0;
     }
