@@ -12,7 +12,6 @@ public class BagPartialView {
     private JTextField bagWeightTextField;
     /** JButton that deletes this BagPartialView from CheckInView*/
     private JButton closeBagPartialViewButton;
-
     /** Creates a BagPartialView object. */
     public BagPartialView() {
         bagPartialViewPanel = new JPanel(new GridBagLayout());
@@ -26,7 +25,6 @@ public class BagPartialView {
 
     /** Sets up the bagPartialViewPanel*/
     private void setupViewPanel() {
-        //TODO: Find out how the panel add vetically instead of horizontally
         //TODO: Add ScrollBar or ScrollPane
         int horizontalSizeOfTextField = 155;
         int verticalSizeOfTextField = 5;
@@ -46,7 +44,7 @@ public class BagPartialView {
         JLabel labelForBagWeight = new JLabel("Bag Weight");
         bagWeightTextField = new JTextField();
 
-        closeBagPartialViewButton = new JButton("Close");
+        closeBagPartialViewButton = new JButton("Delete");
 
         gridBagConstraintsForBaggageLabels.anchor = GridBagConstraints.WEST;
         gridBagConstraintsForBaggageLabels.insets = new Insets(0, 0, 15, 45);
@@ -59,7 +57,6 @@ public class BagPartialView {
 
         gridBagConstraintsForBaggageTextFields.gridwidth = GridBagConstraints.REMAINDER;
         gridBagConstraintsForBaggageTextFields.insets = new Insets(0, 20, 15, 0);
-
 
         gridBagConstraintsForCloseButton.ipady = verticalSizeOfCloseButton;
         gridBagConstraintsForCloseButton.ipadx = horizontalSizeOfCloseButton;
