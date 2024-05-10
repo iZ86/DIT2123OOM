@@ -43,46 +43,118 @@ public class CheckInView {
     private JButton checkInKioskButton = new JButton("Last Page");
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
+    /** Grid Y to push the BagPartialViewPanel downwards, otherwise it will add horizontally. */
+    private int gridYOfBagPartialView = 2;
+    /** Panel to add all the JTextFields and BagPartialView,
+     * to separate Button Panel to let it stick at the bottom of the view.
+     */
+    private JPanel panelForTextFieldAndBagPartialView;
 
-    /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel. */
+    /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
+        bagPartialViews = new LinkedList<>();
         setupViewPanel();
+    }
+
+    /** The method to get the size of <LinkedList> bagPartialViews.*/
+    public int getNumberOfBagPartialViews() {
+        return bagPartialViews.size();
+    }
+
+    /** Clears the view. */
+    private void clearView() {
+        checkInViewPanel.removeAll();
+    }
+
+    /** Updates the view. */
+    public void updateView() {
+        checkInViewPanel.revalidate();
+        checkInViewPanel.repaint();
     }
 
     /** Sets up the checkInViewPanel. */
     private void setupViewPanel() {
-        // TODO: MOVE ADD BAGGAGE BUTTON TO HERE AND MAKE IT INTO A JPANEL
+
+        panelForTextFieldAndBagPartialView = new JPanel(new GridBagLayout());
+        int horizontalSizeOfBaggageButton = 200;
+        int verticalSizeOfBaggageButton = 8;
+
         JPanel textFieldPanel = setupViewTextFieldPanel();
         JPanel buttonPanel = setupViewButtonPanel();
 
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
+        GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
+        GridBagConstraints constraintsForTextFieldAndBagPartialViewPanel = new GridBagConstraints();
 
         constraintsForTextFieldPanel.gridy = 0;
         constraintsForTextFieldPanel.insets = new Insets(120, 0, 0, 0);
 
+        constraintsForAddBaggageButton.gridy = 1;
+        constraintsForAddBaggageButton.ipadx = horizontalSizeOfBaggageButton;
+        constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
+        constraintsForAddBaggageButton.insets = new Insets(0, 0, 0, 0);
+
         constraintsForButtonPanel.gridy = 1;
         constraintsForButtonPanel.insets = new Insets(180, 0, 0, 0);
+        constraintsForButtonPanel.anchor = GridBagConstraints.PAGE_END;
+        constraintsForTextFieldAndBagPartialViewPanel.gridy = 0;
 
-        checkInViewPanel.add(textFieldPanel, constraintsForTextFieldPanel);
+
+
+        // If there is any bagPartialViews, add them.
+        for (int i = 0; i < bagPartialViews.size(); i++) {
+            GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
+            constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + i;
+            constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
+            bagPartialViews.get(i).setIndex(i);
+            panelForTextFieldAndBagPartialView.add(bagPartialViews.get(i).getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
+        }
+
+        panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
+        panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
+
+        checkInViewPanel.add(panelForTextFieldAndBagPartialView, constraintsForTextFieldAndBagPartialViewPanel);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
     }
 
-    /** Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton,
-     * that is added to the JButton closeBagPartialViewButton,
+    /** Creates a BagPartialView object with the ActionListener listenForRemoveBagPartialViewButton,
+     * that is added to the JButton removeBagPartialViewButton,
      and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews,
      and adds its viewPanel to the checkInViewPanel.
      */
-    public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) {
+    public void createBagPartialView(ActionListener listenForRemoveBagPartialViewButton) {
+        int sizeOfLinkedList = bagPartialViews.size();
 
+        BagPartialView bagPartialView = new BagPartialView();
+        bagPartialView.addRemoveBagPartialViewButtonListener(listenForRemoveBagPartialViewButton);
+        bagPartialView.setIndex(sizeOfLinkedList);
+
+        GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
+
+        constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + sizeOfLinkedList;
+        constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
+        bagPartialViews.addLast(bagPartialView);
+        panelForTextFieldAndBagPartialView.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
+
+    }
+
+    /** Warning method to call when the addBagButton is pressed more than 4 times */
+    public JLabel maximumBagErrorMessage() {
+        JLabel labelForBaggageText = new JLabel("Maximum number of bags is 4 !!!");
+        labelForBaggageText.setForeground(Color.red);
+
+        return labelForBaggageText;
     }
 
     /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews,
      * and remove it from the checkInViewPanel.
      */
     public void removeBagPartialView(int index) {
-
+        clearView();
+        bagPartialViews.remove(index);
+        setupViewPanel();
     }
 
     /** Returns the checkInViewPanel. */
@@ -194,24 +266,17 @@ public class CheckInView {
     /** Sets up JButtons and adjusting. */
     private JPanel setupViewButtonPanel() {
         JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
-        JPanel panelForNextAndPreviousButton = new JPanel(new FlowLayout());
+        JPanel panelForNextAndPreviousButton = new JPanel(new GridBagLayout());
 
-        int horizontalSizeOfButton = 20;
+        int horizontalSizeOfButton = 18;
         int verticalSizeOfButton = 4;
 
-        GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
         GridBagConstraints constraintsForNextButton = new GridBagConstraints();
         GridBagConstraints constraintsForPreviousButton = new GridBagConstraints();
         GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
         GridBagConstraints constraintsForBackToCheckInOptionView = new GridBagConstraints();
         GridBagConstraints constraintsForCheckInButton = new GridBagConstraints();
-        //GridBagConstraints constraintsForNextAndPreviousButtonPanel = new GridBagConstraints();
-
-        constraintsForAddBaggageButton.gridx = 1;
-        constraintsForAddBaggageButton.gridy = 0;
-
-        constraintsForAddBaggageButton.ipadx = horizontalSizeOfButton;
-        constraintsForAddBaggageButton.ipady = verticalSizeOfButton;
+        GridBagConstraints constraintsForNextAndPreviousButtonPanel = new GridBagConstraints();
 
         constraintsForNextButton.ipadx = horizontalSizeOfButton;
         constraintsForNextButton.ipady = verticalSizeOfButton;
@@ -228,37 +293,43 @@ public class CheckInView {
         constraintsForCheckInButton.ipadx = horizontalSizeOfButton;
         constraintsForCheckInButton.ipady = verticalSizeOfButton;
 
+        // Adjust insets for spacing between next and previous buttons
+        constraintsForPreviousButton.insets = new Insets(0, 0, 0, 10); // Add spacing of 10 pixels to the right
+        constraintsForNextButton.insets = new Insets(0, 10, 0, 0); // Add spacing of 10 pixels to the left
+        constraintsForNextAndPreviousButtonPanel.insets = new Insets(10, 0, 10, 0);
+        constraintsForBackToCheckInOptionView.insets = new Insets(0, 10, 0, 10);
 
-        constraintsForNextButton.gridx = 0;
-
-        constraintsForPreviousButton.gridx = 1;
+        constraintsForPreviousButton.gridx = 0;
+        constraintsForNextButton.gridx = 1;
 
         constraintsForCheckInButton.gridy = 2;
         constraintsForMainMenuButton.gridy = 2;
         constraintsForBackToCheckInOptionView.gridy = 2;
 
-        //constraintsForNextAndPreviousButtonPanel.gridy = 1;
-        //constraintsForNextAndPreviousButtonPanel.gridx = 1;
+        constraintsForNextAndPreviousButtonPanel.gridy = 1;
+        constraintsForNextAndPreviousButtonPanel.gridx = 0;
 
-        constraintsForNextButton.insets = new Insets(0,0,0,50);
-        constraintsForPreviousButton.insets = new Insets(0,50,0,0);
-        informationPageButtonPanel.add(addBagButton, constraintsForAddBaggageButton);
+        constraintsForNextAndPreviousButtonPanel.gridwidth = 3; // Set the width to span both columns
 
+        constraintsForNextButton.fill = GridBagConstraints.HORIZONTAL;
+        constraintsForPreviousButton.fill = GridBagConstraints.HORIZONTAL;
+        constraintsForMainMenuButton.fill = GridBagConstraints.HORIZONTAL;
+        constraintsForCheckInButton.fill = GridBagConstraints.HORIZONTAL;
+        constraintsForBackToCheckInOptionView.fill = GridBagConstraints.HORIZONTAL;
 
         panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
         panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
 
-        informationPageButtonPanel.add(panelForNextAndPreviousButton,constraintsForNextAndPreviousButtonPanel);
+        informationPageButtonPanel.add(panelForNextAndPreviousButton, constraintsForNextAndPreviousButtonPanel);
 
         informationPageButtonPanel.add(mainMenuButton, constraintsForMainMenuButton);
         informationPageButtonPanel.add(checkInKioskButton, constraintsForBackToCheckInOptionView);
         informationPageButtonPanel.add(checkInButton, constraintsForCheckInButton);
 
-
-
         return informationPageButtonPanel;
     }
 
-    
-    
+
+
+
 }

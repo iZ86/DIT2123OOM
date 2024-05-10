@@ -2,18 +2,27 @@ public class KioskCheckInModel {
     /**The number of passengers to check in */
     private int numberOfPassengers; 
     /**Array of passengers, used to keep track of different passengers data */
-    private Passenger[] passenger;
-    /** Index of the passenger. */
+    private Passenger[] passengers;
+    /** Index of the passenger whose data should be accessed,
+     * Mostly for getter and setter method use.
+     */
     private int passengerIndex;
+    /** Index of bag in the Passenger whose data should be accessed,
+     * Mostly for getter and setter method use.
+     */
+    private int bagIndex;
 
     public KioskCheckInModel() {
+        // An edge case fix for now.
+        passengers = new Passenger[]{new Passenger(null, 0, null, new Bag[]{new Bag(null, null, 0)})};
         passengerIndex = 0;
+        bagIndex = 0;
     }
    
-    /**Sets the number of passengers to be checked in */
-    public void setNumberOfPassenger(int numberOfPassengers) {
+    /** Sets the number of passengers to be checked in. */
+    public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
-        this.passenger = new Passenger[numberOfPassengers];
+        this.passengers = new Passenger[numberOfPassengers];
     }
 
     /** Inserts the passenger data's that needs to be stored. */
@@ -21,34 +30,54 @@ public class KioskCheckInModel {
 
     }
 
-    /**Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex */
-    public String getBookingID(int passengerIndex) {
-        return passenger[passengerIndex].getBookingID();
+    /** Returns the passengerIndex. */
+    public int getPassengerIndex() {
+        return passengerIndex;
     }
 
-    /**Returns the passport number of the passenger in Passenger[] passengers at passengerIndex */
-    public int getPassportNumber(int passengerIndex) {
-        return this.passenger[passengerIndex].getPassportNumber();
+    /** Sets the passengerIndex. */
+    public void setPassengerIndex(int passengerIndex) {
+        this.passengerIndex = passengerIndex;
     }
 
-    /**Returns the full name of the passenger in Passenger[] passengers at passengerIndex */
-    public String getFullName(int passengerIndex) {
-        return this.passenger[passengerIndex].getFullName();
+    /** Returns the bagIndex. */
+    public int getBagIndex() {
+        return bagIndex;
     }
 
-    /**Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
-    public Bag getBagID(int passengerIndex, int bagIndex) {
-        return this.passenger[passengerIndex].getBag(bagIndex);
+    /** Sets the bagIndex. */
+    public void setBagIndex(int bagIndex) {
+        this.bagIndex = bagIndex;
     }
 
-    /**Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
-    public String getBagColor(int passengerIndex, int bagIndex) {
-        return null;
+    /** Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex. */
+    public String getBookingID() {
+        return passengers[passengerIndex].getBookingID();
     }
 
-    /**Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex */
-    public double getBagWeight(int passengerIndex, int bagIndex) {
-        return 0;
+    /** Returns the passport number of the passenger in Passenger[] passengers at passengerIndex. */
+    public int getPassportNumber() {
+        return passengers[passengerIndex].getPassportNumber();
+    }
+
+    /** Returns the full name of the passenger in Passenger[] passengers at passengerIndex. */
+    public String getFullName() {
+        return passengers[passengerIndex].getFullName();
+    }
+
+    /** Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
+    public String getBagID() {
+        return passengers[passengerIndex].getBag(bagIndex).getBagID();
+    }
+
+    /** Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
+    public String getBagColor() {
+        return passengers[passengerIndex].getBag(bagIndex).getBagColor();
+    }
+
+    /** Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
+    public double getBagWeight() {
+        return passengers[passengerIndex].getBag(bagIndex).getBagWeight();
     }
 
 }

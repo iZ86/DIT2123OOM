@@ -28,7 +28,31 @@ public class BoardingPassView {
 
     /** Sets up the boardingPassViewPanel. */
     private void setupViewPanel() {
+        //TODO: GUI & Get details from user input
         boardingPassViewPanel = new JPanel();
+
+        JLabel boardingPassLabel = new JLabel("- Boarding Pass Details -");
+        JLabel nameLabel = new JLabel("Mr/Ms ");
+        kioskCheckInModel.getFullName();
+        JLabel bookingIdLabel = new JLabel("Booking ID: ");
+        kioskCheckInModel.getBookingID();
+        JLabel passportNumberLabel = new JLabel("Passport Number: ");
+        kioskCheckInModel.getPassportNumber();
+        JLabel typeLabel = new JLabel("Type: ");
+
+        JLabel bagDetailsLabel = new JLabel("- Bag Details -");
+        JLabel bagIdLabel = new JLabel("Bag ID :");
+        kioskCheckInModel.getBagID();
+        JLabel bagColorLabel = new JLabel("Bag Color : ");
+        kioskCheckInModel.getBagColor();
+        JLabel bagWeightLabel = new JLabel("Bag Weight : ");
+        kioskCheckInModel.getBagWeight();
+
+        boardingPassViewPanel.add(boardingPassLabel);
+        boardingPassViewPanel.add(nameLabel); boardingPassViewPanel.add(bookingIdLabel);
+        boardingPassViewPanel.add(passportNumberLabel); boardingPassViewPanel.add(typeLabel);
+        boardingPassViewPanel.add(bagDetailsLabel); boardingPassViewPanel.add(bagIdLabel);
+        boardingPassViewPanel.add(bagColorLabel); boardingPassViewPanel.add(bagWeightLabel);
     }
 
     /** Returns the boardingPassViewPanel. */

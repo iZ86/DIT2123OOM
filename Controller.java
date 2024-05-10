@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -72,7 +73,12 @@ public class Controller {
     public class AddBagButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: Adds a new BagPartialView in the CheckInView.
+            if (gui.getCheckInView().getNumberOfBagPartialViews() >= 4) {
+                gui.getCheckInView().maximumBagErrorMessage();
+            } else {
+                gui.getCheckInView().createBagPartialView(new RemoveBagPartialViewButtonListener());
+            }
+            gui.getCheckInView().updateView();
         }
     }
 
@@ -126,10 +132,15 @@ public class Controller {
         }
     }
 
-    public class CloseBagPartialViewButtonListener implements ActionListener {
+    public class RemoveBagPartialViewButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            // Get the property of the JButton, which is the index of the bagPartialView.
+            // in the LinkedList bagPartialViews in CheckInView.
+            int bagPartialViewIndex = (int) ((JButton) e.getSource()).getClientProperty("index");
 
+            gui.getCheckInView().removeBagPartialView(bagPartialViewIndex);
+            gui.getCheckInView().updateView();
         }
     }
 }

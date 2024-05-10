@@ -38,6 +38,8 @@ private String fullName - Full name of the passenger.
 
 private Bag[] bags - Bags of the passenger.
 
+private boolean specialNeed - Special needs status of the passenger. 
+
 ### Methods
 
 public Passenger(String bookingID, int passportNumber, String fullName, Bag[] bags[]) - Creates a Passenger object to hold data.
@@ -50,6 +52,10 @@ public String getFullName() - Returns the full name.
 
 public Bag getBag(int index) - Returns the bag at int INDEX, returns null, if the bag index doesn't exist.
 
+public boolean isSpecialNeed() - Returns specialNeed.
+
+public void setSpecialNeed(boolean specialNeed) - Sets specialNeed.
+
 ## KioskCheckInModel
 This class represents the model for kiosk check in.
 
@@ -57,9 +63,12 @@ This class represents the model for kiosk check in.
 
 private int numberOfPassengers - The number of passengers to check in.
 
-private Passenger[] passenger - Array of passengers, used to keep track of different passengers data.
+private Passenger[] passengers - Array of passengers, used to keep track of different passengers data.
 
-private int passengerIndex - Index for the passenger array.
+private int passengerIndex - Index for the passenger array whose data should be accessed, Mostly for getter and setter method use.
+
+private int bagIndex - Index of bag in the Passenger whose data should be accessed, Mostly for getter and setter method use.
+
 
 ### Methods
 
@@ -69,17 +78,25 @@ public void setNumberOfPassengers(int numberOfPassengers) - Sets the number of p
 
 public void insertPassenger(Passenger) - Inserts the passenger data's that needs to be stored.
 
-public String getBookingID(int passengerIndex) - Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex.
+public int getPassengerIndex() - Returns the passengerIndex.
 
-public int getPassportNumber(int passengerIndex) - Returns the passport number of the passenger in Passenger[] passengers at passengerIndex.
+public void setPassengerIndex(int passengerIndex) - Sets the passengerIndex.
 
-public String getFullName(int passengerIndex) - Returns the full name of the passenger in Passenger[] passengers at passengerIndex.
+public int getBagIndex() - Returns the bagIndex.
 
-public String getBagID(int passengerIndex, int bagIndex) - Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+public void setBagIndex(int bagIndex) - Sets the bagIndex.
 
-public String getBagColor(int passengerIndex, int bagIndex) - Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+public String getBookingID() - Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex.
 
-public String getBagWeight(int passengerIndex, int bagIndex) - Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+public int getPassportNumber() - Returns the passport number of the passenger in Passenger[] passengers at passengerIndex.
+
+public String getFullName() - Returns the full name of the passenger in Passenger[] passengers at passengerIndex.
+
+public String getBagID() - Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+
+public String getBagColor() - Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
+
+public double getBagWeight() - Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex.
 
 ## MainMenuView
 This class represents the view for the main menu.
@@ -190,8 +207,8 @@ public CheckInView(KioskCheckInModel kioskCheckInModel) - Creates a CheckInView 
 
 private void setupViewPanel() - Sets up the checkInViewPanel.
 
-public void createBagPartialView(ActionListener listenForCloseBagPartialViewButton) - 
-Creates a BagPartialView object with the ActionListener listenForCloseBagPartialViewButton added to the JButton closeBagPartialViewButton, 
+public void createBagPartialView(ActionListener listenForRemoveBagPartialViewButton) - 
+Creates a BagPartialView object with the ActionListener listenForRemoveBagPartialViewButton added to the JButton removeBagPartialViewButton, 
 and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews, and adds its viewPanel to the checkInViewPanel.
 
 public void removeBagPartialView(int index) - Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews and remove it from the checkInViewPanel.
@@ -237,13 +254,13 @@ private JTextField bagColorTextField - The text field where user enters the bag 
 
 private JTextField bagWeightTextField - The text field where user enters the bag weight.
 
-private JButton closeBagPartialViewButton - JButton that deletes this BagPartialView from CheckInView.
+private JButton removeBagPartialViewButton - JButton that removes this BagPartialView from CheckInView.
 
 ### Methods
 
-public BagPartialView(ActionListener listenForCloseBagPartialViewButton) - Creates a BagPartialView object with ActionListener listenForCloseBagPartialViewButton.
+public BagPartialView() - Creates a BagPartialView object.
 
-private void addCloseBagPartialViewButtonListener(ActionListener listenForCloseBagPartialViewButton) - Adds an ActionListener to JButton closeBagPartialViewButton.
+public void addRemoveBagPartialViewButtonListener(ActionListener listenForRemoveBagPartialViewButton) - Adds an ActionListener to JButton removeBagPartialViewButton.
 
 private void setupViewPanel() - Sets up the bagPartialViewPanel.
 
@@ -309,6 +326,16 @@ private CheckInView checkInView - The check in view.
 
 private BoardingPassView boardingPassView - the boarding pass view.
 
+public static final String MAINMENUVIEWINDEX - Index used to access mainMenuView in the GUIViewPanel.
+
+public static final String COUNTERVIEWINDEX - Index used to access counterView in the GUIViewPanel.
+
+public static final String CHECKINOPTIONVIEWINDEX - Index used to access checkInOptionView in the GUIViewPanel.
+
+public static final String CHECKINVIEWINDEX - Index used to access checkInView in the GUIViewPanel.
+
+public static final String BOARDINGPASSVIEWINDEX - Index used to access boardingPassView in the GUIViewPanel.
+
 ### Methods
 
 public GUI(KioskCheckInModel kioskCheckInModel) - Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use.
@@ -326,6 +353,8 @@ public MainMenuView getMainMenuView() - Returns the mainMenuView.
 public CounterView getCounterView() - Returns the counterView.
 
 public CheckInOptionView getCheckInOptionView() - Returns the checkInOptionView.
+
+public CheckInView getCheckInView() - Returns the checkInView.
 
 public BoardingPassView getBoardingPassView() - Returns the boardingPassView.
 
