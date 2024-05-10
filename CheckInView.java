@@ -1,7 +1,9 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;    
+import java.awt.image.WritableRaster;
+import java.util.LinkedList;
 
 /** This class represents the view for users to check in. */
 public class CheckInView {
@@ -86,36 +88,43 @@ public class CheckInView {
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
         GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
-        GridBagConstraints constraintsForTextFieldAndBagPartialViewPanel = new GridBagConstraints();
+        GridBagConstraints constraintsForScrollPane = new GridBagConstraints();
 
         constraintsForTextFieldPanel.gridy = 0;
-        constraintsForTextFieldPanel.insets = new Insets(120, 0, 0, 0);
 
         constraintsForAddBaggageButton.gridy = 1;
         constraintsForAddBaggageButton.ipadx = horizontalSizeOfBaggageButton;
         constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
-        constraintsForAddBaggageButton.insets = new Insets(0, 0, 0, 0);
 
         constraintsForButtonPanel.gridy = 1;
-        constraintsForButtonPanel.insets = new Insets(180, 0, 0, 0);
         constraintsForButtonPanel.anchor = GridBagConstraints.PAGE_END;
-        constraintsForTextFieldAndBagPartialViewPanel.gridy = 0;
+
+        constraintsForScrollPane.gridx = 0;
+        constraintsForScrollPane.gridy = 0;
+        constraintsForScrollPane.ipadx = 370;
+        constraintsForScrollPane.ipady = 300;
 
 
+        panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
+        panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
 
         // If there is any bagPartialViews, add them.
         for (int i = 0; i < bagPartialViews.size(); i++) {
             GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
             constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + i;
-            constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
             bagPartialViews.get(i).setIndex(i);
             panelForTextFieldAndBagPartialView.add(bagPartialViews.get(i).getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
         }
 
-        panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
-        panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
 
-        checkInViewPanel.add(panelForTextFieldAndBagPartialView, constraintsForTextFieldAndBagPartialViewPanel);
+
+        wrapperPanel.add(panelForTextFieldAndBagPartialView, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        checkInViewPanel.add(scrollPane, constraintsForScrollPane);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
     }
 
