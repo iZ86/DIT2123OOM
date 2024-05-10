@@ -69,6 +69,8 @@ public class CheckInView {
 
     /** Updates the view. */
     public void updateView() {
+        clearView();
+        setupViewPanel();
         checkInViewPanel.revalidate();
         checkInViewPanel.repaint();
     }
@@ -130,14 +132,7 @@ public class CheckInView {
         BagPartialView bagPartialView = new BagPartialView();
         bagPartialView.addRemoveBagPartialViewButtonListener(listenForRemoveBagPartialViewButton);
         bagPartialView.setIndex(sizeOfLinkedList);
-
-        GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
-
-        constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + sizeOfLinkedList;
-        constraintsForBagPartialViewPanel.insets = new Insets(20, 0, 0, 0);
-        bagPartialViews.addLast(bagPartialView);
-        panelForTextFieldAndBagPartialView.add(bagPartialView.getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
-
+        bagPartialViews.add(bagPartialView);
     }
 
     /** Warning method to call when the addBagButton is pressed more than 4 times */
