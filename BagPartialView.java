@@ -42,8 +42,6 @@ public class BagPartialView {
         GridBagConstraints gridBagConstraintsForBaggageTextFields = new GridBagConstraints();
         GridBagConstraints gridBagConstraintsForCloseButton = new GridBagConstraints();
 
-        bagPartialViewPanel.setPreferredSize(new Dimension(350, 100));
-
         JLabel labelForBagColor = new JLabel("Bag Color");
         bagColorTextField = new JTextField();
 
