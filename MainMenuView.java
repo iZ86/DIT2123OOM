@@ -12,21 +12,19 @@ public class MainMenuView {
     /** JButton to change the view to counterView */
     private JButton checkInCounterButton = new JButton("Staff");
 
-
     /** JButton to change the view to checkInOptionView */
     private JButton checkInKioskButton = new JButton("Kiosk");
 
-  
-            
-    /** all these are wrong, you should create your own method and put it inside the methods */
-
+    /** Method to place the components on the panel */
     public MainMenuView() {
         setupViewPanel();
     }
     
     /** GUI */
     public void setupViewPanel(){
-        GridBagConstraints c = new GridBagConstraints();
+        GridBagConstraints welcomeTitleConstraints = new GridBagConstraints();
+        GridBagConstraints staffButtonConstraints = new GridBagConstraints();
+        GridBagConstraints kioskButtonConstraints = new GridBagConstraints();
 
         // JLabel to display a welcome title 
         JLabel welcomeTitle = new JLabel("Welcome to AeroCheck Check-In System");
@@ -34,32 +32,44 @@ public class MainMenuView {
         // Set font for welcome title
         welcomeTitle.setFont(new Font("Arial", Font.BOLD, 19));
         
-
         // Add welcome title to panel
-        c.gridx = 2;
-        c.gridy = 3;
-        c.gridwidth = 10;
-        mainMenuViewPanel.add(welcomeTitle, c);
+        welcomeTitleConstraints.gridx = 1;
+        welcomeTitleConstraints.gridy = 1;
+        welcomeTitleConstraints.fill = 1;
 
-        // Add checkInCounter button to panel 
-        c.gridx = 7;
-        c.gridy = 4;
-        mainMenuViewPanel.add(checkInCounterButton, c);
+        // Adjust the welcome title position
+        welcomeTitleConstraints.insets = new Insets(0, 0, 180, 0);
+        mainMenuViewPanel.add(welcomeTitle, welcomeTitleConstraints);
 
-        // Add checkInKiosk button to panel 
-        c.gridx = 9;
-        c.gridy = 5;
-        mainMenuViewPanel.add(checkInKioskButton, c);
+        // Add checkInCounter(this is staff) button to panel 
+        staffButtonConstraints.gridx = 1;
+        staffButtonConstraints.gridy = 6;
+        staffButtonConstraints.fill = 0; 
+
+        // Adjust the staff button position
+        staffButtonConstraints.insets = new Insets(10, 0, 200, 0);
+        mainMenuViewPanel.add(checkInCounterButton, staffButtonConstraints);
+
+        // Add checkInKiosk(this is kiosk) button to panel 
+        kioskButtonConstraints.gridx = 1;
+        kioskButtonConstraints.gridy = 6;
+        kioskButtonConstraints.fill = 0;
+
+        // Adjust the kiosk button position
+        kioskButtonConstraints.insets = new Insets(20, 0, 0, 0);
+        mainMenuViewPanel.add(checkInKioskButton, kioskButtonConstraints);
     }
 
     public JPanel getMainMenuViewPanel(){
         return mainMenuViewPanel;    
     }
 
+    /** Adds an Action Listener to checkInCounterButton */
     public void addCheckInCounterButtonListener(ActionListener listenForCheckInCounterButton){
         checkInCounterButton.addActionListener(listenForCheckInCounterButton);
     }
 
+    /** Adds an ActionListener to checkInKioskButton */
     public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton){
         checkInKioskButton.addActionListener(listenForCheckInKioskButton);
     }
