@@ -15,6 +15,13 @@ public class CounterModel {
 
     public CounterModel() {
         utils = new Utils();
+
+        // Temporary Initialization for testing purpose.
+        // TODO: Remove this once everything is completed.
+        counterNumber = 0;
+        staffName = null;
+        staffRole = null;
+        staffAge = 0;
     }
 
     /** Returns counterNumber. */
