@@ -38,22 +38,26 @@ public class MainMenuView {
         welcomeTitleConstraints.fill = 1;
 
         // Adjust the welcome title position
-        welcomeTitleConstraints.insets = new Insets(0, 0, 180, 0);
+        welcomeTitleConstraints.insets = new Insets(50, 0, 150, 0);
         mainMenuViewPanel.add(welcomeTitle, welcomeTitleConstraints);
+
+        // Set size for staff button
+        checkInCounterButton.setPreferredSize(new Dimension(100,40));
+
+        // Set size for kiosk button 
+        checkInKioskButton.setPreferredSize(new Dimension(100, 40));
 
         // Add checkInCounter(this is staff) button to panel 
         staffButtonConstraints.gridx = 1;
         staffButtonConstraints.gridy = 6;
-        staffButtonConstraints.fill = 0; 
 
         // Adjust the staff button position
-        staffButtonConstraints.insets = new Insets(10, 0, 200, 0);
+        staffButtonConstraints.insets = new Insets(0, 0, 300, 0);
         mainMenuViewPanel.add(checkInCounterButton, staffButtonConstraints);
 
         // Add checkInKiosk(this is kiosk) button to panel 
         kioskButtonConstraints.gridx = 1;
         kioskButtonConstraints.gridy = 6;
-        kioskButtonConstraints.fill = 0;
 
         // Adjust the kiosk button position
         kioskButtonConstraints.insets = new Insets(20, 0, 0, 0);
