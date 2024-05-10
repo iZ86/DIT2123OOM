@@ -54,7 +54,6 @@ public class BagPartialView {
         gridBagConstraintsForBaggageLabels.insets = new Insets(0, 0, 15, 45);
 
         gridBagConstraintsForBaggageTextFields.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraintsForBaggageTextFields.weightx = 1;
 
         gridBagConstraintsForBaggageTextFields.ipadx = horizontalSizeOfTextField;
         gridBagConstraintsForBaggageTextFields.ipady = verticalSizeOfTextField;
@@ -67,7 +66,7 @@ public class BagPartialView {
         gridBagConstraintsForCloseButton.ipadx = horizontalSizeOfCloseButton;
 
         gridBagConstraintsForCloseButton.gridx = 1;
-        gridBagConstraintsForCloseButton.insets = new Insets(0, 70, 0, 0);
+        gridBagConstraintsForCloseButton.insets = new Insets(0, 70, 10, 0);
 
         bagPartialViewPanel.add(labelForBagColor, gridBagConstraintsForBaggageLabels);
         bagPartialViewPanel.add(bagColorTextField, gridBagConstraintsForBaggageTextFields);
