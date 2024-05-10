@@ -51,7 +51,7 @@ public class GUI {
     /** Sets up the GUIViewPanel. */
     private void setupGUI() {
         // TODO: Commented first, since they do not exist yet.
-        // GUIViewPanel.add(mainMenuView.getMainMenuViewPanel(), MAINMENUVIEWINDEX);
+        GUIViewPanel.add(mainMenuView.getMainMenuViewPanel(), MAINMENUVIEWINDEX);
         // GUIViewPanel.add(counterView.getCounterViewPanel(), COUNTERVIEWINDEX);
         // GUIViewPanel.add(checkInOptionView.getCheckInOptionViewPanel(), CHECKINOPTIONVIEWINDEX);
         GUIViewPanel.add(checkInView.getCheckInViewPanel(), CHECKINOPTIONVIEWINDEX);
@@ -102,13 +102,14 @@ public class GUI {
     /** Adds an ActionListener to ALL checkInCounterButton in all the view objects. */
     public void addAllCheckInCounterButtonsListener(ActionListener listenForAllCheckInCounterButtons) {
         // TODO: Find all the view classes that have checkInCounterButton and adds the ActionListener to them.
-        // MainMenuView.
+        mainMenuView.addCheckInCounterButtonListener(listenForAllCheckInCounterButtons);
     }
 
     /** Adds an ActionListener to ALL checkInKioskButton in all the view objects. */
     public void addAllCheckInKioskButtonsListener(ActionListener listenForAllCheckInKioskButtons) {
         // TODO: Find all the view classes that have checkInKioskButton and adds the ActionListener to them.
         // MainMenuView.
+        mainMenuView.addCheckInCounterButtonListener(listenForAllCheckInKioskButtons);
         checkInView.addCheckInButtonListener(listenForAllCheckInKioskButtons);
     }
 
