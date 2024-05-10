@@ -30,12 +30,12 @@ public class GUI {
     public static final String BOARDINGPASSVIEWINDEX = "BoardingPassView";
 
     /** Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use. */
-    public GUI(KioskCheckInModel kioskCheckInModel) {
+    public GUI(CounterModel counterModel, KioskCheckInModel kioskCheckInModel) {
         GUI = new JFrame("Aerocheck in");
 
         GUIViewPanel = new JPanel(new CardLayout());
         mainMenuView = new MainMenuView();
-        counterView = new CounterView();
+        //counterView = new CounterView(counterModel);
         checkInOptionView = new CheckInOptionView();
         checkInView = new CheckInView(kioskCheckInModel);
         boardingPassView = new BoardingPassView(kioskCheckInModel);

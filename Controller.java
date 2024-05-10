@@ -1,20 +1,26 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 /** This class acts as the controller of the MVC structure in this program. */
 public class Controller {
     /** gui. */
     private GUI gui;
+    /** The model that holds data for counterView. */
+    private CounterModel counterModel;
     /** The model to hold all the data. */
     private KioskCheckInModel kioskCheckInModel;
+    /** Temp passenger data including their bag data. */
+    private LinkedList<Passenger> tempPassengerData = new LinkedList<>();
 
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
      * controlling the workflow.
      */
-    public Controller(GUI gui, KioskCheckInModel kioskCheckInModel) {
+    public Controller(GUI gui, CounterModel counterModel, KioskCheckInModel kioskCheckInModel) {
         this.gui = gui;
+        this.counterModel = counterModel;
         this.kioskCheckInModel = kioskCheckInModel;
         addActionListeners();
     }
