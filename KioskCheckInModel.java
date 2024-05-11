@@ -1,7 +1,7 @@
 public class KioskCheckInModel {
     /**The number of passengers to check in */
     private int numberOfPassengers; 
-    /**Array of passengers, used to keep track of different passengers data */
+    /** Array of passengers, used to keep track of different passengers data */
     private Passenger[] passengers;
     /** Index of the passenger whose data should be accessed,
      * Mostly for getter and setter method use.
@@ -23,6 +23,11 @@ public class KioskCheckInModel {
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
         this.passengers = new Passenger[numberOfPassengers];
+    }
+
+    /** Returns number of passengers. */
+    public int getNumberOfPassengers() {
+        return numberOfPassengers;
     }
 
     /** Inserts the passenger data's that needs to be stored. */
