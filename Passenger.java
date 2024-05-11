@@ -1,6 +1,6 @@
 public class Passenger {
     /** Passport number of the passenger. */
-    private int passportNumber; 
+    private String passportNumber;
     /** bookingID of the passenger. */
     private String bookingID; 
     /** Full name of the passenger. */
@@ -11,7 +11,7 @@ public class Passenger {
     private boolean specialNeed;
 
     /** Creates a Passenger object to hold data. */
-    public Passenger(String bookingID, int passportNumber, String fullName, Bag[] bags) {
+    public Passenger(String bookingID, String passportNumber, String fullName, Bag[] bags) {
         this.bookingID = bookingID;
         this.passportNumber = passportNumber;
         this.fullName = fullName;
@@ -24,7 +24,7 @@ public class Passenger {
     }
 
     /** Returns the passport number. */
-    public int getPassportNumber() {
+    public String getPassportNumber() {
         return passportNumber;
     }
 
