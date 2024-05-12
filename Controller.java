@@ -12,7 +12,7 @@ public class Controller {
     /** The model to hold all the data. */
     private KioskCheckInModel kioskCheckInModel;
     /** Temp passenger data including their bag data. */
-    private LinkedList<Passenger> tempPassengerData = new LinkedList<>();
+    private Passenger[] tempPassengersData = new Passenger[8];
 
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
@@ -93,13 +93,71 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             // TODO: Tells the checkInView to show different data
             // TODO: in the checkInView.
+
+            kioskCheckInModel.setPassengerIndex(kioskCheckInModel.getPassengerIndex() - 1);
+            gui.getCheckInView().updateView();
         }
     }
 
     public class NextPassengerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            CheckInView checkInView = gui.getCheckInView();
 
+            try {
+                // Get the current data in checkInView and put it into tempPassengersData.
+                String bookingID = checkInView.getBookingIDFromTextField();
+                String passportNumber = checkInView.getPassportNumberFromTextField();
+                String fullName = checkInView.getFullNameFromTextField();
+                Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
+                LinkedList<BagPartialView> currBagPartialViews = checkInView.getBagPartialViews();
+                for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
+                    bags[i] = new Bag(null, currBagPartialViews.get(i).getBagColorFromTextField(), Double.valueOf(currBagPartialViews.get(i).getBagWeightFromTextField()));
+                }
+                int currIndex = kioskCheckInModel.getPassengerIndex();
+                tempPassengersData[currIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
+
+
+                // Retrieve the data of the next checkInView if there is any.
+                int nextIndex = currIndex + 1;
+
+                checkInView.removeAllBagPartialViews();
+                Passenger nextPassengerData = tempPassengersData[nextIndex];
+                kioskCheckInModel.setPassengerIndex(nextIndex);
+                checkInView.updateView();
+
+                if (nextPassengerData != null) {
+
+
+                    for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
+                        checkInView.createBagPartialView(new RemoveBagPartialViewButtonListener());
+                    }
+
+                    checkInView.updateView();
+
+                    String nextPassengerBookingID = nextPassengerData.getBookingID();
+                    String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
+                    String nextPassengerFullName = nextPassengerData.getFullName();
+
+                    checkInView.setBookingIDTextField(nextPassengerBookingID);
+                    checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
+                    checkInView.setFullNameTextField(nextPassengerFullName);
+
+                    LinkedList<BagPartialView> nextBagPartialViews = checkInView.getBagPartialViews();
+                    for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
+                        nextBagPartialViews.get(i).setBagColorTextField(nextPassengerData.getBag(i).getBagColor());
+                        nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
+                    }
+                }
+
+            } catch (NumberFormatException ex) {
+                // TODO: Temporary.
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "Number format exception",
+                        "AeroCheck In",
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
         }
     }
 
