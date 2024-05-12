@@ -18,6 +18,11 @@ public class Passenger {
         this.bags = bags;
     }
 
+    /** Returns the number of bags the passenger has. */
+    public int getNumberOfBags() {
+        return bags.length;
+    }
+
     /** Returns the bookingID. */
     public String getBookingID() {
         return bookingID;
