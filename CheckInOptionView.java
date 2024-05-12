@@ -43,7 +43,7 @@ public class CheckInOptionView {
         backToMainMenuButtonConstraints.ipady = 0;
         backToMainMenuButtonConstraints.gridx = 0;
         backToMainMenuButtonConstraints.gridy = 0;
-        backToMainMenuButtonConstraints.insets = new Insets(0, 0, 200, 350);
+        backToMainMenuButtonConstraints.insets = new Insets(300, 0, 0, 0);
         CheckInOptionViewPanel.add(backToMainMenuButton, backToMainMenuButtonConstraints);
 
         // Add Single button to panel
@@ -51,7 +51,7 @@ public class CheckInOptionView {
         singleButtonConstraints.ipady = 0;
         singleButtonConstraints.gridx = 0;
         singleButtonConstraints.gridy = 0;
-        singleButtonConstraints.insets = new Insets(100, 0, 0, 175);
+        singleButtonConstraints.insets = new Insets(0, 0, 50, 175);
         CheckInOptionViewPanel.add(singleButton, singleButtonConstraints);
         
         // Add Group button to panel
@@ -59,7 +59,7 @@ public class CheckInOptionView {
         groupButtonConstraints.ipady = 0;
         groupButtonConstraints.gridx = 0;
         groupButtonConstraints.gridy = 0;
-        groupButtonConstraints.insets = new Insets(100, 175, 0, 0);
+        groupButtonConstraints.insets = new Insets(0, 175, 50, 0);
         CheckInOptionViewPanel.add(groupButton, groupButtonConstraints);
 
         // JSpinner for number of people
@@ -67,7 +67,7 @@ public class CheckInOptionView {
         numberOfPeopleConstraints.ipady = 0;
         numberOfPeopleConstraints.gridx = 0;
         numberOfPeopleConstraints.gridy = 0;
-        numberOfPeopleConstraints.insets = new Insets(0 ,175, 0, 0);
+        numberOfPeopleConstraints.insets = new Insets(0 ,175, 150, 0);
         CheckInOptionViewPanel.add(numberOfPeople, numberOfPeopleConstraints);
     }
 
