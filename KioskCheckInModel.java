@@ -14,9 +14,10 @@ public class KioskCheckInModel {
 
     public KioskCheckInModel() {
         // An edge case fix for now.
-        passengers = new Passenger[]{new Passenger(null, 0, null, new Bag[]{new Bag(null, null, 0)})};
+        passengers = new Passenger[]{new Passenger(null, null, null, new Bag[]{new Bag(null, null, 0)})};
         passengerIndex = 0;
         bagIndex = 0;
+        numberOfPassengers = 7;
     }
    
     /** Sets the number of passengers to be checked in. */
@@ -61,7 +62,7 @@ public class KioskCheckInModel {
     }
 
     /** Returns the passport number of the passenger in Passenger[] passengers at passengerIndex. */
-    public int getPassportNumber() {
+    public String getPassportNumber() {
         return passengers[passengerIndex].getPassportNumber();
     }
 
