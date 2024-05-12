@@ -9,7 +9,7 @@ public class CheckInOptionView {
     private JPanel CheckInOptionViewPanel = new JPanel(new GridBagLayout());
 
     /** JButton that changes the view to the MainMenuView */
-    private JButton backToMainMenuButton = new JButton("Main Menu");
+    private JButton mainMenuButton = new JButton("Main Menu");
 
     /** JButton that changes the view to  */
     private JButton groupButton = new JButton("Group");
@@ -20,6 +20,9 @@ public class CheckInOptionView {
     /** JSpinner to select the number of people */
     private JSpinner numberOfPeople = new JSpinner();
 
+    /* Title */
+    JLabel titleText = new JLabel("Check In Option");
+
     /** Creates a CheckInOptionView object */
     public CheckInOptionView(){
         setupCheckInOptionViewPanel();
@@ -27,24 +30,34 @@ public class CheckInOptionView {
 
     /** Sets up the CheckInOptionViewPanel */
     private void setupCheckInOptionViewPanel(){
-        GridBagConstraints backToMainMenuButtonConstraints = new GridBagConstraints();
+        GridBagConstraints mainMenuButtonConstraints = new GridBagConstraints();
+        GridBagConstraints titleTextConstraints = new GridBagConstraints();
         GridBagConstraints groupButtonConstraints = new GridBagConstraints();
         GridBagConstraints singleButtonConstraints = new GridBagConstraints();
         GridBagConstraints numberOfPeopleConstraints = new GridBagConstraints();
 
         // Set size for all components
-        backToMainMenuButton.setPreferredSize(new Dimension(100, 40));
+        mainMenuButton.setPreferredSize(new Dimension(100, 40));
         groupButton.setPreferredSize(new Dimension(100, 40));
         singleButton.setPreferredSize(new Dimension(100, 40));
         numberOfPeople.setPreferredSize(new Dimension(100, 40));
 
+        // Title
+        titleText.setFont(new Font("Arial", Font.BOLD, 17));
+        titleTextConstraints.ipadx = 0;
+        titleTextConstraints.ipady = 0;
+        titleTextConstraints.gridx = 0;
+        titleTextConstraints.gridy = 0;
+        titleTextConstraints.insets = new Insets(0, 0, 300, 0);
+        CheckInOptionViewPanel.add(titleText, titleTextConstraints);
+
         // Add Back To Main Menu button to panel
-        backToMainMenuButtonConstraints.ipadx = 0;
-        backToMainMenuButtonConstraints.ipady = 0;
-        backToMainMenuButtonConstraints.gridx = 0;
-        backToMainMenuButtonConstraints.gridy = 0;
-        backToMainMenuButtonConstraints.insets = new Insets(300, 0, 0, 0);
-        CheckInOptionViewPanel.add(backToMainMenuButton, backToMainMenuButtonConstraints);
+        mainMenuButtonConstraints.ipadx = 0;
+        mainMenuButtonConstraints.ipady = 0;
+        mainMenuButtonConstraints.gridx = 0;
+        mainMenuButtonConstraints.gridy = 0;
+        mainMenuButtonConstraints.insets = new Insets(300, 0, 0, 0);
+        CheckInOptionViewPanel.add(mainMenuButton, mainMenuButtonConstraints);
 
         // Add Single button to panel
         singleButtonConstraints.ipadx = 0;
@@ -78,6 +91,16 @@ public class CheckInOptionView {
 
     /** Adds an ActionListener to the JButton mainMenuButton */
     public void addMainMenuButtonListener(ActionListener listenForMainMenuButton){
-        backToMainMenuButton.addActionListener(listenForMainMenuButton);
+        mainMenuButton.addActionListener(listenForMainMenuButton);
+    }
+
+    /** Adds an ActionListener to the JButton singleButton */
+    public void addSingleButtonListener(ActionListener listenForSingleButton) {
+        singleButton.addActionListener(listenForSingleButton);
+    }
+
+    /** Adds an ActionListener to the JButton groupButton */
+    public void addGroupButtonListener(ActionListener listenForGroupButton) {
+        groupButton.addActionListener(listenForGroupButton);
     }
 }
