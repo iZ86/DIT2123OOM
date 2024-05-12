@@ -79,6 +79,8 @@ public class Controller {
     public class AddBagButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO: Don't clear the text field that was added.
+            // TODO: An easy fix is to put the textFields as instance attributes.
             if (gui.getCheckInView().getNumberOfBagPartialViews() >= 4) {
                 gui.getCheckInView().maximumBagErrorMessage();
             } else {
@@ -94,8 +96,24 @@ public class Controller {
             // TODO: Tells the checkInView to show different data
             // TODO: in the checkInView.
 
-            kioskCheckInModel.setPassengerIndex(kioskCheckInModel.getPassengerIndex() - 1);
-            gui.getCheckInView().updateView();
+            CheckInView checkInView = gui.getCheckInView();
+            try {
+                // Get the current data in checkInView and put it into tempPassengersData.
+                cacheCheckInViewData(checkInView);
+
+                // Retrieve the data of the previous passenger if there is any.
+                int prevIndex = kioskCheckInModel.getPassengerIndex() - 1;
+                loadCacheCheckInViewData(checkInView, prevIndex);
+
+
+            } catch (NumberFormatException ex) {
+                // TODO: Temporary.
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "Number format exception",
+                        "AeroCheck In",
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
         }
     }
 
@@ -106,49 +124,12 @@ public class Controller {
 
             try {
                 // Get the current data in checkInView and put it into tempPassengersData.
-                String bookingID = checkInView.getBookingIDFromTextField();
-                String passportNumber = checkInView.getPassportNumberFromTextField();
-                String fullName = checkInView.getFullNameFromTextField();
-                Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
-                LinkedList<BagPartialView> currBagPartialViews = checkInView.getBagPartialViews();
-                for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
-                    bags[i] = new Bag(null, currBagPartialViews.get(i).getBagColorFromTextField(), Double.valueOf(currBagPartialViews.get(i).getBagWeightFromTextField()));
-                }
-                int currIndex = kioskCheckInModel.getPassengerIndex();
-                tempPassengersData[currIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
+                cacheCheckInViewData(checkInView);
 
 
-                // Retrieve the data of the next checkInView if there is any.
-                int nextIndex = currIndex + 1;
-
-                checkInView.removeAllBagPartialViews();
-                Passenger nextPassengerData = tempPassengersData[nextIndex];
-                kioskCheckInModel.setPassengerIndex(nextIndex);
-                checkInView.updateView();
-
-                if (nextPassengerData != null) {
-
-
-                    for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
-                        checkInView.createBagPartialView(new RemoveBagPartialViewButtonListener());
-                    }
-
-                    checkInView.updateView();
-
-                    String nextPassengerBookingID = nextPassengerData.getBookingID();
-                    String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
-                    String nextPassengerFullName = nextPassengerData.getFullName();
-
-                    checkInView.setBookingIDTextField(nextPassengerBookingID);
-                    checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
-                    checkInView.setFullNameTextField(nextPassengerFullName);
-
-                    LinkedList<BagPartialView> nextBagPartialViews = checkInView.getBagPartialViews();
-                    for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
-                        nextBagPartialViews.get(i).setBagColorTextField(nextPassengerData.getBag(i).getBagColor());
-                        nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
-                    }
-                }
+                // Retrieve the data of the next passenger if there is any.
+                int nextIndex = kioskCheckInModel.getPassengerIndex() + 1;
+                loadCacheCheckInViewData(checkInView, nextIndex);
 
             } catch (NumberFormatException ex) {
                 // TODO: Temporary.
@@ -205,6 +186,57 @@ public class Controller {
 
             gui.getCheckInView().removeBagPartialView(bagPartialViewIndex);
             gui.getCheckInView().updateView();
+        }
+    }
+
+    // TODO: Check if there is a way to NOT use kioskCheckInModel.setPassengerIndex,
+    // TODO: Try to take out removeAllBagPartialViews method and updateView method in loadCacheCheckInView method.
+    /** Caches the checkInView data inputted by the user into tempPassengersData. */
+    public void cacheCheckInViewData(CheckInView checkInView) {
+        String bookingID = checkInView.getBookingIDFromTextField();
+        String passportNumber = checkInView.getPassportNumberFromTextField();
+        String fullName = checkInView.getFullNameFromTextField();
+        Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
+        LinkedList<BagPartialView> currBagPartialViews = checkInView.getBagPartialViews();
+        for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
+            bags[i] = new Bag(null, currBagPartialViews.get(i).getBagColorFromTextField(), Double.valueOf(currBagPartialViews.get(i).getBagWeightFromTextField()));
+        }
+        int currIndex = kioskCheckInModel.getPassengerIndex();
+        tempPassengersData[currIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
+    }
+
+    /** Loads the cache at index tempPassengersData that was saved by checkInView data,
+     * if there isn't any, nothing is loaded.
+     */
+    public void loadCacheCheckInViewData(CheckInView checkInView, int index) {
+
+        checkInView.removeAllBagPartialViews();
+        Passenger nextPassengerData = tempPassengersData[index];
+        kioskCheckInModel.setPassengerIndex(index);
+        checkInView.updateView();
+
+        if (nextPassengerData != null) {
+
+
+            for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
+                checkInView.createBagPartialView(new RemoveBagPartialViewButtonListener());
+            }
+
+            checkInView.updateView();
+
+            String nextPassengerBookingID = nextPassengerData.getBookingID();
+            String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
+            String nextPassengerFullName = nextPassengerData.getFullName();
+
+            checkInView.setBookingIDTextField(nextPassengerBookingID);
+            checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
+            checkInView.setFullNameTextField(nextPassengerFullName);
+
+            LinkedList<BagPartialView> nextBagPartialViews = checkInView.getBagPartialViews();
+            for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
+                nextBagPartialViews.get(i).setBagColorTextField(nextPassengerData.getBag(i).getBagColor());
+                nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
+            }
         }
     }
 }
