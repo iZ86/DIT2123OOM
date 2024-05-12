@@ -40,24 +40,32 @@ public class CheckInOptionView {
         numberOfPeople.setPreferredSize(new Dimension(100, 40));
 
         // Add Back To Main Menu button to panel
+        backToMainMenuButtonConstraints.ipadx = 0;
+        backToMainMenuButtonConstraints.ipady = 0;
         backToMainMenuButtonConstraints.gridx = 0;
         backToMainMenuButtonConstraints.gridy = 0;
         backToMainMenuButtonConstraints.insets = new Insets(0, 0, 200, 350);
         CheckInOptionViewPanel.add(backToMainMenuButton, backToMainMenuButtonConstraints);
 
         // Add Single button to panel
+        singleButtonConstraints.ipadx = 0;
+        singleButtonConstraints.ipady = 0;
         singleButtonConstraints.gridx = 0;
         singleButtonConstraints.gridy = 0;
         singleButtonConstraints.insets = new Insets(100, 0, 0, 175);
         CheckInOptionViewPanel.add(singleButton, singleButtonConstraints);
         
         // Add Group button to panel
+        groupButtonConstraints.ipadx = 0;
+        groupButtonConstraints.ipady = 0;
         groupButtonConstraints.gridx = 0;
         groupButtonConstraints.gridy = 0;
         groupButtonConstraints.insets = new Insets(100, 175, 0, 0);
         CheckInOptionViewPanel.add(groupButton, groupButtonConstraints);
 
         // JSpinner for number of people
+        numberOfPeopleConstraints.ipadx = 0;
+        numberOfPeopleConstraints.ipady = 0;
         numberOfPeopleConstraints.gridx = 0;
         numberOfPeopleConstraints.gridy = 0;
         numberOfPeopleConstraints.insets = new Insets(0 ,175, 0, 0);
