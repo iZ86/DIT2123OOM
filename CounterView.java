@@ -13,6 +13,9 @@ public class CounterView {
     /* JButton that changes the view to the MainMenuView. */
     private JButton backToMainMenuButton = new JButton("Main Menu");
 
+    /* Title */
+    JLabel titleText = new JLabel("Check In Counter");
+
     /* Creates a CounterView object. */
     public CounterView(CounterModel CounterModel) {
         this.CounterModel = CounterModel;
@@ -27,12 +30,25 @@ public class CounterView {
         JLabel staffRole = new JLabel("Staff Role: " + CounterModel.getStaffRole());
         JLabel staffID = new JLabel(String.format("Staff ID: %d",CounterModel.getStaffID()));
 
+        GridBagConstraints titleTextConstraints = new GridBagConstraints();
         GridBagConstraints backToMainMenuButtonConstraints = new GridBagConstraints();
         GridBagConstraints counterNumberConstraints = new GridBagConstraints();
         GridBagConstraints staffNameConstraints = new GridBagConstraints();
         GridBagConstraints staffRoleConstraints = new GridBagConstraints();
         GridBagConstraints staffIDConstraints = new GridBagConstraints();
 
+        // Set size for buttons
+        backToMainMenuButton.setPreferredSize(new Dimension(100, 40));
+
+        // Title
+        titleText.setFont(new Font("Arial", Font.BOLD, 17));
+        titleTextConstraints.ipadx = 0;
+        titleTextConstraints.ipady = 0;
+        titleTextConstraints.gridx = 0;
+        titleTextConstraints.gridy = 0;
+        titleTextConstraints.insets = new Insets(0, 0, 300, 0);
+        counterViewPanel.add(titleText, titleTextConstraints);
+        
         // Add Back To Main Menu button to panel
         backToMainMenuButtonConstraints.ipadx = 0;
         backToMainMenuButtonConstraints.ipady = 0;
@@ -46,7 +62,7 @@ public class CounterView {
         counterNumberConstraints.ipady = 0;
         counterNumberConstraints.gridx = 0;
         counterNumberConstraints.gridy = 0;
-        counterNumberConstraints.insets = new Insets(0, 0, 300, 0);
+        counterNumberConstraints.insets = new Insets(0, 0, 200, 0);
         counterViewPanel.add(counterNumber, counterNumberConstraints);
 
         // Add staff name to panel
@@ -54,7 +70,7 @@ public class CounterView {
         staffNameConstraints.ipady = 0;
         staffNameConstraints.gridx = 0;
         staffNameConstraints.gridy = 0;
-        staffNameConstraints.insets = new Insets(0, 0, 200, 0);
+        staffNameConstraints.insets = new Insets(0, 0, 100, 0);
         counterViewPanel.add(staffName, staffNameConstraints);
     
         // Add staff role to panel
@@ -62,7 +78,7 @@ public class CounterView {
         staffRoleConstraints.ipady = 0;
         staffRoleConstraints.gridx = 0;
         staffRoleConstraints.gridy = 0;
-        staffRoleConstraints.insets = new Insets(0, 0, 100, 0);
+        staffRoleConstraints.insets = new Insets(100, 0, 0, 0);
         counterViewPanel.add(staffRole, staffRoleConstraints);
         
         // Add staff ID to panel

@@ -20,6 +20,9 @@ public class CheckInOptionView {
     /** JSpinner to select the number of people */
     private JSpinner numberOfPeople = new JSpinner();
 
+    /* Title */
+    JLabel titleText = new JLabel("Check In Option");
+
     /** Creates a CheckInOptionView object */
     public CheckInOptionView(){
         setupCheckInOptionViewPanel();
@@ -28,6 +31,7 @@ public class CheckInOptionView {
     /** Sets up the CheckInOptionViewPanel */
     private void setupCheckInOptionViewPanel(){
         GridBagConstraints backToMainMenuButtonConstraints = new GridBagConstraints();
+        GridBagConstraints titleTextConstraints = new GridBagConstraints();
         GridBagConstraints groupButtonConstraints = new GridBagConstraints();
         GridBagConstraints singleButtonConstraints = new GridBagConstraints();
         GridBagConstraints numberOfPeopleConstraints = new GridBagConstraints();
@@ -37,6 +41,15 @@ public class CheckInOptionView {
         groupButton.setPreferredSize(new Dimension(100, 40));
         singleButton.setPreferredSize(new Dimension(100, 40));
         numberOfPeople.setPreferredSize(new Dimension(100, 40));
+
+        // Title
+        titleText.setFont(new Font("Arial", Font.BOLD, 17));
+        titleTextConstraints.ipadx = 0;
+        titleTextConstraints.ipady = 0;
+        titleTextConstraints.gridx = 0;
+        titleTextConstraints.gridy = 0;
+        titleTextConstraints.insets = new Insets(0, 0, 300, 0);
+        CheckInOptionViewPanel.add(titleText, titleTextConstraints);
 
         // Add Back To Main Menu button to panel
         backToMainMenuButtonConstraints.ipadx = 0;
