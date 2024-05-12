@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/* This class represents the view for choosing the check in options, this allows the user to choose between single and group check in. */
 public class CheckInOptionView {
     
-    /** Instance Variables */
     /** JPanel for the CheckInOptionView */
     private JPanel CheckInOptionViewPanel = new JPanel(new GridBagLayout());
 
@@ -18,14 +18,13 @@ public class CheckInOptionView {
     private JButton singleButton = new JButton("Single");
 
     /** JSpinner to select the number of people */
-    private JSpinner numberOfPeople = new JSpinner();   //In testing phase
+    private JSpinner numberOfPeople = new JSpinner();
 
     /** Creates a CheckInOptionView object */
     public CheckInOptionView(){
         setupCheckInOptionViewPanel();
     }
 
-    /** GUI */
     /** Sets up the CheckInOptionViewPanel */
     private void setupCheckInOptionViewPanel(){
         GridBagConstraints backToMainMenuButtonConstraints = new GridBagConstraints();
