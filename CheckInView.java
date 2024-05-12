@@ -69,6 +69,11 @@ public class CheckInView {
         checkInViewPanel.removeAll();
     }
 
+    /** Removes all the bagPartialViews. */
+    public void removeAllBagPartialViews() {
+        bagPartialViews = new LinkedList<>();
+    }
+
     /** Updates the view. */
     public void updateView() {
         clearView();
@@ -197,6 +202,11 @@ public class CheckInView {
         fullNameTextField.setText(fullName);
     }
 
+    /** Returns bagPartialViews. */
+    public LinkedList<BagPartialView> getBagPartialViews() {
+        return bagPartialViews;
+    }
+
     /** Adds an ActionListener to addBagButton. */
     public void addAddBagButtonListener(ActionListener listenForAddBagButton) {
         addBagButton.addActionListener(listenForAddBagButton);
@@ -286,6 +296,7 @@ public class CheckInView {
         GridBagConstraints constraintsForOtherButtonPanel = new GridBagConstraints();
 
         constraintsForNextButton.ipadx = horizontalSizeOfButton;
+        constraintsForNextButton.ipady = verticalSizeOfButton;
 
         constraintsForPreviousButton.ipadx = horizontalSizeOfButton;
         constraintsForPreviousButton.ipady = verticalSizeOfButton;
@@ -327,13 +338,21 @@ public class CheckInView {
         constraintsForOtherButtonPanel.gridx = 0;
 
 
-        constraintsForNextButton.fill = GridBagConstraints.VERTICAL;
         constraintsForMainMenuButton.fill = GridBagConstraints.VERTICAL;
         constraintsForBackToCheckInOptionView.fill = GridBagConstraints.VERTICAL;
 
         // TODO: Dont add if at certain page.
-        panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
-        panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
+        if (kioskCheckInModel.getNumberOfPassengers() > 0) {
+            if (kioskCheckInModel.getPassengerIndex() > 0) {
+
+                panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
+            }
+            if (kioskCheckInModel.getPassengerIndex() < kioskCheckInModel.getNumberOfPassengers()) {
+
+                panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
+            }
+        }
+
 
         panelForOtherButtons.add(mainMenuButton, constraintsForMainMenuButton);
         panelForOtherButtons.add(checkInKioskButton, constraintsForBackToCheckInOptionView);
@@ -344,8 +363,4 @@ public class CheckInView {
 
         return informationPageButtonPanel;
     }
-
-
-
-
 }
