@@ -9,7 +9,7 @@ public class CounterModel {
     /** The role of the staff at the designated counter. */
     private String staffRole;
     /** The age of the staff at the designated counter. */
-    private int staffAge;
+    private int staffID;
     /** Utils for getting random information. */
     private Utils utils;
 
@@ -18,10 +18,10 @@ public class CounterModel {
 
         // Temporary Initialization for testing purpose.
         // TODO: Remove this once everything is completed.
-        counterNumber = 0;
-        staffName = null;
-        staffRole = null;
-        staffAge = 0;
+        counterNumber = 1;
+        staffName = "Staff1";
+        staffRole = "Role1";
+        staffID = 1;
     }
 
     /** Returns counterNumber. */
@@ -40,8 +40,8 @@ public class CounterModel {
     }
 
     /** Returns staffAge. */
-    public int getStaffAge() {
-        return staffAge;
+    public int getStaffID() {
+        return staffID;
     }
 
 }
