@@ -82,11 +82,17 @@ public class Controller {
             // TODO: Otherwise, error message, this can be done through JOptionPane.
             // TODO: Or even better, modify the checkInOptionView and have some kind of feedback.
             int numberOfPassengers = gui.getCheckInOptionView().getNumberOfPassengersFromJSpinner();
-            kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
-            kioskCheckInModel.setPassengerIndex(0);
-            tempPassengersData = new Passenger[numberOfPassengers];
-            gui.getCheckInView().updateView();
-            gui.changeView(GUI.CHECKINVIEWINDEX);
+            if (numberOfPassengers >= 2) {
+                kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
+                kioskCheckInModel.setPassengerIndex(0);
+                tempPassengersData = new Passenger[numberOfPassengers];
+                gui.getCheckInView().updateView();
+                gui.changeView(GUI.CHECKINVIEWINDEX);
+            } else {
+                // TODO: Warning.
+                // TODO: Must be greater than 2.
+            }
+
         }
     }
 
@@ -233,6 +239,7 @@ public class Controller {
     public void loadCacheCheckInViewData(CheckInView checkInView, int index) {
 
         checkInView.removeAllBagPartialViews();
+        checkInView.clearCheckInViewTextField();
         Passenger nextPassengerData = tempPassengersData[index];
         kioskCheckInModel.setPassengerIndex(index);
         checkInView.updateView();
