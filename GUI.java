@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 /** This class is the GUI of the program, it creates a window to display all the necessary view classes. */
 public class GUI {
@@ -178,5 +179,10 @@ public class GUI {
         counterView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         checkInView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         boardingPassView.addMainMenuButtonListener(listenForAllMainMenuButtons);
+    }
+
+    /** Adds an ItemListener to the JCheckBox othersSpecialAccommodationCheckBox in checkInView. */
+    public void addOthersSpecialAccommodationCheckBox(ItemListener listenForOthersSpecialAccommodationCheckBox) {
+        checkInView.addOthersSpecialAccommodationCheckBoxItemListener(listenForOthersSpecialAccommodationCheckBox);
     }
 }
