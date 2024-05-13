@@ -80,7 +80,7 @@ public class CheckInView {
         checkInViewPanel.removeAll();
     }
 
-    /** Resets the view. */
+    /** Resets the view from all user inputs. */
     public void resetView() {
         // Removes all the bagPartialViews.
         bagPartialViews = new LinkedList<>();
