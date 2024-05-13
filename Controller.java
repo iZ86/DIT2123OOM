@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.LinkedList;
 
 /** This class acts as the controller of the MVC structure in this program. */
@@ -23,6 +25,7 @@ public class Controller {
         this.counterModel = counterModel;
         this.kioskCheckInModel = kioskCheckInModel;
         addActionListeners();
+        addItemListeners();
     }
 
     /** Adds all the ActionListeners to the GUI respectively. */
@@ -39,6 +42,11 @@ public class Controller {
         gui.addAllNextBoardingPassButtonsListener(new NextBoardingPassButtonListener());
         gui.addAllPrintBoardingPassButtonsListener(new PrintBoardingPassButtonListener());
         gui.addAllMainMenuButtonsListener(new MainMenuButtonListener());
+    }
+
+    /** Adds the ItemListeners to the GUI respectively. */
+    private void addItemListeners() {
+        gui.addOthersSpecialAccommodationCheckBox(new OthersSpecialAccommodationCheckBoxListener());
     }
 
     // TODO: Add comments and TODO's for all the listener class.
@@ -69,7 +77,7 @@ public class Controller {
             kioskCheckInModel.setNumberOfPassengers(1);
             kioskCheckInModel.setPassengerIndex(0);
             tempPassengersData = new Passenger[1];
-            gui.getCheckInView().removeAllBagPartialViews();
+            gui.getCheckInView().resetView();
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
         }
@@ -87,7 +95,7 @@ public class Controller {
                 kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
                 kioskCheckInModel.setPassengerIndex(0);
                 tempPassengersData = new Passenger[numberOfPassengers];
-                gui.getCheckInView().removeAllBagPartialViews();
+                gui.getCheckInView().resetView();
                 gui.getCheckInView().updateView();
                 gui.changeView(GUI.CHECKINVIEWINDEX);
             } else {
@@ -220,6 +228,21 @@ public class Controller {
         }
     }
 
+    public class OthersSpecialAccommodationCheckBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            CheckInView checkInView = gui.getCheckInView();
+            if (checkInView.isOthersSpecialAccommodationCheckBoxSelected()) {
+                checkInView.setOthersSpecialAccommodationTextFieldEnabled(true);
+            } else {
+                checkInView.setOthersSpecialAccommodationTextFieldEnabled(false);
+            }
+            checkInView.updateView();
+        }
+
+
+    }
+
     // TODO: Check if there is a way to NOT use kioskCheckInModel.setPassengerIndex,
     // TODO: Try to take out removeAllBagPartialViews method and updateView method in loadCacheCheckInView method.
     /** Caches the checkInView data inputted by the user into tempPassengersData. */
@@ -241,8 +264,8 @@ public class Controller {
      */
     public void loadCacheCheckInViewData(CheckInView checkInView, int index) {
 
-        checkInView.removeAllBagPartialViews();
-        checkInView.clearCheckInViewTextField();
+
+        checkInView.resetView();
         Passenger nextPassengerData = tempPassengersData[index];
         kioskCheckInModel.setPassengerIndex(index);
         checkInView.updateView();
