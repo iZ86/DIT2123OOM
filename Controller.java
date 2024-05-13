@@ -12,7 +12,7 @@ public class Controller {
     /** The model to hold all the data. */
     private KioskCheckInModel kioskCheckInModel;
     /** Temp passenger data including their bag data. */
-    private Passenger[] tempPassengersData = new Passenger[8];
+    private Passenger[] tempPassengersData;
 
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
@@ -46,6 +46,7 @@ public class Controller {
     public class CheckInCounterButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            gui.changeView(GUI.COUNTERVIEWINDEX);
         }
     }
 
@@ -53,6 +54,8 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             // TODO: Changes the view to the GUIViewPanel to checkInOptionView.
+            gui.changeView(GUI.CHECKINOPTIONVIEWINDEX);
+            gui.getCheckInOptionView().setNumberOfPassengers(2);
         }
     }
 
@@ -63,6 +66,10 @@ public class Controller {
             // TODO: the kioskCheckInModel should automatically adjust itself
             // TODO: so no need to touch kioskCheckInModel.
             // TODO: Changes the GUIViewPanel to checkInView.
+            kioskCheckInModel.setNumberOfPassengers(1);
+            tempPassengersData = new Passenger[1];
+            gui.getCheckInView().updateView();
+            gui.changeView(GUI.CHECKINVIEWINDEX);
         }
     }
 
@@ -73,6 +80,11 @@ public class Controller {
             // TODO: N must be greater than 2.
             // TODO: Otherwise, error message, this can be done through JOptionPane.
             // TODO: Or even better, modify the checkInOptionView and have some kind of feedback.
+            int numberOfPassengers = gui.getCheckInOptionView().getNumberOfPassengersFromJSpinner();
+            kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
+            tempPassengersData = new Passenger[numberOfPassengers];
+            gui.getCheckInView().updateView();
+            gui.changeView(GUI.CHECKINVIEWINDEX);
         }
     }
 
@@ -145,7 +157,16 @@ public class Controller {
     public class CheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // TODO: Need to keep track of bags in Passenger properly.
+            // TODO: Use a different passenger index to add the passengers.
+            cacheCheckInViewData(gui.getCheckInView());
+            kioskCheckInModel.setPassengerIndex(0);
+            for (Passenger tempPassengerData : tempPassengersData) {
+                kioskCheckInModel.insertPassenger(tempPassengerData);
+            }
+            kioskCheckInModel.setPassengerIndex(0);
+            gui.getBoardingPassView().updateView();
+            gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
         }
     }
 
@@ -173,7 +194,7 @@ public class Controller {
     public class MainMenuButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            gui.changeView(GUI.MAINMENUVIEWINDEX);
         }
     }
 
