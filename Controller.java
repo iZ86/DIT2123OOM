@@ -67,6 +67,7 @@ public class Controller {
             // TODO: so no need to touch kioskCheckInModel.
             // TODO: Changes the GUIViewPanel to checkInView.
             kioskCheckInModel.setNumberOfPassengers(1);
+            kioskCheckInModel.setPassengerIndex(0);
             tempPassengersData = new Passenger[1];
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
@@ -82,6 +83,7 @@ public class Controller {
             // TODO: Or even better, modify the checkInOptionView and have some kind of feedback.
             int numberOfPassengers = gui.getCheckInOptionView().getNumberOfPassengersFromJSpinner();
             kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
+            kioskCheckInModel.setPassengerIndex(0);
             tempPassengersData = new Passenger[numberOfPassengers];
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
