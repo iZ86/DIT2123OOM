@@ -347,7 +347,8 @@ public class CheckInView {
 
                 panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
             }
-            if (kioskCheckInModel.getPassengerIndex() < kioskCheckInModel.getNumberOfPassengers()) {
+            // TODO: Maybe change this.
+            if (kioskCheckInModel.getPassengerIndex() < kioskCheckInModel.getNumberOfPassengers() - 1) {
 
                 panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
             }
