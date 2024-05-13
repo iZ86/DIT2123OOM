@@ -17,13 +17,12 @@ public class KioskCheckInModel {
         passengers = new Passenger[]{new Passenger(null, null, null, new Bag[]{new Bag(null, null, 0)})};
         passengerIndex = 0;
         bagIndex = 0;
-        numberOfPassengers = 7;
     }
    
     /** Sets the number of passengers to be checked in. */
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
-        this.passengers = new Passenger[numberOfPassengers];
+        passengers = new Passenger[numberOfPassengers];
     }
 
     /** Returns number of passengers. */
@@ -33,7 +32,7 @@ public class KioskCheckInModel {
 
     /** Inserts the passenger data's that needs to be stored. */
     public void insertPassenger(Passenger passenger) {
-
+        passengers[passengerIndex] = passenger;
     }
 
     /** Returns the passengerIndex. */
