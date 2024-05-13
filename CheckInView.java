@@ -53,15 +53,15 @@ public class CheckInView {
      */
     private JPanel panelForTextFieldAndBagPartialView;
     /** Check Box for Wheel Chair Option.*/
-    private JCheckBox checkBoxForWheelChair;
+    private JCheckBox wheelchairCheckBox = new JCheckBox("Wheelchair");
     /** Check Box for Blindness Option.*/
-    private JCheckBox checkBoxForBlindness;
+    private JCheckBox blindnessCheckBox = new JCheckBox("Blindness");
     /** Check Bo for Deafness Option.*/
-    private JCheckBox checkBoxForDeafness;
+    private JCheckBox deafnessCheckbox = new JCheckBox("Deafness");
     /** Check Box for Others Option*/
-    private JCheckBox checkBoxForOthers;
+    private JCheckBox othersSpecialAccommodationCheckBox = new JCheckBox("Others");
     /** Text Field to let user enter if user choose OTHERS Option.*/
-    private JTextField textFieldForOthersNeeds;
+    private JTextField othersSpecialAccommodationTextField = new JTextField();
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -80,16 +80,23 @@ public class CheckInView {
         checkInViewPanel.removeAll();
     }
 
-    /** Removes all the bagPartialViews. */
-    public void removeAllBagPartialViews() {
+    /** Resets the view. */
+    public void resetView() {
+        // Removes all the bagPartialViews.
         bagPartialViews = new LinkedList<>();
-    }
 
-    /** Clears all the TextField for CheckInView only. */
-    public void clearCheckInViewTextField() {
+        // Sets all the user input to nothing.
         bookingNumberTextField.setText("");
         passportNumberTextField.setText("");
         fullNameTextField.setText("");
+        othersSpecialAccommodationTextField.setText("");
+
+
+        setWheelchairCheckBoxSelected(false);
+        setDeafnessCheckBoxSelected(false);
+        setBlindnessCheckBoxSelected(false);
+        setOthersSpecialAccommodationCheckBoxSelected(false);
+        setOthersSpecialAccommodationTextFieldEnabled(false);
     }
 
     /** Updates the view. */
@@ -116,12 +123,6 @@ public class CheckInView {
         JPanel panelForCheckBoxAndLabel = new JPanel(new GridBagLayout());
         JLabel labelForSpecialNeeds = new JLabel("Any Special Needs?");
 
-        checkBoxForWheelChair = new JCheckBox("Wheelchair");
-        checkBoxForBlindness = new JCheckBox("Blindness");
-        checkBoxForDeafness = new JCheckBox("Deafness");
-        checkBoxForOthers = new JCheckBox("Others");
-
-        textFieldForOthersNeeds = new JTextField();
 
         GridBagConstraints constraintsForSpecialNeedsLabel = new GridBagConstraints();
         GridBagConstraints constraintsForCheckBoxAndLabelPanel = new GridBagConstraints();
@@ -162,11 +163,11 @@ public class CheckInView {
         constraintsForOtherNeedsTextField.insets = new Insets(5,0,0,0);
 
         panelForCheckBoxAndLabel.add(labelForSpecialNeeds, constraintsForSpecialNeedsLabel);
-        panelForCheckBoxAndLabel.add(checkBoxForWheelChair, constraintsForWheelChairJCheckBox);
-        panelForCheckBoxAndLabel.add(checkBoxForBlindness, constraintsForBlindnessJCheckBox);
-        panelForCheckBoxAndLabel.add(checkBoxForDeafness, constraintsForDeafnessJCheckBox);
-        panelForCheckBoxAndLabel.add(checkBoxForOthers, constraintsForOthersJCheckBox);
-        panelForCheckBoxAndLabel.add(textFieldForOthersNeeds, constraintsForOtherNeedsTextField);
+        panelForCheckBoxAndLabel.add(wheelchairCheckBox, constraintsForWheelChairJCheckBox);
+        panelForCheckBoxAndLabel.add(blindnessCheckBox, constraintsForBlindnessJCheckBox);
+        panelForCheckBoxAndLabel.add(deafnessCheckbox, constraintsForDeafnessJCheckBox);
+        panelForCheckBoxAndLabel.add(othersSpecialAccommodationCheckBox, constraintsForOthersJCheckBox);
+        panelForCheckBoxAndLabel.add(othersSpecialAccommodationTextField, constraintsForOtherNeedsTextField);
 
         constraintsForTextFieldPanel.gridy = 0;
         constraintsForCheckBoxAndLabelPanel.gridy = 1;
@@ -281,9 +282,64 @@ public class CheckInView {
         return bagPartialViews;
     }
 
+    /** Returns true iff wheelchairCheckBox is selected. */
+    public boolean isWheelChairCheckBoxSelected() {
+        return wheelchairCheckBox.isSelected();
+    }
+
+    /** Sets wheelchairCheckBox. */
+    public void setWheelchairCheckBoxSelected(boolean selected) {
+        wheelchairCheckBox.setSelected(selected);
+    }
+
+    /** Returns true iff deafnessCheckBox is selected. */
+    public boolean isDeafnessCheckBoxSelected() {
+        return deafnessCheckbox.isSelected();
+    }
+
+    /** Sets deafnessCheckBox. */
+    public void setDeafnessCheckBoxSelected(boolean selected) {
+        deafnessCheckbox.setSelected(selected);
+    }
+
+    /** Returns true iff blindnessCheckBox is selected. */
+    public boolean isBlindnessCheckBoxSelected() {
+        return blindnessCheckBox.isSelected();
+    }
+
+    /** Sets blindnessCheckBox. */
+    public void setBlindnessCheckBoxSelected(boolean selected) {
+        blindnessCheckBox.setSelected(selected);
+    }
+
+    /** Returns true iff othersSpecialAccommodationCheckBox is selected. */
+    public boolean isOthersSpecialAccommodationCheckBoxSelected() {
+        return othersSpecialAccommodationCheckBox.isSelected();
+    }
+
+    /** Sets othersSpecialAccommodationCheckBox. */
+    public void setOthersSpecialAccommodationCheckBoxSelected(boolean selected) {
+        othersSpecialAccommodationCheckBox.setSelected(selected);
+    }
+
+    /** Returns the text in othersSpecialAccommodationTextField. */
+    public String getOthersSpecialAccommodationTextField() {
+        return othersSpecialAccommodationTextField.getText();
+    }
+
+    /** Sets the text in othersSpecialAccommodationTextField. */
+    public void setOthersSpecialAccommodationTextField(String text) {
+        othersSpecialAccommodationTextField.setText(text);
+    }
+
+    /** Sets whether the othersSpecialAccommodationTextField is enabled or not. */
+    public void setOthersSpecialAccommodationTextFieldEnabled(boolean enabled) {
+        othersSpecialAccommodationTextField.setEnabled(enabled);
+    }
+
     /** Adds an ItemListener to checkboxForOthers. */
-    public void addOthersOptionCheckBoxItemListener(ItemListener listenForOptionCheckBox) {
-        checkBoxForOthers.addItemListener(listenForOptionCheckBox);
+    public void addOthersSpecialAccommodationCheckBoxItemListener(ItemListener listenForOthersSpecialAccommodationCheckBox) {
+        othersSpecialAccommodationCheckBox.addItemListener(listenForOthersSpecialAccommodationCheckBox);
     }
 
     /** Adds an ActionListener to addBagButton. */
@@ -325,7 +381,6 @@ public class CheckInView {
         JPanel textFieldPanel = new JPanel(new GridBagLayout());
 
         JLabel bookingNumberLabel = new JLabel("Booking Number");
-        bookingNumberTextField = new JTextField();
 
         JLabel passportLabel = new JLabel("Passport Number");
 
@@ -361,7 +416,7 @@ public class CheckInView {
         JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
         JPanel panelForNextAndPreviousButton = new JPanel(new GridBagLayout());
         JPanel panelForOtherButtons = new JPanel(new GridBagLayout());
-        JLabel labelForPassengerPageIndex = new JLabel("Passanger " + (kioskCheckInModel.getPassengerIndex() + 1) + " / " + kioskCheckInModel.getNumberOfPassengers());
+        JLabel labelForPassengerPageIndex = new JLabel("Passenger " + (kioskCheckInModel.getPassengerIndex() + 1) + " / " + kioskCheckInModel.getNumberOfPassengers());
 
         int horizontalSizeOfButton = 18;
         int verticalSizeOfButton = 4;
