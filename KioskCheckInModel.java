@@ -11,6 +11,8 @@ public class KioskCheckInModel {
      * Mostly for getter and setter method use.
      */
     private int bagIndex;
+    /** Index for keeping track of the amoutn of passengers that was inserted. */
+    private int addPassengerIndex;
 
     public KioskCheckInModel() {
         // An edge case fix for now.
@@ -23,6 +25,7 @@ public class KioskCheckInModel {
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
         passengers = new Passenger[numberOfPassengers];
+        addPassengerIndex = 0;
     }
 
     /** Returns number of passengers. */
@@ -32,7 +35,8 @@ public class KioskCheckInModel {
 
     /** Inserts the passenger data's that needs to be stored. */
     public void insertPassenger(Passenger passenger) {
-        passengers[passengerIndex] = passenger;
+        passengers[addPassengerIndex] = passenger;
+        addPassengerIndex += 1;
     }
 
     /** Returns the passengerIndex. */
