@@ -160,7 +160,6 @@ public class Controller {
             // TODO: Need to keep track of bags in Passenger properly.
             // TODO: Use a different passenger index to add the passengers.
             cacheCheckInViewData(gui.getCheckInView());
-            kioskCheckInModel.setPassengerIndex(0);
             for (Passenger tempPassengerData : tempPassengersData) {
                 kioskCheckInModel.insertPassenger(tempPassengerData);
             }
