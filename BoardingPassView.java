@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 /** This class represents the view to show the boarding pass. */
 public class BoardingPassView {
     /** JPanel for BoardingPassView. */
-    private JPanel boardingPassViewPanel;
+    private JPanel boardingPassViewPanel =  new JPanel();
     /** The model that holds the passenger and their bag data. */
     private KioskCheckInModel kioskCheckInModel;
     /** JButton to show the previous passenger's and their bag's data,
@@ -29,7 +29,7 @@ public class BoardingPassView {
     /** Sets up the boardingPassViewPanel. */
     private void setupViewPanel() {
         //TODO: GUI & Get details from user input
-        boardingPassViewPanel = new JPanel();
+
 
         JLabel boardingPassLabel = new JLabel("- Boarding Pass Details -");
         JLabel nameLabel = new JLabel("Mr/Ms ");
@@ -53,6 +53,14 @@ public class BoardingPassView {
         boardingPassViewPanel.add(passportNumberLabel); boardingPassViewPanel.add(typeLabel);
         boardingPassViewPanel.add(bagDetailsLabel); boardingPassViewPanel.add(bagIdLabel);
         boardingPassViewPanel.add(bagColorLabel); boardingPassViewPanel.add(bagWeightLabel);
+    }
+
+    /** Updates the view. */
+    public void updateView() {
+        boardingPassViewPanel.removeAll();
+        setupViewPanel();
+        boardingPassViewPanel.revalidate();
+        boardingPassViewPanel.repaint();
     }
 
     /** Returns the boardingPassViewPanel. */
