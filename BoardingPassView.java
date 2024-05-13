@@ -35,7 +35,7 @@ public class BoardingPassView {
         JLabel nameLabel = new JLabel("Mr/Ms ");
         kioskCheckInModel.getFullName();
         JLabel bookingIdLabel = new JLabel("Booking ID: ");
-        kioskCheckInModel.getBookingID();
+        kioskCheckInModel.getBookingNumber();
         JLabel passportNumberLabel = new JLabel("Passport Number: ");
         kioskCheckInModel.getPassportNumber();
         JLabel typeLabel = new JLabel("Type: ");
