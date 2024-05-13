@@ -69,6 +69,7 @@ public class Controller {
             kioskCheckInModel.setNumberOfPassengers(1);
             kioskCheckInModel.setPassengerIndex(0);
             tempPassengersData = new Passenger[1];
+            gui.getCheckInView().removeAllBagPartialViews();
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
         }
@@ -86,11 +87,13 @@ public class Controller {
                 kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
                 kioskCheckInModel.setPassengerIndex(0);
                 tempPassengersData = new Passenger[numberOfPassengers];
+                gui.getCheckInView().removeAllBagPartialViews();
                 gui.getCheckInView().updateView();
                 gui.changeView(GUI.CHECKINVIEWINDEX);
             } else {
                 // TODO: Warning.
                 // TODO: Must be greater than 2.
+                System.out.println("I must be more than 2.");
             }
 
         }
