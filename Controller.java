@@ -67,6 +67,7 @@ public class Controller {
             // TODO: so no need to touch kioskCheckInModel.
             // TODO: Changes the GUIViewPanel to checkInView.
             kioskCheckInModel.setNumberOfPassengers(1);
+            kioskCheckInModel.setPassengerIndex(0);
             tempPassengersData = new Passenger[1];
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
@@ -82,6 +83,7 @@ public class Controller {
             // TODO: Or even better, modify the checkInOptionView and have some kind of feedback.
             int numberOfPassengers = gui.getCheckInOptionView().getNumberOfPassengersFromJSpinner();
             kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
+            kioskCheckInModel.setPassengerIndex(0);
             tempPassengersData = new Passenger[numberOfPassengers];
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
@@ -160,7 +162,6 @@ public class Controller {
             // TODO: Need to keep track of bags in Passenger properly.
             // TODO: Use a different passenger index to add the passengers.
             cacheCheckInViewData(gui.getCheckInView());
-            kioskCheckInModel.setPassengerIndex(0);
             for (Passenger tempPassengerData : tempPassengersData) {
                 kioskCheckInModel.insertPassenger(tempPassengerData);
             }
