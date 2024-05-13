@@ -17,8 +17,8 @@ public class CheckInOptionView {
     /** JButton that changes the view to  */
     private JButton singleButton = new JButton("Single");
 
-    /** JSpinner to select the number of people */
-    private JSpinner numberOfPeople = new JSpinner();
+    /** JSpinner to select the number of passengers */
+    private JSpinner numberOfPassengers = new JSpinner();
 
     /* Title */
     JLabel titleText = new JLabel("Check In Option");
@@ -40,7 +40,7 @@ public class CheckInOptionView {
         mainMenuButton.setPreferredSize(new Dimension(100, 40));
         groupButton.setPreferredSize(new Dimension(100, 40));
         singleButton.setPreferredSize(new Dimension(100, 40));
-        numberOfPeople.setPreferredSize(new Dimension(100, 40));
+        numberOfPassengers.setPreferredSize(new Dimension(100, 40));
 
         // Title
         titleText.setFont(new Font("Arial", Font.BOLD, 17));
@@ -81,7 +81,7 @@ public class CheckInOptionView {
         numberOfPeopleConstraints.gridx = 0;
         numberOfPeopleConstraints.gridy = 0;
         numberOfPeopleConstraints.insets = new Insets(0 ,175, 150, 0);
-        CheckInOptionViewPanel.add(numberOfPeople, numberOfPeopleConstraints);
+        CheckInOptionViewPanel.add(numberOfPassengers, numberOfPeopleConstraints);
     }
 
     /** Returns the CheckInOptionViewPanel */
@@ -89,6 +89,15 @@ public class CheckInOptionView {
         return CheckInOptionViewPanel;
     }
 
+    /** Returns the number of passengers in JSpinners numberOfPassenger. */
+    public int getNumberOfPassengersFromJSpinner() {
+        return (Integer) numberOfPassengers.getValue();
+    }
+
+    /** Sets the number of passengers in JSpinner numberOfPassengers. */
+    public void setNumberOfPassengers(int numberOfPassengers) {
+        this.numberOfPassengers.setValue(numberOfPassengers);
+    }
     /** Adds an ActionListener to the JButton mainMenuButton */
     public void addMainMenuButtonListener(ActionListener listenForMainMenuButton){
         mainMenuButton.addActionListener(listenForMainMenuButton);
