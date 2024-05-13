@@ -60,7 +60,7 @@ public class KioskCheckInModel {
     }
 
     /** Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex. */
-    public String getBookingID() {
+    public String getBookingNumber() {
         return passengers[passengerIndex].getBookingID();
     }
 

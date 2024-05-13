@@ -221,7 +221,7 @@ public class Controller {
     // TODO: Try to take out removeAllBagPartialViews method and updateView method in loadCacheCheckInView method.
     /** Caches the checkInView data inputted by the user into tempPassengersData. */
     public void cacheCheckInViewData(CheckInView checkInView) {
-        String bookingID = checkInView.getBookingIDFromTextField();
+        String bookingID = checkInView.getBookingNumberFromTextField();
         String passportNumber = checkInView.getPassportNumberFromTextField();
         String fullName = checkInView.getFullNameFromTextField();
         Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
@@ -257,7 +257,7 @@ public class Controller {
             String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
             String nextPassengerFullName = nextPassengerData.getFullName();
 
-            checkInView.setBookingIDTextField(nextPassengerBookingID);
+            checkInView.setBookingNumberTextField(nextPassengerBookingID);
             checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
             checkInView.setFullNameTextField(nextPassengerFullName);
 
