@@ -12,11 +12,11 @@ public class CheckInView {
     /** The model that holds the passenger and their bag data. */
     private KioskCheckInModel kioskCheckInModel;
     /** The text field where user enters their bookingID. */
-    private JTextField bookingIDTextField;
+    private JTextField bookingIDTextField = new JTextField();
     /** The text field where user enters their passport number. */
-    private JTextField passportNumberTextField;
+    private JTextField passportNumberTextField = new JTextField();
     /** The text field where the user enters their full name. */
-    private JTextField fullNameTextField;
+    private JTextField fullNameTextField = new JTextField();
     /** A Linked List of BagPartialView that each asks the user for information for a different bag,
      *  LinkedList used because it does not allow gaps between data.
      *  For example, a list of 3, if I remove the 2nd element, the 3rd element will now become the 2nd element.
@@ -72,6 +72,13 @@ public class CheckInView {
     /** Removes all the bagPartialViews. */
     public void removeAllBagPartialViews() {
         bagPartialViews = new LinkedList<>();
+    }
+
+    /** Clears all the TextField for CheckInView only. */
+    public void clearCheckInViewTextField() {
+        bookingIDTextField.setText("");
+        passportNumberTextField.setText("");
+        fullNameTextField.setText("");
     }
 
     /** Updates the view. */
@@ -246,13 +253,10 @@ public class CheckInView {
         JPanel textFieldPanel = new JPanel(new GridBagLayout());
 
         JLabel passportLabel = new JLabel("Passport Number");
-        passportNumberTextField = new JTextField();
 
         JLabel bookingNumberLabel = new JLabel("Booking Number");
-        bookingIDTextField = new JTextField();
 
         JLabel fullNameLabel = new JLabel("Full Name");
-        fullNameTextField = new JTextField();
         
         GridBagConstraints gridBagConstraintsForLabels = new GridBagConstraints();
         gridBagConstraintsForLabels.anchor = GridBagConstraints.WEST;
