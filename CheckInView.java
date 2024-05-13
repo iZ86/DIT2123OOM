@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.awt.image.WritableRaster;
 import java.util.LinkedList;
 
@@ -46,11 +47,21 @@ public class CheckInView {
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
     /** Grid Y to push the BagPartialViewPanel downwards, otherwise it will add horizontally. */
-    private int gridYOfBagPartialView = 2;
+    private int gridYOfBagPartialView = 3;
     /** Panel to add all the JTextFields and BagPartialView,
      * to separate Button Panel to let it stick at the bottom of the view.
      */
     private JPanel panelForTextFieldAndBagPartialView;
+    /** Check Box for Wheel Chair Option.*/
+    private JCheckBox checkBoxForWheelChair;
+    /** Check Box for Blindness Option.*/
+    private JCheckBox checkBoxForBlindness;
+    /** Check Bo for Deafness Option.*/
+    private JCheckBox checkBoxForDeafness;
+    /** Check Box for Others Option*/
+    private JCheckBox checkBoxForOthers;
+    /** Text Field to let user enter if user choose OTHERS Option.*/
+    private JTextField textFieldForOthersNeeds;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -96,17 +107,71 @@ public class CheckInView {
         int horizontalSizeOfBaggageButton = 200;
         int verticalSizeOfBaggageButton = 8;
 
+        int horizontalSizeOfSpecialNeedsTextField = 120;
+        int verticalSizeOfSpecialNeedsTextField = 18;
+
         JPanel textFieldPanel = setupViewTextFieldPanel();
         JPanel buttonPanel = setupViewButtonPanel();
+
+        JPanel panelForCheckBoxAndLabel = new JPanel(new GridBagLayout());
+        JLabel labelForSpecialNeeds = new JLabel("Any Special Needs?");
+
+        checkBoxForWheelChair = new JCheckBox("Wheelchair");
+        checkBoxForBlindness = new JCheckBox("Blindness");
+        checkBoxForDeafness = new JCheckBox("Deafness");
+        checkBoxForOthers = new JCheckBox("Others");
+
+        textFieldForOthersNeeds = new JTextField();
+
+        GridBagConstraints constraintsForSpecialNeedsLabel = new GridBagConstraints();
+        GridBagConstraints constraintsForCheckBoxAndLabelPanel = new GridBagConstraints();
+        GridBagConstraints constraintsForWheelChairJCheckBox = new GridBagConstraints();
+        GridBagConstraints constraintsForBlindnessJCheckBox = new GridBagConstraints();
+        GridBagConstraints constraintsForDeafnessJCheckBox = new GridBagConstraints();
+        GridBagConstraints constraintsForOthersJCheckBox = new GridBagConstraints();
 
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
         GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
         GridBagConstraints constraintsForScrollPane = new GridBagConstraints();
+        GridBagConstraints constraintsForOtherNeedsTextField = new GridBagConstraints();
+
+        constraintsForSpecialNeedsLabel.gridy = 0;
+
+        constraintsForWheelChairJCheckBox.gridy = 1;
+        constraintsForWheelChairJCheckBox.gridx = 0;
+
+        constraintsForBlindnessJCheckBox.gridy = 1;
+        constraintsForBlindnessJCheckBox.gridx = 1;
+
+        constraintsForDeafnessJCheckBox.gridy = 1;
+        constraintsForDeafnessJCheckBox.gridx = 2;
+
+        constraintsForOthersJCheckBox.gridy = 2;
+        constraintsForOthersJCheckBox.gridx = 0;
+
+        constraintsForOtherNeedsTextField.gridy = 3;
+        constraintsForOtherNeedsTextField.gridx = 0;
+
+        constraintsForOtherNeedsTextField.fill = GridBagConstraints.HORIZONTAL;
+        constraintsForOtherNeedsTextField.weightx = 1;
+        constraintsForOtherNeedsTextField.gridwidth = GridBagConstraints.REMAINDER;
+        constraintsForOtherNeedsTextField.ipady = verticalSizeOfSpecialNeedsTextField;
+        constraintsForOtherNeedsTextField.ipadx = horizontalSizeOfSpecialNeedsTextField;
+
+        constraintsForOtherNeedsTextField.insets = new Insets(5,0,0,0);
+
+        panelForCheckBoxAndLabel.add(labelForSpecialNeeds, constraintsForSpecialNeedsLabel);
+        panelForCheckBoxAndLabel.add(checkBoxForWheelChair, constraintsForWheelChairJCheckBox);
+        panelForCheckBoxAndLabel.add(checkBoxForBlindness, constraintsForBlindnessJCheckBox);
+        panelForCheckBoxAndLabel.add(checkBoxForDeafness, constraintsForDeafnessJCheckBox);
+        panelForCheckBoxAndLabel.add(checkBoxForOthers, constraintsForOthersJCheckBox);
+        panelForCheckBoxAndLabel.add(textFieldForOthersNeeds, constraintsForOtherNeedsTextField);
 
         constraintsForTextFieldPanel.gridy = 0;
-
-        constraintsForAddBaggageButton.gridy = 1;
+        constraintsForCheckBoxAndLabelPanel.gridy = 1;
+        constraintsForCheckBoxAndLabelPanel.gridx = 0;
+        constraintsForAddBaggageButton.gridy = 2;
         constraintsForAddBaggageButton.ipadx = horizontalSizeOfBaggageButton;
         constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
 
@@ -118,8 +183,10 @@ public class CheckInView {
         constraintsForScrollPane.ipadx = 370;
         constraintsForScrollPane.ipady = 300;
 
+        constraintsForCheckBoxAndLabelPanel.insets = new Insets(0,0,20,0);
 
         panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
+        panelForTextFieldAndBagPartialView.add(panelForCheckBoxAndLabel, constraintsForCheckBoxAndLabelPanel);
         panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
 
         // If there is any bagPartialViews, add them.
@@ -214,6 +281,11 @@ public class CheckInView {
         return bagPartialViews;
     }
 
+    /** Adds an ItemListener to checkboxForOthers. */
+    public void addOthersOptionCheckBoxItemListener(ItemListener listenForOptionCheckBox) {
+        checkBoxForOthers.addItemListener(listenForOptionCheckBox);
+    }
+
     /** Adds an ActionListener to addBagButton. */
     public void addAddBagButtonListener(ActionListener listenForAddBagButton) {
         addBagButton.addActionListener(listenForAddBagButton);
@@ -258,25 +330,26 @@ public class CheckInView {
         JLabel passportLabel = new JLabel("Passport Number");
 
         JLabel fullNameLabel = new JLabel("Full Name");
-        
-        GridBagConstraints gridBagConstraintsForLabels = new GridBagConstraints();
-        gridBagConstraintsForLabels.anchor = GridBagConstraints.WEST;
-        gridBagConstraintsForLabels.insets = new Insets(0, 0, 15, 10); 
 
-        GridBagConstraints gridBagConstraintsForTextFields = new GridBagConstraints();
-        gridBagConstraintsForTextFields.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraintsForTextFields.weightx = 1;
-        gridBagConstraintsForTextFields.ipadx = horizontalSizeOfTextField;
-        gridBagConstraintsForTextFields.ipady = verticalSizeOfTextField;
-        gridBagConstraintsForTextFields.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraintsForTextFields.insets = new Insets(0, 20, 15, 0);
+        GridBagConstraints constraintsForLabels = new GridBagConstraints();
+        GridBagConstraints constraintsForTextFields = new GridBagConstraints();
 
-        textFieldPanel.add(bookingNumberLabel, gridBagConstraintsForLabels);
-        textFieldPanel.add(bookingNumberTextField, gridBagConstraintsForTextFields);
-        textFieldPanel.add(passportLabel, gridBagConstraintsForLabels);
-        textFieldPanel.add(passportNumberTextField, gridBagConstraintsForTextFields);
-        textFieldPanel.add(fullNameLabel, gridBagConstraintsForLabels);
-        textFieldPanel.add(fullNameTextField, gridBagConstraintsForTextFields);
+        constraintsForLabels.anchor = GridBagConstraints.WEST;
+        constraintsForLabels.insets = new Insets(0, 0, 15, 10);
+
+        constraintsForTextFields.fill = GridBagConstraints.HORIZONTAL;
+        constraintsForTextFields.weightx = 1;
+        constraintsForTextFields.ipadx = horizontalSizeOfTextField;
+        constraintsForTextFields.ipady = verticalSizeOfTextField;
+        constraintsForTextFields.gridwidth = GridBagConstraints.REMAINDER;
+        constraintsForTextFields.insets = new Insets(0, 20, 15, 0);
+
+        textFieldPanel.add(bookingNumberLabel, constraintsForLabels);
+        textFieldPanel.add(bookingNumberTextField, constraintsForTextFields);
+        textFieldPanel.add(passportLabel, constraintsForLabels);
+        textFieldPanel.add(passportNumberTextField, constraintsForTextFields);
+        textFieldPanel.add(fullNameLabel, constraintsForLabels);
+        textFieldPanel.add(fullNameTextField, constraintsForTextFields);
 
         textFieldPanel.setPreferredSize(new Dimension(350, 150)); 
 
