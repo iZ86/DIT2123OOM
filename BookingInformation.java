@@ -3,16 +3,16 @@ public class BookingInformation {
     String seatNumber;
     String destination;
     String flightStatus;
-    String gate;
+    int gateNumber;
     String boardingTime;
 
     public BookingInformation(String bookingID, String seatNumber, String destination,
-                              String flightStatus, String gate, String boardingTime) {
+                              String flightStatus, int gateNumber, String boardingTime) {
         this.bookingID = bookingID;
         this.seatNumber = seatNumber;
         this.destination = destination;
         this.flightStatus = flightStatus;
-        this.gate = gate;
+        this.gateNumber = gateNumber;
         this.boardingTime = boardingTime;
     }
 
@@ -32,8 +32,8 @@ public class BookingInformation {
         return flightStatus;
     }
 
-    public String getGate() {
-        return gate;
+    public int getGateNumber() {
+        return gateNumber;
     }
 
     public String getBoardingTime() {
