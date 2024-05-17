@@ -180,6 +180,10 @@ public class Controller {
             // TODO: Use a different passenger index to add the passengers.
             cacheCheckInViewData(gui.getCheckInView());
             for (Passenger tempPassengerData : tempPassengersData) {
+                // TODO: Update view, if not valid bookingID.
+                if (!kioskCheckInModel.validateBookingID(tempPassengerData.getBookingID())) {
+                    System.out.println("Invalid bookingID");
+                }
                 kioskCheckInModel.insertPassenger(tempPassengerData);
             }
             kioskCheckInModel.setPassengerIndex(0);
