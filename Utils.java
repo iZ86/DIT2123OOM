@@ -4,13 +4,17 @@ import java.util.Random;
  *  it will be used for getting random information.
  */
 public class Utils {
+
+    /** Number of data. */
+    public static final int NUMBEROFDATA = 6;
+
     /** A constant array of bookingID's. */
     public static final String[] BOOKINGIDS = new String[]{
             "ABC123", "ABC124", "ABC125", "ABC223", "ABC323", "BAC123"
     };
 
-    /** A constant array of plane seats. */
-    public static final String[] PLANESEATS = new String[]{
+    /** A constant array of seat numbers. */
+    public static final String[] SEATNUMBERS = new String[]{
             "A-01", "A-02", "A-03", "Y-29", "E-14", "O-44"
     };
 
@@ -29,6 +33,10 @@ public class Utils {
 
     /** random object used to decide which data should be used. */
     private Random random;
+
+    public int generateRandomGateNumber() {
+        return 0;
+    }
 
 
 }
