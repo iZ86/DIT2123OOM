@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class KioskCheckInModel {
     /**The number of passengers to check in */
     private int numberOfPassengers; 
@@ -13,12 +15,34 @@ public class KioskCheckInModel {
     private int bagIndex;
     /** Index for keeping track of the amoutn of passengers that was inserted. */
     private int addPassengerIndex;
+    /** HashMap used to store bookingID and their respective bookingInformation,
+     * for faster lookup speed.
+     */
+    private HashMap<String, BookingInformation> bookingInformationData;
+    /** Utilities class. */
+    private Utils utils = new Utils();
 
     public KioskCheckInModel() {
         // An edge case fix for now.
         passengers = new Passenger[]{new Passenger(null, null, null, new Bag[]{new Bag(null, null, 0)})};
         passengerIndex = 0;
         bagIndex = 0;
+        bookingInformationData = new HashMap<>();
+        setupBookingInformationData();
+    }
+
+    /** Setups up the bookingInformationData. */
+    private void setupBookingInformationData() {
+        for (int i = 0; i < Utils.NUMBEROFDATA; i++) {
+            bookingInformationData.put(Utils.BOOKINGIDS[i], new BookingInformation(Utils.BOOKINGIDS[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", utils.generateRandomGateNumber(), Utils.BOARDINGTIMES[i]));
+        }
+    }
+
+    /** Used to validate bookingID entered by user,
+     * returns true iff it's a valid bookingID.
+     * Otherwise, returns false. */
+    public boolean validateBookingID(String bookingID) {
+        return bookingInformationData.containsKey(bookingID);
     }
    
     /** Sets the number of passengers to be checked in. */
