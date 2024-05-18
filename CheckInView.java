@@ -62,6 +62,8 @@ public class CheckInView {
     private JCheckBox othersSpecialAccommodationCheckBox = new JCheckBox("Others");
     /** Text Field to let user enter if user choose OTHERS Option.*/
     private JTextField othersSpecialAccommodationTextField = new JTextField();
+    /** checkInViewPagingIndex, used to show the page that the user is at. */
+    private int checkInViewPagingIndex;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -70,6 +72,10 @@ public class CheckInView {
         setupViewPanel();
     }
 
+    /** Sets the checkInViewPagingIndex. */
+    public void setCheckInViewPagingIndex(int checkInViewPagingIndex) {
+        this.checkInViewPagingIndex = checkInViewPagingIndex;
+    }
     /** The method to get the size of <LinkedList> bagPartialViews.*/
     public int getNumberOfBagPartialViews() {
         return bagPartialViews.size();
@@ -416,7 +422,7 @@ public class CheckInView {
         JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
         JPanel panelForNextAndPreviousButton = new JPanel(new GridBagLayout());
         JPanel panelForOtherButtons = new JPanel(new GridBagLayout());
-        JLabel labelForPassengerPageIndex = new JLabel("Passenger " + (kioskCheckInModel.getPassengerIndex() + 1) + " / " + kioskCheckInModel.getNumberOfPassengers());
+        JLabel labelForPassengerPageIndex = new JLabel("Passenger " + (checkInViewPagingIndex + 1) + " / " + kioskCheckInModel.getNumberOfPassengers());
 
         int horizontalSizeOfButton = 18;
         int verticalSizeOfButton = 4;
@@ -480,12 +486,12 @@ public class CheckInView {
 
         // TODO: Dont add if at certain page.
         if (kioskCheckInModel.getNumberOfPassengers() > 0) {
-            if (kioskCheckInModel.getPassengerIndex() > 0) {
+            if (checkInViewPagingIndex > 0) {
 
                 panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
             }
             // TODO: Maybe change this.
-            if (kioskCheckInModel.getPassengerIndex() < kioskCheckInModel.getNumberOfPassengers() - 1) {
+            if (checkInViewPagingIndex < kioskCheckInModel.getNumberOfPassengers() - 1) {
 
                 panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
             }
