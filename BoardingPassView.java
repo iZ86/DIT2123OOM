@@ -83,29 +83,38 @@ public class BoardingPassView {
         constraintsForPanel.insets = new Insets(20, 0, 0, 0);
         panelForBoardingPassView.add(panelForBagAreaPanel,constraintsForPanel);
 
-        JLabel bagIdLabel = new JLabel("Bag ID: ");
-        JLabel bagColorLabel = new JLabel("Bag Color: ");
-        JLabel bagWeightLabel = new JLabel("Bag Weight: ");
+        // Checks if the passenger has any number of bags.
+        // If got adds it to the view.
+        // This is to prevent exception when the passenger has no bags.
+        // It will ask for null attributes, and that is an error.
+        // TODO: @i4GS implement this however u like. but it MUST be implemented.
+        if (kioskCheckInModel.getNumberOfBags() > 0) {
+            JLabel bagIdLabel = new JLabel("Bag ID: ");
+            JLabel bagColorLabel = new JLabel("Bag Color: ");
+            JLabel bagWeightLabel = new JLabel("Bag Weight: ");
 
-        JLabel bagIdDataLabel = new JLabel(kioskCheckInModel.getBagID());
-        JLabel bagColorDataLabel = new JLabel(kioskCheckInModel.getBagColor());
-        JLabel bagWeightDataLabel = new JLabel();
+            JLabel bagIdDataLabel = new JLabel(kioskCheckInModel.getBagID());
+            JLabel bagColorDataLabel = new JLabel(kioskCheckInModel.getBagColor());
+            JLabel bagWeightDataLabel = new JLabel();
+            constraintsForLabel.anchor = GridBagConstraints.WEST;
+            constraintsForLabel.insets = new Insets(10, 0, 15, 235);
 
-        constraintsForLabel.anchor = GridBagConstraints.WEST;
-        constraintsForLabel.insets = new Insets(10, 0, 15, 235);
+            panelForBagAreaPanel.add(bagIdLabel, constraintsForLabel);
+            panelForBagAreaPanel.add(bagIdDataLabel, constraintsForData);
 
-        panelForBagAreaPanel.add(bagIdLabel, constraintsForLabel);
-        panelForBagAreaPanel.add(bagIdDataLabel, constraintsForData);
+            constraintsForLabel.gridy = 4;
+            constraintsForData.gridy = 4;
+            panelForBagAreaPanel.add(bagColorLabel, constraintsForLabel);
+            panelForBagAreaPanel.add(bagColorDataLabel, constraintsForData);
 
-        constraintsForLabel.gridy = 4;
-        constraintsForData.gridy = 4;
-        panelForBagAreaPanel.add(bagColorLabel, constraintsForLabel);
-        panelForBagAreaPanel.add(bagColorDataLabel, constraintsForData);
+            constraintsForLabel.gridy = 5;
+            constraintsForData.gridy = 5;
+            panelForBagAreaPanel.add(bagWeightLabel, constraintsForLabel);
+            panelForBagAreaPanel.add(bagWeightDataLabel, constraintsForData);
+        }
 
-        constraintsForLabel.gridy = 5;
-        constraintsForData.gridy = 5;
-        panelForBagAreaPanel.add(bagWeightLabel, constraintsForLabel);
-        panelForBagAreaPanel.add(bagWeightDataLabel, constraintsForData);
+
+
 
         constraintsForButton.gridy = 6;
         constraintsForButton.gridx = 0;
