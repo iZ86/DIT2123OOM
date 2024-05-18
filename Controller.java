@@ -15,6 +15,15 @@ public class Controller {
     private KioskCheckInModel kioskCheckInModel;
     /** Temp passenger data including their bag data. */
     private Passenger[] tempPassengersData;
+    /** checkInViewPagingIndex,
+     * used to keep track of which checkInViewPage is being displayed.
+     * Also use to keep track of which index the tempPassengersData should be used.
+     */
+    private int checkInViewPagingIndex;
+    /** boardingPassViewPagingIndex,
+     * used to keep track of which passenger's boarding pass to show.
+     */
+    private int boardingPassViewPagingIndex;
 
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
@@ -75,8 +84,9 @@ public class Controller {
             // TODO: so no need to touch kioskCheckInModel.
             // TODO: Changes the GUIViewPanel to checkInView.
             kioskCheckInModel.setNumberOfPassengers(1);
-            kioskCheckInModel.setPassengerIndex(0);
+            checkInViewPagingIndex = 0;
             tempPassengersData = new Passenger[1];
+            gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
             gui.getCheckInView().resetView();
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
@@ -93,7 +103,8 @@ public class Controller {
             int numberOfPassengers = gui.getCheckInOptionView().getNumberOfPassengersFromJSpinner();
             if (numberOfPassengers >= 2) {
                 kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
-                kioskCheckInModel.setPassengerIndex(0);
+                checkInViewPagingIndex = 0;
+                gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
                 tempPassengersData = new Passenger[numberOfPassengers];
                 gui.getCheckInView().resetView();
                 gui.getCheckInView().updateView();
@@ -133,8 +144,10 @@ public class Controller {
                 cacheCheckInViewData(checkInView);
 
                 // Retrieve the data of the previous passenger if there is any.
-                int prevIndex = kioskCheckInModel.getPassengerIndex() - 1;
-                loadCacheCheckInViewData(checkInView, prevIndex);
+                checkInViewPagingIndex -= 1;
+
+                checkInView.setCheckInViewPagingIndex(checkInViewPagingIndex);
+                loadCacheCheckInViewData(checkInView);
 
 
             } catch (NumberFormatException ex) {
@@ -159,8 +172,10 @@ public class Controller {
 
 
                 // Retrieve the data of the next passenger if there is any.
-                int nextIndex = kioskCheckInModel.getPassengerIndex() + 1;
-                loadCacheCheckInViewData(checkInView, nextIndex);
+                checkInViewPagingIndex += 1;
+
+                checkInView.setCheckInViewPagingIndex(checkInViewPagingIndex);
+                loadCacheCheckInViewData(checkInView);
 
             } catch (NumberFormatException ex) {
                 // TODO: Temporary.
@@ -178,17 +193,25 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             // TODO: Need to keep track of bags in Passenger properly.
             // TODO: Use a different passenger index to add the passengers.
+            boardingPassViewPagingIndex = 0;
             cacheCheckInViewData(gui.getCheckInView());
-            for (Passenger tempPassengerData : tempPassengersData) {
-                // TODO: Update view, if not valid bookingID.
-                if (!kioskCheckInModel.validateBookingID(tempPassengerData.getBookingID())) {
-                    System.out.println("Invalid bookingID");
+            for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                // TODO: Fix if one bookingID valid, but others invalid. Shows boardingPassView.
+                if (kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
+
+                    kioskCheckInModel.insertPassenger(tempPassengersData[i]);
+                    kioskCheckInModel.setPassengerIndex(0);
+                    gui.getBoardingPassView().updateView();
+                    gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+                } else {
+                    checkInViewPagingIndex = i;
+                    gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
+                    loadCacheCheckInViewData(gui.getCheckInView());
+
+
                 }
-                kioskCheckInModel.insertPassenger(tempPassengerData);
             }
-            kioskCheckInModel.setPassengerIndex(0);
-            gui.getBoardingPassView().updateView();
-            gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+
         }
     }
 
@@ -259,19 +282,18 @@ public class Controller {
         for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
             bags[i] = new Bag(null, currBagPartialViews.get(i).getBagColorFromTextField(), Double.valueOf(currBagPartialViews.get(i).getBagWeightFromTextField()));
         }
-        int currIndex = kioskCheckInModel.getPassengerIndex();
-        tempPassengersData[currIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
+
+        tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
     }
 
     /** Loads the cache at index tempPassengersData that was saved by checkInView data,
      * if there isn't any, nothing is loaded.
      */
-    public void loadCacheCheckInViewData(CheckInView checkInView, int index) {
+    public void loadCacheCheckInViewData(CheckInView checkInView) {
 
 
         checkInView.resetView();
-        Passenger nextPassengerData = tempPassengersData[index];
-        kioskCheckInModel.setPassengerIndex(index);
+        Passenger nextPassengerData = tempPassengersData[checkInViewPagingIndex];
         checkInView.updateView();
 
         if (nextPassengerData != null) {
