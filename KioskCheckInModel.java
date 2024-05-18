@@ -98,6 +98,11 @@ public class KioskCheckInModel {
         return passengers[passengerIndex].getFullName();
     }
 
+    /** Returns the number of bags the passenger has in Passenger[] passenger at passengerIndex. */
+    public int getNumberOfBags() {
+        return passengers[passengerIndex].getNumberOfBags();
+    }
+
     /** Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
     public String getBagID() {
         return passengers[passengerIndex].getBag(bagIndex).getBagID();
