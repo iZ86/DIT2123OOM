@@ -193,23 +193,42 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             // TODO: Need to keep track of bags in Passenger properly.
             // TODO: Use a different passenger index to add the passengers.
+
+            boolean allValid = true;
+            int pageIndexOfInvalidBookingID = -1;
+
             boardingPassViewPagingIndex = 0;
             cacheCheckInViewData(gui.getCheckInView());
+
+            // Validates all the bookingID.
             for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
-                // TODO: Fix if one bookingID valid, but others invalid. Shows boardingPassView.
-                if (kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
-
-                    kioskCheckInModel.insertPassenger(tempPassengersData[i]);
-                    kioskCheckInModel.setPassengerIndex(0);
-                    gui.getBoardingPassView().updateView();
-                    gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
-                } else {
-                    checkInViewPagingIndex = i;
-                    gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
-                    loadCacheCheckInViewData(gui.getCheckInView());
-
-
+                if (!kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
+                    allValid = false;
+                    pageIndexOfInvalidBookingID = i;
+                    break;
                 }
+            }
+
+            if (allValid) {
+                gui.getCheckInView().setInvalidBookingID(false);
+                for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                    if (kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
+                        kioskCheckInModel.insertPassenger(tempPassengersData[i]);
+                        kioskCheckInModel.setPassengerIndex(0);
+                        gui.getBoardingPassView().updateView();
+                        gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+                    } else {
+                        checkInViewPagingIndex = i;
+                        gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
+                        loadCacheCheckInViewData(gui.getCheckInView());
+                    }
+                }
+
+            } else {
+                checkInViewPagingIndex = pageIndexOfInvalidBookingID;
+                gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
+                gui.getCheckInView().setInvalidBookingID(true);
+                loadCacheCheckInViewData(gui.getCheckInView());
             }
 
         }
@@ -294,7 +313,6 @@ public class Controller {
 
         checkInView.resetView();
         Passenger nextPassengerData = tempPassengersData[checkInViewPagingIndex];
-        checkInView.updateView();
 
         if (nextPassengerData != null) {
 
@@ -303,7 +321,7 @@ public class Controller {
                 checkInView.createBagPartialView(new RemoveBagPartialViewButtonListener());
             }
 
-            checkInView.updateView();
+
 
             String nextPassengerBookingID = nextPassengerData.getBookingID();
             String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
@@ -319,5 +337,6 @@ public class Controller {
                 nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
             }
         }
+        checkInView.updateView();
     }
 }
