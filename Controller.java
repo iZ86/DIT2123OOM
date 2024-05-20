@@ -151,12 +151,7 @@ public class Controller {
 
 
             } catch (NumberFormatException ex) {
-                // TODO: Temporary.
-                JOptionPane.showMessageDialog(new JFrame(),
-                        "Number format exception",
-                        "AeroCheck In",
-                        JOptionPane.ERROR_MESSAGE);
-
+                checkInView.updateView();
             }
         }
     }
@@ -178,12 +173,7 @@ public class Controller {
                 loadCacheCheckInViewData(checkInView);
 
             } catch (NumberFormatException ex) {
-                // TODO: Temporary.
-                JOptionPane.showMessageDialog(new JFrame(),
-                        "Number format exception",
-                        "AeroCheck In",
-                        JOptionPane.ERROR_MESSAGE);
-
+                checkInView.updateView();
             }
         }
     }
@@ -194,42 +184,50 @@ public class Controller {
             // TODO: Need to keep track of bags in Passenger properly.
             // TODO: Use a different passenger index to add the passengers.
 
-            boolean allValid = true;
-            int pageIndexOfInvalidBookingID = -1;
+            // TODO: WIP.
+            CheckInView checkInView = gui.getCheckInView();
 
-            boardingPassViewPagingIndex = 0;
-            cacheCheckInViewData(gui.getCheckInView());
+            try {
+                boolean allValid = true;
+                int pageIndexOfInvalidBookingID = -1;
 
-            // Validates all the bookingID.
-            for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
-                if (!kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
-                    allValid = false;
-                    pageIndexOfInvalidBookingID = i;
-                    break;
-                }
-            }
+                boardingPassViewPagingIndex = 0;
+                cacheCheckInViewData(checkInView);
 
-            if (allValid) {
-                gui.getCheckInView().setInvalidBookingID(false);
+                // Validates all the bookingID.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
-                    if (kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
-                        kioskCheckInModel.insertPassenger(tempPassengersData[i]);
-                        kioskCheckInModel.setPassengerIndex(0);
-                        gui.getBoardingPassView().updateView();
-                        gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
-                    } else {
-                        checkInViewPagingIndex = i;
-                        gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
-                        loadCacheCheckInViewData(gui.getCheckInView());
+                    if (!kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
+                        allValid = false;
+                        pageIndexOfInvalidBookingID = i;
+                        break;
                     }
                 }
 
-            } else {
-                checkInViewPagingIndex = pageIndexOfInvalidBookingID;
-                gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
-                gui.getCheckInView().setInvalidBookingID(true);
-                loadCacheCheckInViewData(gui.getCheckInView());
+                if (allValid) {
+                    gui.getCheckInView().setInvalidBookingID(false);
+                    for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                        if (kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
+                            kioskCheckInModel.insertPassenger(tempPassengersData[i]);
+                            kioskCheckInModel.setPassengerIndex(0);
+                            gui.getBoardingPassView().updateView();
+                            gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+                        } else {
+                            checkInViewPagingIndex = i;
+                            gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
+                            loadCacheCheckInViewData(checkInView);
+                        }
+                    }
+
+                } else {
+                    checkInViewPagingIndex = pageIndexOfInvalidBookingID;
+                    gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
+                    gui.getCheckInView().setInvalidBookingID(true);
+                    loadCacheCheckInViewData(checkInView);
+                }
+            } catch (NumberFormatException ex) {
+                checkInView.updateView();
             }
+
 
         }
     }
@@ -293,16 +291,79 @@ public class Controller {
     // TODO: Try to take out removeAllBagPartialViews method and updateView method in loadCacheCheckInView method.
     /** Caches the checkInView data inputted by the user into tempPassengersData. */
     public void cacheCheckInViewData(CheckInView checkInView) {
+
+        boolean cacheFailed = false;
+
+
         String bookingID = checkInView.getBookingNumberFromTextField();
+
+        if (bookingID.isEmpty()) {
+            checkInView.setWarnEmptyBookingNumberInput(true);
+            cacheFailed = true;
+        } else {
+            checkInView.setWarnEmptyBookingNumberInput(false);
+        }
+
+
         String passportNumber = checkInView.getPassportNumberFromTextField();
+
+        if (passportNumber.isEmpty()) {
+            checkInView.setWarnEmptyPassportNumberInput(true);
+            cacheFailed = true;
+        } else {
+            checkInView.setWarnEmptyPassportNumberInput(false);
+        }
+
+
         String fullName = checkInView.getFullNameFromTextField();
+
+        if (fullName.isEmpty()) {
+            checkInView.setWarnEmptyFullNameInput(true);
+            cacheFailed = true;
+        } else {
+            checkInView.setWarnEmptyFullNameInput(false);
+        }
+
+
         Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
         LinkedList<BagPartialView> currBagPartialViews = checkInView.getBagPartialViews();
         for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
-            bags[i] = new Bag(null, currBagPartialViews.get(i).getBagColorFromTextField(), Double.valueOf(currBagPartialViews.get(i).getBagWeightFromTextField()));
+            String bagColor = currBagPartialViews.get(i).getBagColorFromTextField();
+            String bagWeightString = currBagPartialViews.get(i).getBagWeightFromTextField();
+
+            if (bagColor.isEmpty()) {
+                // Set warning message.
+                cacheFailed = true;
+            }
+
+            boolean invalidBagWeight = false;
+
+            if (bagWeightString.isEmpty()) {
+                // Set warning message.
+                cacheFailed = true;
+                invalidBagWeight = true;
+            } else {
+                if (!isValidDouble(bagWeightString)) {
+                    cacheFailed = true;
+                    invalidBagWeight = true;
+                    // Set warning message.
+                }
+            }
+
+            if (invalidBagWeight) {
+                bags[i] = new Bag(null, bagColor, -1);
+            } else {
+                bags[i] = new Bag(null, bagColor, Double.valueOf(bagWeightString));
+            }
+
+        }
+
+        if (cacheFailed) {
+            throw new NumberFormatException();
         }
 
         tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
+
     }
 
     /** Loads the cache at index tempPassengersData that was saved by checkInView data,
@@ -338,5 +399,58 @@ public class Controller {
             }
         }
         checkInView.updateView();
+    }
+
+    /** This method is used to validate,
+     * that the string is in the format of a double.
+     */
+    private boolean isValidDouble(String d) {
+
+        if (d.isBlank()) {
+            return false;
+        }
+
+        int numberOfDecimalPoint = 0;
+
+        for (int i = 0; i < d.length(); i++) {
+            char character = d.charAt(i);
+
+            if (isCharacterDecimalPoint(character)) {
+                numberOfDecimalPoint += 1;
+            }
+
+            /* Return false, if character is not a number or a decimal place,
+            or if it has more than one decimal point,
+            or if the whole score is just one decimal point,
+            or if it has more than two decimal places.
+             */
+            if ((!isCharacterNumber(character) && !isCharacterDecimalPoint(character))
+                    || numberOfDecimalPoint > 1
+                    || (numberOfDecimalPoint == 1 && (d.length() == 1))
+                    || (numberOfDecimalPoint == 1 && ((d.length() - i) > 3))) {
+                return false;
+            }
+        }
+
+        // subjectScore cannot be less than 0, or more than 100.
+        double subjectScore = Double.parseDouble(d);
+        if (subjectScore < 0 || subjectScore > 100) {
+            return false;
+        }
+        return true;
+    }
+
+    /** Return true, iff char CHARACTER is a decimal point.
+     * Otherwise, return false.
+     */
+    public boolean isCharacterDecimalPoint(char character) {
+        return (character == 46);
+    }
+
+    /** Return true, iff char NUMBER iS a number.
+     * Otherwise, return false.
+     */
+    public boolean isCharacterNumber(char number) {
+        return (number >= 48 && number <= 57);
     }
 }
