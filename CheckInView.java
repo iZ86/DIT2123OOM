@@ -62,6 +62,12 @@ public class CheckInView {
     private int checkInViewPagingIndex;
     /** True iff the bookingID inputted is invalid, used to decide when to display "invalid bookingID". */
     private boolean invalidBookingID;
+    /** Deciding factor if there should be a warning label for empty booking number in bookingNumberTextField. */
+    private boolean warnEmptyBookingNumberInput;
+    /** Deciding factor if there should be a warning label for empty passport number in passportNumberTextField. */
+    private boolean warnEmptyPassportNumberInput;
+    /** Deciding factor if there should be a warning label for empty full name in fullNameTextField. */
+    private boolean warnEmptyFullNameInput;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -215,6 +221,20 @@ public class CheckInView {
         this.invalidBookingID = invalidBookingID;
     }
 
+    /** Sets warnEmptyBookingNumberInput. */
+    public void setWarnEmptyBookingNumberInput(boolean warnEmptyBookingNumberInput) {
+        this.warnEmptyBookingNumberInput = warnEmptyBookingNumberInput;
+    }
+
+    /** Sets warnEmptyPassportNumberInput. */
+    public void setWarnEmptyPassportNumberInput(boolean warnEmptyPassportNumberInput) {
+        this.warnEmptyPassportNumberInput  = warnEmptyPassportNumberInput;
+    }
+
+    /** Sets warnEmptyFullNameInput. */
+    public void setWarnEmptyFullNameInput(boolean warnEmptyFullNameInput) {
+        this.warnEmptyFullNameInput = warnEmptyFullNameInput;
+    }
 
     /** Returns the checkInViewPanel. */
     public JPanel getCheckInViewPanel() {
@@ -383,6 +403,17 @@ public class CheckInView {
             textFieldPanel.add(invalidBookingNumberLabel, constraintsForInvalidBookingNumberLabel);
         }
 
+        if (warnEmptyBookingNumberInput) {
+
+            JLabel warningEmptyBookingNumberLabel = new JLabel("Empty Field.");
+            warningEmptyBookingNumberLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForWarningEmptyBookingNumberLabel = new GridBagConstraints();
+            constraintsForWarningEmptyBookingNumberLabel.gridx = 1;
+            constraintsForWarningEmptyBookingNumberLabel.gridy = 1;
+
+            textFieldPanel.add(warningEmptyBookingNumberLabel, constraintsForWarningEmptyBookingNumberLabel);
+        }
+
         GridBagConstraints constraintsForPassportLabel = new GridBagConstraints();
         constraintsForPassportLabel.gridx = 0;
         constraintsForPassportLabel.gridy = 2;
@@ -393,6 +424,17 @@ public class CheckInView {
         constraintsForPassportNumberTextField.gridy = 2;
         constraintsForPassportNumberTextField.fill = GridBagConstraints.HORIZONTAL;
         constraintsForPassportNumberTextField.ipady = verticalSizeOfTextField;
+
+        if (warnEmptyPassportNumberInput) {
+
+            JLabel warningEmptyPassportNumberLabel = new JLabel("Empty Field.");
+            warningEmptyPassportNumberLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForWarningEmptyPassportNumberLabel = new GridBagConstraints();
+            constraintsForWarningEmptyPassportNumberLabel.gridx = 1;
+            constraintsForWarningEmptyPassportNumberLabel.gridy = 3;
+
+            textFieldPanel.add(warningEmptyPassportNumberLabel, constraintsForWarningEmptyPassportNumberLabel);
+        }
 
         // constraints.gridy = 4 for fullNameLabel and fullNameTextField
         // because JLabels representing error messages will occupy space
@@ -409,6 +451,16 @@ public class CheckInView {
         constraintsForFullNameTextField.fill = GridBagConstraints.HORIZONTAL;
         constraintsForFullNameTextField.ipady = verticalSizeOfTextField;
 
+        if (warnEmptyFullNameInput) {
+
+            JLabel warningEmptyFullNameLabel = new JLabel("Empty Field.");
+            warningEmptyFullNameLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForWarningEmptyFullNameLabel = new GridBagConstraints();
+            constraintsForWarningEmptyFullNameLabel.gridx = 1;
+            constraintsForWarningEmptyFullNameLabel.gridy = 5;
+
+            textFieldPanel.add(warningEmptyFullNameLabel, constraintsForWarningEmptyFullNameLabel);
+        }
 
 
 
