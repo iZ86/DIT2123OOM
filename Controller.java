@@ -132,7 +132,7 @@ public class Controller {
             // TODO: Don't clear the text field that was added.
             // TODO: An easy fix is to put the textFields as instance attributes.
             if (gui.getCheckInView().getNumberOfBagPartialViews() >= 4) {
-                gui.getCheckInView().maximumBagErrorMessage();
+                gui.getCheckInView().setWarnMaximumNumberOfBagsAdded(true);
             } else {
                 gui.getCheckInView().createBagPartialView(new RemoveBagPartialViewButtonListener());
             }
@@ -293,6 +293,7 @@ public class Controller {
             // in the LinkedList bagPartialViews in CheckInView.
             int bagPartialViewIndex = (int) ((JButton) e.getSource()).getClientProperty("index");
 
+            gui.getCheckInView().setWarnMaximumNumberOfBagsAdded(false);
             gui.getCheckInView().removeBagPartialView(bagPartialViewIndex);
             gui.getCheckInView().updateView();
         }
@@ -326,8 +327,6 @@ public class Controller {
         if (bookingID.isEmpty()) {
             checkInView.setWarnEmptyBookingNumberInput(true);
             cacheFailed = true;
-        } else {
-            checkInView.setWarnEmptyBookingNumberInput(false);
         }
 
 
@@ -336,8 +335,6 @@ public class Controller {
         if (passportNumber.isEmpty()) {
             checkInView.setWarnEmptyPassportNumberInput(true);
             cacheFailed = true;
-        } else {
-            checkInView.setWarnEmptyPassportNumberInput(false);
         }
 
 
@@ -346,8 +343,6 @@ public class Controller {
         if (fullName.isEmpty()) {
             checkInView.setWarnEmptyFullNameInput(true);
             cacheFailed = true;
-        } else {
-            checkInView.setWarnEmptyFullNameInput(false);
         }
 
 
@@ -424,7 +419,7 @@ public class Controller {
                 nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
             }
 
-            checkInView.setInvalidBookingID(tempInvalidBookingIDData[checkInViewPagingIndex]);
+            checkInView.setWarnInvalidBookingID(tempInvalidBookingIDData[checkInViewPagingIndex]);
         }
         checkInView.updateView();
     }
