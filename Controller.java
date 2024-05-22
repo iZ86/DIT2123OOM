@@ -24,6 +24,8 @@ public class Controller {
      * used to keep track of which passenger's boarding pass to show.
      */
     private int boardingPassViewPagingIndex;
+    /** Temp data to keep track of which tempPassengerData's bookingID is invalid. */
+    private boolean[] tempInvalidBookingIDData;
 
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
@@ -86,6 +88,8 @@ public class Controller {
             kioskCheckInModel.setNumberOfPassengers(1);
             checkInViewPagingIndex = 0;
             tempPassengersData = new Passenger[1];
+            tempInvalidBookingIDData = new boolean[1];
+            tempInvalidBookingIDData[0] = false;
             gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
             gui.getCheckInView().resetView();
             gui.getCheckInView().updateView();
@@ -106,6 +110,10 @@ public class Controller {
                 checkInViewPagingIndex = 0;
                 gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
                 tempPassengersData = new Passenger[numberOfPassengers];
+                tempInvalidBookingIDData = new boolean[numberOfPassengers];
+                for (int i = 0; i < numberOfPassengers; i++) {
+                    tempInvalidBookingIDData[i] = false;
+                }
                 gui.getCheckInView().resetView();
                 gui.getCheckInView().updateView();
                 gui.changeView(GUI.CHECKINVIEWINDEX);
@@ -183,47 +191,65 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             // TODO: Need to keep track of bags in Passenger properly.
             // TODO: Use a different passenger index to add the passengers.
-
-            // TODO: WIP.
             CheckInView checkInView = gui.getCheckInView();
 
             try {
-                boolean allValid = true;
-                int pageIndexOfInvalidBookingID = -1;
 
-                boardingPassViewPagingIndex = 0;
                 cacheCheckInViewData(checkInView);
+
+                // Check if there is any empty data, if there is any,
+                // load it up and throw NumberFormatException (following the cacheCheckInView from the above line.
+                for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                    if (tempPassengersData[i] == null) {
+                        checkInViewPagingIndex = i;
+                        checkInView.setCheckInViewPagingIndex(checkInViewPagingIndex);
+                        loadCacheCheckInViewData(checkInView);
+                        checkInView.setWarnEmptyBookingNumberInput(true);
+                        checkInView.setWarnEmptyPassportNumberInput(true);
+                        checkInView.setWarnEmptyFullNameInput(true);
+                        throw new NumberFormatException();
+                    }
+                }
+
+
+                boolean allValid = true;
+                int pageIndexOfInvalidBookingID = 0;
+                boolean foundFirstInvalid = false;
 
                 // Validates all the bookingID.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+
                     if (!kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
                         allValid = false;
-                        pageIndexOfInvalidBookingID = i;
-                        break;
+
+                        // If we have found the first invalid bookingID,
+                        // Keep track of the pagingIndex it is at.
+                        if (!foundFirstInvalid) {
+                            pageIndexOfInvalidBookingID = i;
+                            foundFirstInvalid = true;
+                        }
+
+                        tempInvalidBookingIDData[i] = true;
+
+                    } else {
+                        tempInvalidBookingIDData[i] = false;
                     }
                 }
 
-                if (allValid) {
-                    gui.getCheckInView().setInvalidBookingID(false);
-                    for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
-                        if (kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
-                            kioskCheckInModel.insertPassenger(tempPassengersData[i]);
-                            kioskCheckInModel.setPassengerIndex(0);
-                            gui.getBoardingPassView().updateView();
-                            gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
-                        } else {
-                            checkInViewPagingIndex = i;
-                            gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
-                            loadCacheCheckInViewData(checkInView);
-                        }
-                    }
 
+                if (allValid) {
+                    boardingPassViewPagingIndex = 0;
+                    for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                        kioskCheckInModel.insertPassenger(tempPassengersData[i]);
+                        gui.getBoardingPassView().updateView();
+                        gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+                    }
                 } else {
                     checkInViewPagingIndex = pageIndexOfInvalidBookingID;
                     gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
-                    gui.getCheckInView().setInvalidBookingID(true);
                     loadCacheCheckInViewData(checkInView);
                 }
+
             } catch (NumberFormatException ex) {
                 checkInView.updateView();
             }
@@ -397,6 +423,8 @@ public class Controller {
                 nextBagPartialViews.get(i).setBagColorTextField(nextPassengerData.getBag(i).getBagColor());
                 nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
             }
+
+            checkInView.setInvalidBookingID(tempInvalidBookingIDData[checkInViewPagingIndex]);
         }
         checkInView.updateView();
     }
