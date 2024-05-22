@@ -135,6 +135,7 @@ public class CheckInView {
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         constraintsForTextFieldPanel.gridy = 0;
         constraintsForTextFieldPanel.gridx = 0;
+        constraintsForTextFieldPanel.insets = new Insets(0, 0, 20, 0);
 
         GridBagConstraints constraintsForPanelForSpecialAccommodationInput= new GridBagConstraints();
         constraintsForPanelForSpecialAccommodationInput.gridy = 1;
@@ -385,13 +386,14 @@ public class CheckInView {
         GridBagConstraints constraintsForBookingNumberLabel = new GridBagConstraints();
         constraintsForBookingNumberLabel.gridx = 0;
         constraintsForBookingNumberLabel.gridy = 0;
-        constraintsForBookingNumberLabel.insets = new Insets(0, 0, 0, 20);
+        constraintsForBookingNumberLabel.insets = new Insets(15, 0, 0, 20);
 
         GridBagConstraints constraintsForBookingNumberTextField = new GridBagConstraints();
         constraintsForBookingNumberTextField.gridx = 1;
         constraintsForBookingNumberTextField.gridy = 0;
         constraintsForBookingNumberTextField.ipadx = horizontalSizeOfTextField;
         constraintsForBookingNumberTextField.ipady = verticalSizeOfTextField;
+        constraintsForBookingNumberTextField.insets = new Insets(15, 0, 0, 0);
 
         if (invalidBookingID) {
             JLabel invalidBookingNumberLabel = new JLabel("Invalid Booking Number.");
@@ -417,13 +419,14 @@ public class CheckInView {
         GridBagConstraints constraintsForPassportLabel = new GridBagConstraints();
         constraintsForPassportLabel.gridx = 0;
         constraintsForPassportLabel.gridy = 2;
-        constraintsForPassportLabel.insets = new Insets(15, 0, 15, 20);
+        constraintsForPassportLabel.insets = new Insets(15, 0, 0, 20);
 
         GridBagConstraints constraintsForPassportNumberTextField = new GridBagConstraints();
         constraintsForPassportNumberTextField.gridx = 1;
         constraintsForPassportNumberTextField.gridy = 2;
         constraintsForPassportNumberTextField.fill = GridBagConstraints.HORIZONTAL;
         constraintsForPassportNumberTextField.ipady = verticalSizeOfTextField;
+        constraintsForPassportNumberTextField.insets = new Insets(15, 0, 0, 0);
 
         if (warnEmptyPassportNumberInput) {
 
@@ -443,13 +446,14 @@ public class CheckInView {
         GridBagConstraints constraintsForFullNameLabel = new GridBagConstraints();
         constraintsForFullNameLabel.gridx = 0;
         constraintsForFullNameLabel.gridy = 4;
-        constraintsForFullNameLabel.insets = new Insets(0, 0, 0, 20);
+        constraintsForFullNameLabel.insets = new Insets(15, 0, 0, 20);
 
         GridBagConstraints constraintsForFullNameTextField = new GridBagConstraints();
         constraintsForFullNameTextField.gridx = 1;
         constraintsForFullNameTextField.gridy = 4;
         constraintsForFullNameTextField.fill = GridBagConstraints.HORIZONTAL;
         constraintsForFullNameTextField.ipady = verticalSizeOfTextField;
+        constraintsForFullNameTextField.insets = new Insets(15, 0, 0, 0);
 
         if (warnEmptyFullNameInput) {
 
@@ -472,7 +476,6 @@ public class CheckInView {
         textFieldPanel.add(fullNameLabel, constraintsForFullNameLabel);
         textFieldPanel.add(fullNameTextField, constraintsForFullNameTextField);
 
-        textFieldPanel.setPreferredSize(new Dimension(350, 150));
 
         return textFieldPanel;
     }
