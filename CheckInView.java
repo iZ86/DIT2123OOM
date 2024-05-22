@@ -47,7 +47,7 @@ public class CheckInView {
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
     /** Grid Y to push the BagPartialViewPanel downwards, otherwise it will add horizontally. */
-    private int gridYOfBagPartialView = 3;
+    private int gridYOfBagPartialView = 4;
     /** Check Box for Wheel Chair Option.*/
     private JCheckBox wheelchairCheckBox = new JCheckBox("Wheelchair");
     /** Check Box for Blindness Option.*/
@@ -61,19 +61,20 @@ public class CheckInView {
     /** checkInViewPagingIndex, used to show the page that the user is at. */
     private int checkInViewPagingIndex;
     /** True iff the bookingID inputted is invalid, used to decide when to display "invalid bookingID". */
-    private boolean invalidBookingID;
-    /** Deciding factor if there should be a warning label for empty booking number in bookingNumberTextField. */
+    private boolean warnInvalidBookingID;
+    /** True if there should be a warning prompt for empty booking number in bookingNumberTextField. */
     private boolean warnEmptyBookingNumberInput;
-    /** Deciding factor if there should be a warning label for empty passport number in passportNumberTextField. */
+    /** True if there should be a warning prompt for empty passport number in passportNumberTextField. */
     private boolean warnEmptyPassportNumberInput;
-    /** Deciding factor if there should be a warning label for empty full name in fullNameTextField. */
+    /** True factor if there should be a warning prompt for empty full name in fullNameTextField. */
     private boolean warnEmptyFullNameInput;
+    /** True if there should be warning prompt for maximum number of bags added. */
+    private boolean warnMaximumNumberOfBagsAdded;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
         bagPartialViews = new LinkedList<>();
-        invalidBookingID = false;
         setupViewPanel();
         bookingNumberTextField.setColumns(1);
         passportNumberTextField.setColumns(1);
@@ -95,7 +96,7 @@ public class CheckInView {
         checkInViewPanel.removeAll();
     }
 
-    /** Resets the view from all user inputs. */
+    /** Resets the view from all user inputs and removes all warnings. */
     public void resetView() {
         // Removes all the bagPartialViews.
         bagPartialViews = new LinkedList<>();
@@ -112,6 +113,12 @@ public class CheckInView {
         setBlindnessCheckBoxSelected(false);
         setOthersSpecialAccommodationCheckBoxSelected(false);
         setOthersSpecialAccommodationTextFieldEnabled(false);
+
+        setWarnInvalidBookingID(false);
+        setWarnEmptyBookingNumberInput(false);
+        setWarnEmptyPassportNumberInput(false);
+        setWarnEmptyFullNameInput(false);
+        setWarnMaximumNumberOfBagsAdded(false);
     }
 
     /** Updates the view. */
@@ -130,25 +137,35 @@ public class CheckInView {
         int verticalSizeOfBaggageButton = 8;
 
         JPanel textFieldPanel = setupViewTextFieldPanel();
-        JPanel panelForSpecialAccommodationInput = setupPanelForSpecialAccommodationInput();
+        JPanel specialAccommodationInputPanel = setupPanelForSpecialAccommodationInput();
 
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         constraintsForTextFieldPanel.gridy = 0;
         constraintsForTextFieldPanel.gridx = 0;
         constraintsForTextFieldPanel.insets = new Insets(0, 0, 20, 0);
 
-        GridBagConstraints constraintsForPanelForSpecialAccommodationInput= new GridBagConstraints();
-        constraintsForPanelForSpecialAccommodationInput.gridy = 1;
-        constraintsForPanelForSpecialAccommodationInput.gridx = 0;
-        constraintsForPanelForSpecialAccommodationInput.insets = new Insets(0,0,20,0);
+        GridBagConstraints constraintsForSpecialAccommodationInputPanel = new GridBagConstraints();
+        constraintsForSpecialAccommodationInputPanel.gridy = 1;
+        constraintsForSpecialAccommodationInputPanel.gridx = 0;
+        constraintsForSpecialAccommodationInputPanel.insets = new Insets(0,0,20,0);
 
         GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
         constraintsForAddBaggageButton.gridy = 2;
         constraintsForAddBaggageButton.ipadx = horizontalSizeOfBaggageButton;
         constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
 
+        if (warnMaximumNumberOfBagsAdded) {
+            JLabel warnMaximumNumberOfBagsAddedLabel = new JLabel("Maximum number of bags added.");
+            warnMaximumNumberOfBagsAddedLabel.setForeground(Color.RED);
+
+            GridBagConstraints constraintsForWarnMaximumNumberOfBagsAdded = new GridBagConstraints();
+            constraintsForWarnMaximumNumberOfBagsAdded.gridy = 3;
+
+            panelForTextFieldAndBagPartialView.add(warnMaximumNumberOfBagsAddedLabel, constraintsForWarnMaximumNumberOfBagsAdded);
+        }
+
         panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
-        panelForTextFieldAndBagPartialView.add(panelForSpecialAccommodationInput, constraintsForPanelForSpecialAccommodationInput);
+        panelForTextFieldAndBagPartialView.add(specialAccommodationInputPanel, constraintsForSpecialAccommodationInputPanel);
         panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
 
         // If there is any bagPartialViews, add them.
@@ -200,14 +217,6 @@ public class CheckInView {
         bagPartialViews.add(bagPartialView);
     }
 
-    /** Warning method to call when the addBagButton is pressed more than 4 times */
-    public JLabel maximumBagErrorMessage() {
-        JLabel labelForBaggageText = new JLabel("Maximum number of bags is 4 !!!");
-        labelForBaggageText.setForeground(Color.red);
-
-        return labelForBaggageText;
-    }
-
     /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews,
      * and remove it from the checkInViewPanel.
      */
@@ -217,9 +226,9 @@ public class CheckInView {
         setupViewPanel();
     }
 
-    /** Sets invalidBookingID. */
-    public void setInvalidBookingID(boolean invalidBookingID) {
-        this.invalidBookingID = invalidBookingID;
+    /** Sets warnInvalidBookingID. */
+    public void setWarnInvalidBookingID(boolean warnInvalidBookingID) {
+        this.warnInvalidBookingID = warnInvalidBookingID;
     }
 
     /** Sets warnEmptyBookingNumberInput. */
@@ -235,6 +244,11 @@ public class CheckInView {
     /** Sets warnEmptyFullNameInput. */
     public void setWarnEmptyFullNameInput(boolean warnEmptyFullNameInput) {
         this.warnEmptyFullNameInput = warnEmptyFullNameInput;
+    }
+
+    /** Sets warnMaximumNumberOfBagsAdded. */
+    public void setWarnMaximumNumberOfBagsAdded(boolean warnMaximumNumberOfBagsAdded) {
+        this.warnMaximumNumberOfBagsAdded = warnMaximumNumberOfBagsAdded;
     }
 
     /** Returns the checkInViewPanel. */
@@ -395,7 +409,7 @@ public class CheckInView {
         constraintsForBookingNumberTextField.ipady = verticalSizeOfTextField;
         constraintsForBookingNumberTextField.insets = new Insets(15, 0, 0, 0);
 
-        if (invalidBookingID) {
+        if (warnInvalidBookingID) {
             JLabel invalidBookingNumberLabel = new JLabel("Invalid Booking Number.");
             invalidBookingNumberLabel.setForeground(Color.RED);
             GridBagConstraints constraintsForInvalidBookingNumberLabel = new GridBagConstraints();
