@@ -73,8 +73,10 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             // TODO: Changes the view to the GUIViewPanel to checkInOptionView.
+            CheckInOptionView checkInOptionView = gui.getCheckInOptionView();
+            checkInOptionView.resetView();
+            checkInOptionView.updateView();
             gui.changeView(GUI.CHECKINOPTIONVIEWINDEX);
-            gui.getCheckInOptionView().setNumberOfPassengers(2);
         }
     }
 
@@ -118,9 +120,10 @@ public class Controller {
                 gui.getCheckInView().updateView();
                 gui.changeView(GUI.CHECKINVIEWINDEX);
             } else {
-                // TODO: Warning.
-                // TODO: Must be greater than 2.
-                System.out.println("I must be more than 2.");
+                CheckInOptionView checkInOptionView = gui.getCheckInOptionView();
+                checkInOptionView.resetView();
+                checkInOptionView.setWarnMinimumNumberOfPassengers(true);
+                checkInOptionView.updateView();
             }
 
         }
