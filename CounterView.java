@@ -25,8 +25,6 @@ public class CounterView {
     /** Sets up the counterViewPanel. */
     private void setupViewPanel() {
 
-
-
         // Staff and counter information
         JLabel counterNumberLabel = new JLabel(String.format("Counter: %d", counterModel.getCounterNumber()));
         JLabel staffNameLabel = new JLabel("Staff Name: " + counterModel.getStaffName());
@@ -84,6 +82,19 @@ public class CounterView {
         constraintsForMainMenuButton.gridy = 5;
         constraintsForMainMenuButton.insets = new Insets(30, 0, 0, 0);
         counterViewPanel.add(mainMenuButton, constraintsForMainMenuButton);
+    }
+
+    /** Clears the view. */
+    private void clearView() {
+        counterViewPanel.removeAll();
+    }
+
+    /** Updates the view. */
+    public void updateView() {
+        clearView();
+        setupViewPanel();
+        counterViewPanel.revalidate();
+        counterViewPanel.repaint();
     }
 
     /** Returns the counterViewPanel. */
