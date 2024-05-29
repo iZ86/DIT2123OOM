@@ -15,13 +15,6 @@ public class CounterModel {
 
     public CounterModel() {
         utils = new Utils();
-
-        // Temporary Initialization for testing purpose.
-        // TODO: Remove this once everything is completed.
-        counterNumber = 1;
-        staffName = "Staff1";
-        staffRole = "Role1";
-        staffID = 1;
     }
 
     /** Returns counterNumber. */
@@ -42,6 +35,14 @@ public class CounterModel {
     /** Returns staffAge. */
     public int getStaffID() {
         return staffID;
+    }
+
+    /** Gets a new Counter and sets its data in the model. */
+    public void nextCounter() {
+        counterNumber = 0;
+        staffName = "Staff1";
+        staffRole = "Role1";
+        staffID = 1;
     }
 
 }
