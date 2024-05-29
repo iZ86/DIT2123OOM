@@ -65,6 +65,8 @@ public class Controller {
     public class CheckInCounterButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            counterModel.nextCounter();
+            gui.getCounterView().updateView();
             gui.changeView(GUI.COUNTERVIEWINDEX);
         }
     }
