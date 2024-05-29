@@ -8,94 +8,90 @@ public class CounterView {
     private JPanel counterViewPanel = new JPanel(new GridBagLayout());
 
     /** The model that holds the staff and counter information. */
-    private CounterModel CounterModel;
+    private CounterModel counterModel;
 
-    /* JButton that changes the view to the MainMenuView. */
+    /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
 
-    /* Title */
-    JLabel titleText = new JLabel("Check In Counter");
 
-    /* Creates a CounterView object. */
-    public CounterView(CounterModel CounterModel) {
-        this.CounterModel = CounterModel;
+
+
+    /** Creates a CounterView object. */
+    public CounterView(CounterModel counterModel) {
+        this.counterModel = counterModel;
         setupViewPanel();
     }
 
-    /* Sets up the counterViewPanel. */
+    /** Sets up the counterViewPanel. */
     private void setupViewPanel() {
-        /* Staff and Counter information */
-        JLabel counterNumber = new JLabel(String.format("Counter: %d",CounterModel.getCounterNumber()));
-        JLabel staffName = new JLabel("Staff Name: " + CounterModel.getStaffName());
-        JLabel staffRole = new JLabel("Staff Role: " + CounterModel.getStaffRole());
-        JLabel staffID = new JLabel(String.format("Staff ID: %d",CounterModel.getStaffID()));
 
-        GridBagConstraints titleTextConstraints = new GridBagConstraints();
-        GridBagConstraints mainMenuButtonConstraints = new GridBagConstraints();
-        GridBagConstraints counterNumberConstraints = new GridBagConstraints();
-        GridBagConstraints staffNameConstraints = new GridBagConstraints();
-        GridBagConstraints staffRoleConstraints = new GridBagConstraints();
-        GridBagConstraints staffIDConstraints = new GridBagConstraints();
 
-        // Set size for buttons
-        mainMenuButton.setPreferredSize(new Dimension(100, 40));
+
+        // Staff and counter information
+        JLabel counterNumberLabel = new JLabel(String.format("Counter: %d", counterModel.getCounterNumber()));
+        JLabel staffNameLabel = new JLabel("Staff Name: " + counterModel.getStaffName());
+        JLabel staffRoleLabel = new JLabel("Staff Role: " + counterModel.getStaffRole());
+        JLabel staffIDLabel = new JLabel(String.format("Staff ID: %d", counterModel.getStaffID()));
+
+        GridBagConstraints constraintsForTitleLabel = new GridBagConstraints();
+        GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
+        GridBagConstraints constraintsForCounterNumberLabel = new GridBagConstraints();
+        GridBagConstraints constraintsForStaffNameLabel = new GridBagConstraints();
+        GridBagConstraints constraintsForStaffRoleLabel = new GridBagConstraints();
+        GridBagConstraints constraintsForStaffIDLabel = new GridBagConstraints();
+
+        int widthOfButton = 30;
+        int heightOfButton = 15;
+
 
         // Title
-        titleText.setFont(new Font("Arial", Font.BOLD, 17));
-        titleTextConstraints.ipadx = 0;
-        titleTextConstraints.ipady = 0;
-        titleTextConstraints.gridx = 0;
-        titleTextConstraints.gridy = 0;
-        titleTextConstraints.insets = new Insets(0, 0, 300, 0);
-        counterViewPanel.add(titleText, titleTextConstraints);
-        
-        // Add Back To Main Menu button to panel
-        mainMenuButtonConstraints.ipadx = 0;
-        mainMenuButtonConstraints.ipady = 0;
-        mainMenuButtonConstraints.gridx = 0;
-        mainMenuButtonConstraints.gridy = 0;
-        mainMenuButtonConstraints.insets = new Insets(300, 0, 0, 0);
-        counterViewPanel.add(mainMenuButton, mainMenuButtonConstraints);
+        JLabel titleLabel = new JLabel("Check In Counter");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 17));
+        constraintsForTitleLabel.gridx = 0;
+        constraintsForTitleLabel.gridy = 0;
+        counterViewPanel.add(titleLabel, constraintsForTitleLabel);
 
         // Add counter number to panel
-        counterNumberConstraints.ipadx = 0;
-        counterNumberConstraints.ipady = 0;
-        counterNumberConstraints.gridx = 0;
-        counterNumberConstraints.gridy = 0;
-        counterNumberConstraints.insets = new Insets(0, 0, 200, 0);
-        counterViewPanel.add(counterNumber, counterNumberConstraints);
+        constraintsForCounterNumberLabel.gridx = 0;
+        constraintsForCounterNumberLabel.gridy = 1;
+        constraintsForCounterNumberLabel.insets = new Insets(30, 0, 0, 0);
+        counterViewPanel.add(counterNumberLabel, constraintsForCounterNumberLabel);
+
+        // Add staff ID to panel
+        constraintsForStaffIDLabel.gridx = 0;
+        constraintsForStaffIDLabel.gridy = 2;
+        constraintsForStaffIDLabel.insets = new Insets(30, 0, 0, 0);
+        counterViewPanel.add(staffIDLabel, constraintsForStaffIDLabel);
 
         // Add staff name to panel
-        staffNameConstraints.ipadx = 0;
-        staffNameConstraints.ipady = 0;
-        staffNameConstraints.gridx = 0;
-        staffNameConstraints.gridy = 0;
-        staffNameConstraints.insets = new Insets(0, 0, 100, 0);
-        counterViewPanel.add(staffName, staffNameConstraints);
+        constraintsForStaffNameLabel.gridx = 0;
+        constraintsForStaffNameLabel.gridy = 3;
+        constraintsForStaffNameLabel.insets = new Insets(30, 0, 0, 0);
+        counterViewPanel.add(staffNameLabel, constraintsForStaffNameLabel);
     
         // Add staff role to panel
-        staffRoleConstraints.ipadx = 0;
-        staffRoleConstraints.ipady = 0;
-        staffRoleConstraints.gridx = 0;
-        staffRoleConstraints.gridy = 0;
-        staffRoleConstraints.insets = new Insets(100, 0, 0, 0);
-        counterViewPanel.add(staffRole, staffRoleConstraints);
+        constraintsForStaffRoleLabel.gridx = 0;
+        constraintsForStaffRoleLabel.gridy = 4;
+        constraintsForStaffRoleLabel.insets = new Insets(30, 0, 0, 0);
+        counterViewPanel.add(staffRoleLabel, constraintsForStaffRoleLabel);
         
-        // Add staff ID to panel
-        staffIDConstraints.ipadx = 0;
-        staffIDConstraints.ipady = 0;
-        staffIDConstraints.gridx = 0;
-        staffIDConstraints.gridy = 0;
-        staffIDConstraints.insets = new Insets(0, 0, 0, 0);
-        counterViewPanel.add(staffID, staffIDConstraints);
+
+
+        // Add Back To Main Menu button to panel
+        constraintsForMainMenuButton.ipadx = widthOfButton;
+        constraintsForMainMenuButton.ipady = heightOfButton;
+        constraintsForMainMenuButton.gridx = 0;
+        constraintsForMainMenuButton.gridy = 5;
+        constraintsForMainMenuButton.insets = new Insets(30, 0, 0, 0);
+        counterViewPanel.add(mainMenuButton, constraintsForMainMenuButton);
     }
 
-    /* Returns the counterViewPanel. */
+    /** Returns the counterViewPanel. */
     public JPanel getCounterViewPanel() {
         return counterViewPanel;
     }
 
-    /* Adds an ActionListener to the JButton mainMenuButton. */
+    /** Adds an ActionListener to the JButton mainMenuButton. */
     public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
         mainMenuButton.addActionListener(listenForMainMenuButton);
     }
