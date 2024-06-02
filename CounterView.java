@@ -26,10 +26,11 @@ public class CounterView {
     private void setupViewPanel() {
 
         // Staff and counter information
-        JLabel counterNumberLabel = new JLabel(String.format("Counter: %d", counterModel.getCounterNumber()));
+        JLabel counterNumberLabel = new JLabel(String.format("Counter: %d", counterModel.getCounter()));
+        JLabel staffIDLabel = new JLabel("Staff ID: " + counterModel.getStaffID());
         JLabel staffNameLabel = new JLabel("Staff Name: " + counterModel.getStaffName());
         JLabel staffRoleLabel = new JLabel("Staff Role: " + counterModel.getStaffRole());
-        JLabel staffIDLabel = new JLabel(String.format("Staff ID: %d", counterModel.getStaffID()));
+
 
         GridBagConstraints constraintsForTitleLabel = new GridBagConstraints();
         GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
