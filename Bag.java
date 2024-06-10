@@ -2,16 +2,16 @@
 public class Bag {
     /** bagID of the bag. */
     private String bagID;
-    /** Color of the bag. */
-    private String bagColor;
     /** Weight of the bag. */
     private double bagWeight;
+    /** Status of the bag screening. */
+    private String screeningStatus;
 
     /** Creates a bag object to hold data about a bag. */
-    public Bag(String bagID, String bagColor, double bagWeight) {
+    public Bag(String bagID, double bagWeight, String screeningStatus) {
         this.bagID = bagID;
-        this.bagColor = bagColor;
         this.bagWeight = bagWeight;
+        this.screeningStatus = screeningStatus;
     }
 
     /** Returns the bagID. */
@@ -19,13 +19,18 @@ public class Bag {
         return bagID;
     }
 
-    /** Returns the color of the bag. */
-    public String getBagColor() {
-        return bagColor;
-    }
-
     /** Returns the weight of the bag. */
     public double getBagWeight() {
         return bagWeight;
+    }
+
+    /** sets ScreeningStatus. */
+    public void setScreeningStatus(String screeningStatus) {
+        this.screeningStatus = screeningStatus;
+    }
+
+    /** Return screeningStatus. */
+    public String getScreeningStatus() {
+        return screeningStatus;
     }
 }
