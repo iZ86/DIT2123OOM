@@ -48,7 +48,7 @@ public class CheckInView {
     private JButton mainMenuButton = new JButton("Main Menu");
     /** Grid Y to push the BagPartialViewPanel downwards, otherwise it will add horizontally. */
     private int gridYOfBagPartialView = 4;
-    /** Check Box for Wheel Chair Option.*/
+    /** Check Box for Wheelchair Option.*/
     private JCheckBox wheelchairCheckBox = new JCheckBox("Wheelchair");
     /** Check Box for Blindness Option.*/
     private JCheckBox blindnessCheckBox = new JCheckBox("Blindness");
