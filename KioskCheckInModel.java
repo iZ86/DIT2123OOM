@@ -21,12 +21,15 @@ public class KioskCheckInModel {
     private HashMap<String, BookingInformation> bookingInformationData;
     /** Utilities class. */
     private Utils utils = new Utils();
+    /** Number of bags checked in. */
+    private int numberOfBagsCheckedIn;
 
     public KioskCheckInModel() {
         // An edge case fix for now.
-        passengers = new Passenger[]{new Passenger(null, null, null, new Bag[]{new Bag(null, null, 0)})};
+        passengers = null;
         passengerIndex = 0;
         bagIndex = 0;
+        numberOfBagsCheckedIn = 0;
         bookingInformationData = new HashMap<>();
         setupBookingInformationData();
     }
@@ -52,6 +55,17 @@ public class KioskCheckInModel {
         addPassengerIndex = 0;
     }
 
+    /** Generates bagID for tracking purposes. */
+    private String generateBagID() {
+        String numberOfBagsCheckedInString = String.valueOf(numberOfBagsCheckedIn);
+        StringBuilder bagID = new StringBuilder("B");
+        for (int i = numberOfBagsCheckedInString.length(); i < 4; i++) {
+            bagID.append("0");
+        }
+        bagID.append(numberOfBagsCheckedInString);
+        return bagID.toString();
+    }
+
     /** Returns number of passengers. */
     public int getNumberOfPassengers() {
         return numberOfPassengers;
@@ -59,6 +73,11 @@ public class KioskCheckInModel {
 
     /** Inserts the passenger data's that needs to be stored. */
     public void insertPassenger(Passenger passenger) {
+        for (int i = 0; i < passenger.getNumberOfBags(); i++) {
+            passenger.getBag(i).setBagID(generateBagID());
+            passenger.getBag(i).setBagWeight(utils.getRandomBagWeight());
+            passenger.getBag(i).setScreeningStatus("Incomplete");
+        }
         passengers[addPassengerIndex] = passenger;
         addPassengerIndex += 1;
     }
@@ -106,11 +125,6 @@ public class KioskCheckInModel {
     /** Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
     public String getBagID() {
         return passengers[passengerIndex].getBag(bagIndex).getBagID();
-    }
-
-    /** Returns the bag color at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
-    public String getBagColor() {
-        return passengers[passengerIndex].getBag(bagIndex).getBagColor();
     }
 
     /** Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
