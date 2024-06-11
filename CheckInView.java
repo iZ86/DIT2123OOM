@@ -1,10 +1,7 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.awt.image.WritableRaster;
-import java.util.LinkedList;
 
 /** This class represents the view for users to check in. */
 public class CheckInView {
@@ -18,14 +15,6 @@ public class CheckInView {
     private JTextField passportNumberTextField = new JTextField();
     /** The text field where the user enters their full name. */
     private JTextField fullNameTextField = new JTextField();
-    /** A Linked List of BagPartialView that each asks the user for information for a different bag,
-     *  LinkedList used because it does not allow gaps between data.
-     *  For example, a list of 3, if I remove the 2nd element, the 3rd element will now become the 2nd element.
-     *  Therefore, no null is made.
-     */
-    private LinkedList<BagPartialView> bagPartialViews;
-    /** JButton that creates a BagPartialView and adds its viewPanel to LinkedList<JPanel> bagPartialViewPanels. */
-    private JButton addBagButton = new JButton("Add Baggage");
     /** JButton that changes the CheckInView to display the previous Passenger information.
      * This button will not be displayed when showing the FIRST Passenger's data.
      */
@@ -74,7 +63,6 @@ public class CheckInView {
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
-        bagPartialViews = new LinkedList<>();
         setupViewPanel();
         bookingNumberTextField.setColumns(1);
         passportNumberTextField.setColumns(1);
@@ -86,10 +74,6 @@ public class CheckInView {
     public void setCheckInViewPagingIndex(int checkInViewPagingIndex) {
         this.checkInViewPagingIndex = checkInViewPagingIndex;
     }
-    /** The method to get the size of <LinkedList> bagPartialViews.*/
-    public int getNumberOfBagPartialViews() {
-        return bagPartialViews.size();
-    }
 
     /** Clears the view. */
     private void clearView() {
@@ -98,8 +82,6 @@ public class CheckInView {
 
     /** Resets the view from all user inputs and removes all warnings. */
     public void resetView() {
-        // Removes all the bagPartialViews.
-        bagPartialViews = new LinkedList<>();
 
         // Sets all the user input to nothing.
         bookingNumberTextField.setText("");
@@ -149,11 +131,6 @@ public class CheckInView {
         constraintsForSpecialAccommodationInputPanel.gridx = 0;
         constraintsForSpecialAccommodationInputPanel.insets = new Insets(0,0,20,0);
 
-        GridBagConstraints constraintsForAddBaggageButton = new GridBagConstraints();
-        constraintsForAddBaggageButton.gridy = 2;
-        constraintsForAddBaggageButton.ipadx = horizontalSizeOfBaggageButton;
-        constraintsForAddBaggageButton.ipady = verticalSizeOfBaggageButton;
-
         if (warnMaximumNumberOfBagsAdded) {
             JLabel warnMaximumNumberOfBagsAddedLabel = new JLabel("Maximum number of bags added.");
             warnMaximumNumberOfBagsAddedLabel.setForeground(Color.RED);
@@ -166,17 +143,6 @@ public class CheckInView {
 
         panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
         panelForTextFieldAndBagPartialView.add(specialAccommodationInputPanel, constraintsForSpecialAccommodationInputPanel);
-        panelForTextFieldAndBagPartialView.add(addBagButton, constraintsForAddBaggageButton);
-
-        // If there is any bagPartialViews, add them.
-        for (int i = 0; i < bagPartialViews.size(); i++) {
-            GridBagConstraints constraintsForBagPartialViewPanel = new GridBagConstraints();
-            constraintsForBagPartialViewPanel.gridy = gridYOfBagPartialView + i;
-            constraintsForBagPartialViewPanel.insets = new Insets(10, 0, 0, 0);
-            bagPartialViews.get(i).setIndex(i);
-            panelForTextFieldAndBagPartialView.add(bagPartialViews.get(i).getBagPartialViewPanel(), constraintsForBagPartialViewPanel);
-
-        }
 
         JPanel wrapperPanel = new JPanel(new BorderLayout());
 
@@ -201,29 +167,6 @@ public class CheckInView {
 
         checkInViewPanel.add(scrollPane, constraintsForScrollPane);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
-    }
-
-    /** Creates a BagPartialView object with the ActionListener listenForRemoveBagPartialViewButton,
-     * that is added to the JButton removeBagPartialViewButton,
-     and adds the BagPartialView to LinkedList<BagPartialView> bagPartialViews,
-     and adds its viewPanel to the checkInViewPanel.
-     */
-    public void createBagPartialView(ActionListener listenForRemoveBagPartialViewButton) {
-        int sizeOfLinkedList = bagPartialViews.size();
-
-        BagPartialView bagPartialView = new BagPartialView();
-        bagPartialView.addRemoveBagPartialViewButtonListener(listenForRemoveBagPartialViewButton);
-        bagPartialView.setIndex(sizeOfLinkedList);
-        bagPartialViews.add(bagPartialView);
-    }
-
-    /** Removes the BagPartialView from the LinkedList<BagPartialView> bagPartialViews,
-     * and remove it from the checkInViewPanel.
-     */
-    public void removeBagPartialView(int index) {
-        clearView();
-        bagPartialViews.remove(index);
-        setupViewPanel();
     }
 
     /** Sets warnInvalidBookingID. */
@@ -284,11 +227,6 @@ public class CheckInView {
     /** Sets the fullNameTextField with String fullName. */
     public void setFullNameTextField(String fullName) {
         fullNameTextField.setText(fullName);
-    }
-
-    /** Returns bagPartialViews. */
-    public LinkedList<BagPartialView> getBagPartialViews() {
-        return bagPartialViews;
     }
 
     /** Returns true iff wheelchairCheckBox is selected. */
