@@ -94,6 +94,11 @@ public class Utils {
         return new Staff(staffID, staffName, staffRole, counter);
     }
 
+    /** Returns a random bag weight. */
+    public double getRandomBagWeight() {
+        return random.nextDouble(30.0);
+    }
+
     // TODO: ...
     public int generateRandomGateNumber() {
         return 0;
