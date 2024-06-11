@@ -14,9 +14,17 @@ public class Bag {
         this.screeningStatus = screeningStatus;
     }
 
+    public void setBagID(String bagID) {
+        this.bagID = bagID;
+    }
+
     /** Returns the bagID. */
     public String getBagID() {
         return bagID;
+    }
+
+    public void setBagWeight(double bagWeight) {
+        this.bagWeight = bagWeight;
     }
 
     /** Returns the weight of the bag. */
