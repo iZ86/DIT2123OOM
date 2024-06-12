@@ -94,7 +94,6 @@ public class BoardingPassView {
             JLabel bagWeightLabel = new JLabel("Bag Weight: ");
 
             JLabel bagIdDataLabel = new JLabel(kioskCheckInModel.getBagID());
-            JLabel bagColorDataLabel = new JLabel(kioskCheckInModel.getBagColor());
             JLabel bagWeightDataLabel = new JLabel();
             constraintsForLabel.anchor = GridBagConstraints.WEST;
             constraintsForLabel.insets = new Insets(10, 0, 15, 235);
@@ -105,7 +104,6 @@ public class BoardingPassView {
             constraintsForLabel.gridy = 4;
             constraintsForData.gridy = 4;
             panelForBagAreaPanel.add(bagColorLabel, constraintsForLabel);
-            panelForBagAreaPanel.add(bagColorDataLabel, constraintsForData);
 
             constraintsForLabel.gridy = 5;
             constraintsForData.gridy = 5;
