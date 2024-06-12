@@ -128,12 +128,6 @@ public class GUI {
         checkInOptionView.addGroupButtonListener(listenForAllGroupCheckInButtons);
     }
 
-    /** Adds an ActionListener to ALL addBagButton in all the view objects. */
-    public void addAllAddBagButtonsListener(ActionListener listenForAllAddBagButtons) {
-        // TODO: Find all the view classes that have addBagButton and adds the ActionListener to them.
-        checkInView.addAddBagButtonListener(listenForAllAddBagButtons);
-    }
-
     /** Adds an ActionListener to ALL previousPassengerButton in all the view objects. */
     public void addAllPreviousPassengerButtonsListener(ActionListener listenForAllPreviousPassengerButtons) {
         // TODO: Find all the view classes that have previousPassengerButton and adds the ActionListener to them.
