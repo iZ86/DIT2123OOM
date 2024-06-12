@@ -5,6 +5,19 @@ import java.awt.event.ItemListener;
 
 /** This class represents the view for users to check in. */
 public class CheckInView {
+
+    public static final String[] QUESTIONS = new String[]{
+            "1. Have you packed your baggage yourself?",
+            "2. Has anyone asked you to carry anything on board for them?",
+            "3. Have you left your baggage unattended at any time?",
+            "4. Did you remember to turn off all electronic devices and remove their batteries, if removable, before checking in your luggage?",
+            "5. Are you carrying any liquids, gels, or aerosols in your carry-on luggage?",
+            "5b. If so, are they in containers of 100mL or less and stored in a clear, resealable plastic bag?"
+    };
+
+    /** CSS used to wrap String in JLabels. */
+    public static final String HTML = "<html><body style='width: %1spx'>%1s";
+
     /** JPanel for the CheckInView. */
     private JPanel checkInViewPanel = new JPanel(new GridBagLayout());
     /** The model that holds the passenger and their bag data. */
@@ -35,8 +48,6 @@ public class CheckInView {
     private JButton checkInKioskButton = new JButton("Last Page");
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
-    /** Grid Y to push the BagPartialViewPanel downwards, otherwise it will add horizontally. */
-    private int gridYOfBagPartialView = 4;
     /** Check Box for Wheelchair Option.*/
     private JCheckBox wheelchairCheckBox = new JCheckBox("Wheelchair");
     /** Check Box for Blindness Option.*/
@@ -59,10 +70,16 @@ public class CheckInView {
     private boolean warnEmptyFullNameInput;
     /** True if there should be warning prompt for maximum number of bags added. */
     private boolean warnMaximumNumberOfBagsAdded;
+    private JRadioButton[] questionYesRadioButtons = new JRadioButton[6];
+    private JRadioButton[] questionNoRadioButtons = new JRadioButton[6];
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
+        for (int i = 0; i < questionYesRadioButtons.length; i++) {
+            questionYesRadioButtons[i] = new JRadioButton("Yes");
+            questionNoRadioButtons[i] = new JRadioButton("No");
+        }
         setupViewPanel();
         bookingNumberTextField.setColumns(1);
         passportNumberTextField.setColumns(1);
@@ -95,6 +112,7 @@ public class CheckInView {
         setBlindnessCheckBoxSelected(false);
         setOthersSpecialAccommodationCheckBoxSelected(false);
         setOthersSpecialAccommodationTextFieldEnabled(false);
+        setQuestionFiveBRadioButtonsEnabled(false);
 
         setWarnInvalidBookingID(false);
         setWarnEmptyBookingNumberInput(false);
@@ -115,8 +133,6 @@ public class CheckInView {
     private void setupViewPanel() {
 
         JPanel panelForTextFieldAndBagPartialView = new JPanel(new GridBagLayout());
-        int horizontalSizeOfBaggageButton = 200;
-        int verticalSizeOfBaggageButton = 8;
 
         JPanel textFieldPanel = setupViewTextFieldPanel();
         JPanel specialAccommodationInputPanel = setupPanelForSpecialAccommodationInput();
@@ -141,8 +157,53 @@ public class CheckInView {
             panelForTextFieldAndBagPartialView.add(warnMaximumNumberOfBagsAddedLabel, constraintsForWarnMaximumNumberOfBagsAdded);
         }
 
+        for (int i = 0; i < QUESTIONS.length; i++) {
+            JPanel bagCheckInQuestionPanel = new JPanel(new GridBagLayout());
+            JPanel bagCheckInQuestionRadioButtonPanel = new JPanel(new GridBagLayout());
+            JLabel bagCheckInQuestionLabel = new JLabel(String.format(HTML, 250, QUESTIONS[i]));
+
+
+            // Adding the Question answer checkboxes to bagCheckInQuestionCheckBoxPanel.
+
+            ButtonGroup btnGroup = new ButtonGroup();
+            btnGroup.add(questionNoRadioButtons[i]);
+            btnGroup.add(questionYesRadioButtons[i]);
+
+            GridBagConstraints constraintsForQuestionNoCheckBox = new GridBagConstraints();
+            constraintsForQuestionNoCheckBox.gridx = 0;
+            constraintsForQuestionNoCheckBox.gridy = 0;
+
+            GridBagConstraints constraintsForQuestionYesCheckBox = new GridBagConstraints();
+            constraintsForQuestionYesCheckBox.gridx = 1;
+            constraintsForQuestionYesCheckBox.gridy = 0;
+
+            bagCheckInQuestionRadioButtonPanel.add(questionNoRadioButtons[i], constraintsForQuestionNoCheckBox);
+            bagCheckInQuestionRadioButtonPanel.add(questionYesRadioButtons[i], constraintsForQuestionYesCheckBox);
+
+            // Adding the question label and the answer checkboxes to the bagCheckInQuestionPanel.
+            GridBagConstraints constraintsForBagCheckInQuestionLabel = new GridBagConstraints();
+            constraintsForBagCheckInQuestionLabel.gridx = 0;
+            constraintsForBagCheckInQuestionLabel.gridy = 0;
+
+            GridBagConstraints constraintsForBagCheckInQuestionCheckBoxPanel = new GridBagConstraints();
+            constraintsForBagCheckInQuestionCheckBoxPanel.gridx = 0;
+            constraintsForBagCheckInQuestionCheckBoxPanel.gridy = 1;
+
+            bagCheckInQuestionPanel.add(bagCheckInQuestionLabel, constraintsForBagCheckInQuestionLabel);
+            bagCheckInQuestionPanel.add(bagCheckInQuestionRadioButtonPanel, constraintsForBagCheckInQuestionCheckBoxPanel);
+
+            // Adding bagCheckInQuestionPanel to the checkInViewPanel.
+            GridBagConstraints constraintsForBagCheckInQuestionPanel = new GridBagConstraints();
+            constraintsForBagCheckInQuestionPanel.gridx = 0;
+            constraintsForBagCheckInQuestionPanel.gridy = i + 4; // 2 because other components take up gridy 1 and 0 in the viewPanel.
+            constraintsForBagCheckInQuestionPanel.insets = new Insets(0, 0 , 20, 0);
+
+            panelForTextFieldAndBagPartialView.add(bagCheckInQuestionPanel, constraintsForBagCheckInQuestionPanel);
+        }
+
         panelForTextFieldAndBagPartialView.add(textFieldPanel, constraintsForTextFieldPanel);
         panelForTextFieldAndBagPartialView.add(specialAccommodationInputPanel, constraintsForSpecialAccommodationInputPanel);
+
 
         JPanel wrapperPanel = new JPanel(new BorderLayout());
 
@@ -152,9 +213,11 @@ public class CheckInView {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 
+
         GridBagConstraints constraintsForScrollPane = new GridBagConstraints();
         constraintsForScrollPane.gridx = 0;
         constraintsForScrollPane.gridy = 0;
+
         constraintsForScrollPane.ipadx = 370;
         constraintsForScrollPane.ipady = 300;
 
@@ -163,7 +226,8 @@ public class CheckInView {
 
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
         constraintsForButtonPanel.gridy = 1;
-        constraintsForButtonPanel.anchor = GridBagConstraints.PAGE_END;
+
+
 
         checkInViewPanel.add(scrollPane, constraintsForScrollPane);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
@@ -284,14 +348,14 @@ public class CheckInView {
         othersSpecialAccommodationTextField.setEnabled(enabled);
     }
 
+    public void setQuestionFiveBRadioButtonsEnabled(boolean enabled) {
+        questionYesRadioButtons[5].setEnabled(enabled);
+        questionNoRadioButtons[5].setEnabled(enabled);
+    }
+
     /** Adds an ItemListener to checkboxForOthers. */
     public void addOthersSpecialAccommodationCheckBoxItemListener(ItemListener listenForOthersSpecialAccommodationCheckBox) {
         othersSpecialAccommodationCheckBox.addItemListener(listenForOthersSpecialAccommodationCheckBox);
-    }
-
-    /** Adds an ActionListener to addBagButton. */
-    public void addAddBagButtonListener(ActionListener listenForAddBagButton) {
-        addBagButton.addActionListener(listenForAddBagButton);
     }
 
     /** Adds an ActionListener to previousPassengerButton. */
