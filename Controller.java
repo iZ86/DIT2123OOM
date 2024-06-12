@@ -1,9 +1,8 @@
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.LinkedList;
+
 
 /** This class acts as the controller of the MVC structure in this program. */
 public class Controller {
@@ -45,7 +44,6 @@ public class Controller {
         gui.addAllCheckInKioskButtonsListener(new CheckInKioskButtonListener());
         gui.addAllSingleCheckInButtonsListener(new SingleCheckInButtonListener());
         gui.addAllGroupCheckInButtonsListener(new GroupCheckInButtonListener());
-        gui.addAllAddBagButtonsListener(new AddBagButtonListener());
         gui.addAllPreviousPassengerButtonsListener(new PreviousPassengerButtonListener());
         gui.addAllNextPassengerButtonsListener(new NextPassengerButtonListener());
         gui.addAllCheckInButtonsListener(new CheckInButtonListener());
@@ -128,20 +126,6 @@ public class Controller {
                 checkInOptionView.updateView();
             }
 
-        }
-    }
-
-    public class AddBagButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO: Don't clear the text field that was added.
-            // TODO: An easy fix is to put the textFields as instance attributes.
-            if (gui.getCheckInView().getNumberOfBagPartialViews() >= 4) {
-                gui.getCheckInView().setWarnMaximumNumberOfBagsAdded(true);
-            } else {
-                gui.getCheckInView().createBagPartialView(new RemoveBagPartialViewButtonListener());
-            }
-            gui.getCheckInView().updateView();
         }
     }
 
@@ -291,18 +275,6 @@ public class Controller {
         }
     }
 
-    public class RemoveBagPartialViewButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // Get the property of the JButton, which is the index of the bagPartialView.
-            // in the LinkedList bagPartialViews in CheckInView.
-            int bagPartialViewIndex = (int) ((JButton) e.getSource()).getClientProperty("index");
-
-            gui.getCheckInView().setWarnMaximumNumberOfBagsAdded(false);
-            gui.getCheckInView().removeBagPartialView(bagPartialViewIndex);
-            gui.getCheckInView().updateView();
-        }
-    }
 
     public class OthersSpecialAccommodationCheckBoxListener implements ItemListener {
         @Override
@@ -350,7 +322,7 @@ public class Controller {
             cacheFailed = true;
         }
 
-
+        /*
         Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
         LinkedList<BagPartialView> currBagPartialViews = checkInView.getBagPartialViews();
         for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
@@ -384,11 +356,13 @@ public class Controller {
 
         }
 
+
+         */
         if (cacheFailed) {
             throw new NumberFormatException();
         }
 
-        tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingID, passportNumber, fullName, bags);
+        tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingID, passportNumber, fullName);
 
     }
 
@@ -403,13 +377,6 @@ public class Controller {
 
         if (nextPassengerData != null) {
 
-
-            for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
-                checkInView.createBagPartialView(new RemoveBagPartialViewButtonListener());
-            }
-
-
-
             String nextPassengerBookingID = nextPassengerData.getBookingID();
             String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
             String nextPassengerFullName = nextPassengerData.getFullName();
@@ -418,15 +385,11 @@ public class Controller {
             checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
             checkInView.setFullNameTextField(nextPassengerFullName);
 
-            LinkedList<BagPartialView> nextBagPartialViews = checkInView.getBagPartialViews();
-            for (int i = 0; i < nextPassengerData.getNumberOfBags(); i++) {
-                nextBagPartialViews.get(i).setBagColorTextField(nextPassengerData.getBag(i).getBagColor());
-                nextBagPartialViews.get(i).setBagWeightTextField(String.valueOf(nextPassengerData.getBag(i).getBagWeight()));
-            }
-
             checkInView.setWarnInvalidBookingID(tempInvalidBookingIDData[checkInViewPagingIndex]);
         }
         checkInView.updateView();
+
+
     }
 
     /** This method is used to validate,
