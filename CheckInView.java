@@ -72,6 +72,8 @@ public class CheckInView {
     private JRadioButton[] answerYesRadioButtons = new JRadioButton[6];
     /** No radio buttons for every bag check in question. */
     private JRadioButton[] answerNoRadioButtons = new JRadioButton[6];
+    /** Button group that contains both answerYesRadioButton and answerNoRadioButton. */
+    private ButtonGroup[] buttonGroup = new ButtonGroup[6];
     /** JSpinner to select the number of passengers */
     private JSpinner numberOfBagsSpinner;
 
@@ -81,6 +83,9 @@ public class CheckInView {
         for (int i = 0; i < answerYesRadioButtons.length; i++) {
             answerYesRadioButtons[i] = new JRadioButton("Yes");
             answerNoRadioButtons[i] = new JRadioButton("No");
+            buttonGroup[i] = new ButtonGroup();
+            buttonGroup[i].add(answerYesRadioButtons[i]);
+            buttonGroup[i].add(answerNoRadioButtons[i]);
         }
 
         // Set limiter on spinner.
@@ -123,6 +128,7 @@ public class CheckInView {
         setOthersSpecialAccommodationTextFieldEnabled(false);
         for (int i = 0; i < QUESTIONS.length; i++) {
             setQuestionAnswerRadioButtonsEnabled(i, false);
+            setBagCheckInQuestionAnswer(i, 0);
         }
 
         setWarnInvalidBookingNumber(false);
@@ -345,7 +351,9 @@ public class CheckInView {
         if (answer == 1) {
             answerYesRadioButtons[index].setSelected(true);
         } else if (answer == -1) {
-            answerNoRadioButtons[index].setSelected(false);
+            answerNoRadioButtons[index].setSelected(true);
+        } else if (answer == 0) {
+            buttonGroup[index].clearSelection();
         }
     }
 
@@ -603,9 +611,6 @@ public class CheckInView {
 
             // Adding the Question answer checkboxes to bagCheckInQuestionCheckBoxPanel.
 
-            ButtonGroup btnGroup = new ButtonGroup();
-            btnGroup.add(answerNoRadioButtons[i]);
-            btnGroup.add(answerYesRadioButtons[i]);
 
             GridBagConstraints constraintsForQuestionNoCheckBox = new GridBagConstraints();
             constraintsForQuestionNoCheckBox.gridx = 0;
