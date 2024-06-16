@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
@@ -178,5 +179,13 @@ public class GUI {
     /** Adds an ItemListener to the JCheckBox othersSpecialAccommodationCheckBox in checkInView. */
     public void addOthersSpecialAccommodationCheckBox(ItemListener listenForOthersSpecialAccommodationCheckBox) {
         checkInView.addOthersSpecialAccommodationCheckBoxItemListener(listenForOthersSpecialAccommodationCheckBox);
+    }
+
+    public void addNumberOfBagsSpinnerListener(ChangeListener listenForNumberOfBagsSpinner) {
+        checkInView.addNumberOfBagsSpinnerListener(listenForNumberOfBagsSpinner);
+    }
+
+    public void addQuestionFiveYesRadioButtonListener(ItemListener listenForQuestionFiveYesRadioButton) {
+        checkInView.addQuestionFiveYesRadioButtonListener(listenForQuestionFiveYesRadioButton);
     }
 }
