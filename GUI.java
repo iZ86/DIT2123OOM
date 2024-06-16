@@ -181,10 +181,12 @@ public class GUI {
         checkInView.addOthersSpecialAccommodationCheckBoxItemListener(listenForOthersSpecialAccommodationCheckBox);
     }
 
+    /** Adds a ChangeListener to the JSpinner numberOfBagsSpinner in checkInView. */
     public void addNumberOfBagsSpinnerListener(ChangeListener listenForNumberOfBagsSpinner) {
         checkInView.addNumberOfBagsSpinnerListener(listenForNumberOfBagsSpinner);
     }
 
+    /** Adds an ItemListener to the JRadioButton questionFiveYesButton in checkInView. */
     public void addQuestionFiveYesRadioButtonListener(ItemListener listenForQuestionFiveYesRadioButton) {
         checkInView.addQuestionFiveYesRadioButtonListener(listenForQuestionFiveYesRadioButton);
     }
