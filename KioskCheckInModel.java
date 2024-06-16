@@ -15,7 +15,7 @@ public class KioskCheckInModel {
     private int bagIndex;
     /** Index for keeping track of the amoutn of passengers that was inserted. */
     private int addPassengerIndex;
-    /** HashMap used to store bookingID and their respective bookingInformation,
+    /** HashMap used to store bookingNumber and their respective bookingInformation,
      * for faster lookup speed.
      */
     private HashMap<String, BookingInformation> bookingInformationData;
@@ -26,7 +26,7 @@ public class KioskCheckInModel {
 
     public KioskCheckInModel() {
         // An edge case fix for now.
-        passengers = null;
+        passengers = new Passenger[]{new Passenger(null, null, null)};
         passengerIndex = 0;
         bagIndex = 0;
         numberOfBagsCheckedIn = 0;
@@ -37,15 +37,15 @@ public class KioskCheckInModel {
     /** Setups up the bookingInformationData. */
     private void setupBookingInformationData() {
         for (int i = 0; i < Utils.NUMBEROFDATA; i++) {
-            bookingInformationData.put(Utils.BOOKINGIDS[i], new BookingInformation(Utils.BOOKINGIDS[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", utils.generateRandomGateNumber(), Utils.BOARDINGTIMES[i]));
+            bookingInformationData.put(Utils.BOOKINGNUMBERS[i], new BookingInformation(Utils.BOOKINGNUMBERS[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", utils.generateRandomGateNumber(), Utils.BOARDINGTIMES[i]));
         }
     }
 
-    /** Used to validate bookingID entered by user,
+    /** Used to validate bookingNumber entered by user,
      * returns true iff it's a valid bookingID.
      * Otherwise, returns false. */
-    public boolean validateBookingID(String bookingID) {
-        return bookingInformationData.containsKey(bookingID);
+    public boolean validateBookingNumber(String bookingNumber) {
+        return bookingInformationData.containsKey(bookingNumber);
     }
    
     /** Sets the number of passengers to be checked in. */
@@ -102,9 +102,9 @@ public class KioskCheckInModel {
         this.bagIndex = bagIndex;
     }
 
-    /** Returns the bookingID of the passenger in Passenger[] passengers at passengerIndex. */
+    /** Returns the bookingNumber of the passenger in Passenger[] passengers at passengerIndex. */
     public String getBookingNumber() {
-        return passengers[passengerIndex].getBookingID();
+        return passengers[passengerIndex].getBookingNumber();
     }
 
     /** Returns the passport number of the passenger in Passenger[] passengers at passengerIndex. */
