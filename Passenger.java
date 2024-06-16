@@ -1,8 +1,8 @@
 public class Passenger {
     /** Passport number of the passenger. */
     private String passportNumber;
-    /** bookingID of the passenger. */
-    private String bookingID; 
+    /** bookingNumber of the passenger. */
+    private String bookingNumber;
     /** Full name of the passenger. */
     private String fullName; 
     /** Bags of the passenger. */
@@ -21,11 +21,11 @@ public class Passenger {
     private String otherSpecialAccommodationDetails;
 
     /** Creates a Passenger object to hold data. */
-    public Passenger(String bookingID, String passportNumber, String fullName) {
-        this.bookingID = bookingID;
+    public Passenger(String bookingNumber, String passportNumber, String fullName) {
+        this.bookingNumber = bookingNumber;
         this.passportNumber = passportNumber;
         this.fullName = fullName;
-        bags = null;
+        setBagArray(0);
     }
 
     /** Returns the number of bags the passenger has. */
@@ -34,13 +34,13 @@ public class Passenger {
     }
 
     /** Sets the bags. */
-    public void setBags(Bag[] bags) {
-        this.bags = bags;
+    public void setBagArray(int numberOfBags) {
+        bags = new Bag[numberOfBags];
     }
 
-    /** Returns the bookingID. */
-    public String getBookingID() {
-        return bookingID;
+    /** Returns the bookingNumber. */
+    public String getBookingNumber() {
+        return bookingNumber;
     }
 
     /** Returns the passport number. */
