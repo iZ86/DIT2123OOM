@@ -19,13 +19,19 @@ public class Passenger {
     private boolean otherSpecialAccommodation;
     /** Special Accommodation details of the passenger. */
     private String otherSpecialAccommodationDetails;
+    /** Answers of the passenger to the bag check in questions,
+     * 1 if the answer is yes,
+     * -1 if the answer is no,
+     * 0 if there is no answer.
+     * */
+    private int bagCheckInQuestionAnswers[] = new int[6];
 
     /** Creates a Passenger object to hold data. */
     public Passenger(String bookingNumber, String passportNumber, String fullName) {
         this.bookingNumber = bookingNumber;
         this.passportNumber = passportNumber;
         this.fullName = fullName;
-        setBagArray(0);
+        setBagArraySize(0);
     }
 
     /** Returns the number of bags the passenger has. */
@@ -34,7 +40,7 @@ public class Passenger {
     }
 
     /** Sets the bags. */
-    public void setBagArray(int numberOfBags) {
+    public void setBagArraySize(int numberOfBags) {
         bags = new Bag[numberOfBags];
     }
 
@@ -101,6 +107,16 @@ public class Passenger {
     /** Returns otherSpecialAccommodation. */
     public boolean isOtherSpecialAccommodation() {
         return otherSpecialAccommodation;
+    }
+
+    /** Returns answer of the bag check in question at index. */
+    public int getBagCheckInQuestionAnswer(int index) {
+        return bagCheckInQuestionAnswers[index];
+    }
+
+    /** Sets the answer of the back check in question at index. */
+    public void setBagCheckInQuestionAnswer(int index, int answer) {
+        bagCheckInQuestionAnswers[index] = answer;
     }
 
     /** Sets otherSpecialAccommodation. */
