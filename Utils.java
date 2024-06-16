@@ -8,8 +8,8 @@ public class Utils {
     /** Number of data. */
     public static final int NUMBEROFDATA = 6;
 
-    /** A constant array of bookingID's, used for randomized data. */
-    public static final String[] BOOKINGIDS = new String[]{
+    /** A constant array of bookingNumbers, used for randomized data. */
+    public static final String[] BOOKINGNUMBERS = new String[]{
             "ABC123", "ABC124", "ABC125", "ABC223", "ABC323", "BAC123"
     };
 
