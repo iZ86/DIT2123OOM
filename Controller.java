@@ -27,7 +27,14 @@ public class Controller {
     private int boardingPassViewPagingIndex;
     /** Temp data to keep track of which tempPassengerData's bookingNumber is invalid. */
     private boolean[] tempInvalidBookingNumberData;
-
+    /** Temp data to keep track of which tempPassengerData's bookingNumber is empty. */
+    private boolean[] tempWarnEmptyBookingNumberData;
+    /** Temp data to keep track of which tempPassengerData's passportNumber is empty. */
+    private boolean[] tempWarnEmptyPassportNumberData;
+    /** Temp data to keep track of which tempPassengerData's fullName is empty. */
+    private boolean[] tempWarnEmptyFullNameData;
+    /** Temp data to keep track of which tempPassengerData's question is not answered. */
+    private boolean[][] tempWarnQuestionNotAnsweredData;
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
      * controlling the workflow.
