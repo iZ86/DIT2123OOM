@@ -205,6 +205,10 @@ public class Controller {
                 // Check if there is any empty data, if there is any,
                 // load it up and throw NumberFormatException (following the cacheCheckInView from the above line.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                    // TODO: keep track of what should be warned and where
+                    // TODO: so that when user changes page it will show
+                    // TODO: fill in button answer warning
+                    // TODO: if wrong button, new page and lock the bookingNumber
                     if (tempPassengersData[i] == null) {
                         checkInViewPagingIndex = i;
                         checkInView.setCheckInViewPagingIndex(checkInViewPagingIndex);
