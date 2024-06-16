@@ -300,18 +300,16 @@ public class Controller {
         @Override
         public void stateChanged(ChangeEvent e) {
             CheckInView checkInView = gui.getCheckInView();
+
+            int number = 4; // Question 1 - 5, not including 5b.
             if (checkInView.getNumberOfBagsFromSpinner() > 0) {
-                checkInView.setQuestionOneRadioButtonsEnabled(true);
-                checkInView.setQuestionTwoRadioButtonsEnabled(true);
-                checkInView.setQuestionThreeRadioButtonsEnabled(true);
-                checkInView.setQuestionFourRadioButtonsEnabled(true);
-                checkInView.setQuestionFiveRadioButtonsEnabled(true);
+                for (int i = 0; i < number; i++) {
+                    checkInView.setQuestionAnswerRadioButtonsEnabled(i, true);
+                }
             } else {
-                checkInView.setQuestionOneRadioButtonsEnabled(false);
-                checkInView.setQuestionTwoRadioButtonsEnabled(false);
-                checkInView.setQuestionThreeRadioButtonsEnabled(false);
-                checkInView.setQuestionFourRadioButtonsEnabled(false);
-                checkInView.setQuestionFiveRadioButtonsEnabled(false);
+                for (int i = 0; i < number; i++) {
+                    checkInView.setQuestionAnswerRadioButtonsEnabled(i, false);
+                }
             }
         }
     }
@@ -325,10 +323,12 @@ public class Controller {
         public void itemStateChanged(ItemEvent e) {
             CheckInView checkInView = gui.getCheckInView();
 
-            if (checkInView.isQuestionFiveYesRadioButtonSelected()) {
-                checkInView.setQuestionFiveBRadioButtonsEnabled(true);
+            // If question 5 answer is yes, enable question 5b answer radio buttons.
+            // Otherwise, don't
+            if (checkInView.getBagCheckInQuestionAnswer(4) == 1) {
+                checkInView.setQuestionAnswerRadioButtonsEnabled(5, true);
             } else {
-                checkInView.setQuestionFiveBRadioButtonsEnabled(false);
+                checkInView.setQuestionAnswerRadioButtonsEnabled(5, false);
             }
         }
 
@@ -357,70 +357,23 @@ public class Controller {
     /** Caches the checkInView data inputted by the user into tempPassengersData. */
     public void cacheCheckInViewData(CheckInView checkInView) {
 
-        boolean cacheFailed = false;
-
-
         String bookingNumber = checkInView.getBookingNumberFromTextField();
-
-        if (bookingNumber.isEmpty()) {
-            checkInView.setWarnEmptyBookingNumberInput(true);
-            cacheFailed = true;
-        }
-
-
         String passportNumber = checkInView.getPassportNumberFromTextField();
-
-        if (passportNumber.isEmpty()) {
-            checkInView.setWarnEmptyPassportNumberInput(true);
-            cacheFailed = true;
-        }
-
-
         String fullName = checkInView.getFullNameFromTextField();
 
-        if (fullName.isEmpty()) {
-            checkInView.setWarnEmptyFullNameInput(true);
-            cacheFailed = true;
-        }
+        int numberOfBags = checkInView.getNumberOfBagsFromSpinner();
 
-        /*
-        Bag[] bags = new Bag[checkInView.getNumberOfBagPartialViews()];
-        LinkedList<BagPartialView> currBagPartialViews = checkInView.getBagPartialViews();
-        for (int i = 0; i < checkInView.getNumberOfBagPartialViews(); i++) {
-            String bagColor = currBagPartialViews.get(i).getBagColorFromTextField();
-            String bagWeightString = currBagPartialViews.get(i).getBagWeightFromTextField();
+        Passenger passenger = new Passenger(bookingNumber, passportNumber, fullName);
+        passenger.setBagArraySize(numberOfBags);
 
-            if (bagColor.isEmpty()) {
-                // Set warning message.
-                cacheFailed = true;
+        int numberOfBagCheckInQuestions = checkInView.getNumberOfBagCheckInQuestions();
+        if (numberOfBags > 0) {
+            for (int i = 0; i < numberOfBagCheckInQuestions; i++)
+            passenger.setBagCheckInQuestionAnswer(i, checkInView.getBagCheckInQuestionAnswer(i));
+        } else {
+            for (int i = 0; i < numberOfBagCheckInQuestions; i++) {
+                passenger.setBagCheckInQuestionAnswer(i, 0);
             }
-
-            boolean invalidBagWeight = false;
-
-            if (bagWeightString.isEmpty()) {
-                // Set warning message.
-                cacheFailed = true;
-                invalidBagWeight = true;
-            } else {
-                if (!isValidDouble(bagWeightString)) {
-                    cacheFailed = true;
-                    invalidBagWeight = true;
-                    // Set warning message.
-                }
-            }
-
-            if (invalidBagWeight) {
-                bags[i] = new Bag(null, bagColor, -1);
-            } else {
-                bags[i] = new Bag(null, bagColor, Double.valueOf(bagWeightString));
-            }
-
-        }
-
-
-         */
-        if (cacheFailed) {
-            throw new NumberFormatException();
         }
 
         tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingNumber, passportNumber, fullName);
@@ -434,17 +387,30 @@ public class Controller {
 
 
         checkInView.resetView();
-        Passenger nextPassengerData = tempPassengersData[checkInViewPagingIndex];
+        Passenger passengerData = tempPassengersData[checkInViewPagingIndex];
 
-        if (nextPassengerData != null) {
+        if (passengerData != null) {
 
-            String nextPassengerBookingNumber = nextPassengerData.getBookingNumber();
-            String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
-            String nextPassengerFullName = nextPassengerData.getFullName();
+            String nextPassengerBookingNumber = passengerData.getBookingNumber();
+            String nextPassengerPassportNumber = passengerData.getPassportNumber();
+            String nextPassengerFullName = passengerData.getFullName();
 
             checkInView.setBookingNumberTextField(nextPassengerBookingNumber);
             checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
             checkInView.setFullNameTextField(nextPassengerFullName);
+
+            if (passengerData.getNumberOfBags() > 0) {
+                checkInView.setNumberOfBagsSpinner(passengerData.getNumberOfBags());
+                for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions() - 1; i++) {
+                    //checkInView.setQuestionAnswerRadioButtonsEnabled(i, true);
+                    checkInView.setBagCheckInQuestionAnswer(i, passengerData.getBagCheckInQuestionAnswer(i));
+                }
+
+                if (passengerData.getBagCheckInQuestionAnswer(4) == 1) {
+                   // checkInView.setQuestionAnswerRadioButtonsEnabled(5, true);
+                    checkInView.setBagCheckInQuestionAnswer(5, passengerData.getBagCheckInQuestionAnswer(5));
+                }
+            }
 
             checkInView.setWarnInvalidBookingNumber(tempInvalidBookingNumberData[checkInViewPagingIndex]);
         }
