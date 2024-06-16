@@ -69,18 +69,18 @@ public class CheckInView {
     /** True if there should be a warning prompt for empty full name in fullNameTextField. */
     private boolean warnEmptyFullNameInput;
     /** Yes radio buttons for every bag check in question. */
-    private JRadioButton[] questionYesRadioButtons = new JRadioButton[6];
+    private JRadioButton[] answerYesRadioButtons = new JRadioButton[6];
     /** No radio buttons for every bag check in question. */
-    private JRadioButton[] questionNoRadioButtons = new JRadioButton[6];
+    private JRadioButton[] answerNoRadioButtons = new JRadioButton[6];
     /** JSpinner to select the number of passengers */
     private JSpinner numberOfBagsSpinner;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
-        for (int i = 0; i < questionYesRadioButtons.length; i++) {
-            questionYesRadioButtons[i] = new JRadioButton("Yes");
-            questionNoRadioButtons[i] = new JRadioButton("No");
+        for (int i = 0; i < answerYesRadioButtons.length; i++) {
+            answerYesRadioButtons[i] = new JRadioButton("Yes");
+            answerNoRadioButtons[i] = new JRadioButton("No");
         }
 
         // Set limiter on spinner.
@@ -121,12 +121,9 @@ public class CheckInView {
         setBlindnessCheckBoxSelected(false);
         setOthersSpecialAccommodationCheckBoxSelected(false);
         setOthersSpecialAccommodationTextFieldEnabled(false);
-        setQuestionOneRadioButtonsEnabled(false);
-        setQuestionTwoRadioButtonsEnabled(false);
-        setQuestionThreeRadioButtonsEnabled(false);
-        setQuestionFourRadioButtonsEnabled(false);
-        setQuestionFiveRadioButtonsEnabled(false);
-        setQuestionFiveBRadioButtonsEnabled(false);
+        for (int i = 0; i < QUESTIONS.length; i++) {
+            setQuestionAnswerRadioButtonsEnabled(i, false);
+        }
 
         setWarnInvalidBookingNumber(false);
         setWarnEmptyBookingNumberInput(false);
@@ -330,45 +327,39 @@ public class CheckInView {
         othersSpecialAccommodationTextField.setEnabled(enabled);
     }
 
-    /** Sets whether the questionYesRadioButtons[0] is enabled or not. */
-    public void setQuestionOneRadioButtonsEnabled(boolean enabled) {
-        questionYesRadioButtons[0].setEnabled(enabled);
-        questionNoRadioButtons[0].setEnabled(enabled);
+    /** Sets whether the questionYesRadioButtons[index] and questionNoRadioButtons[index]
+     * is enabled or not. */
+    public void setQuestionAnswerRadioButtonsEnabled(int index, boolean enabled) {
+        answerYesRadioButtons[index].setEnabled(enabled);
+        answerNoRadioButtons[index].setEnabled(enabled);
     }
 
-    /** Sets whether the questionYesRadioButtons[1] is enabled or not. */
-    public void setQuestionTwoRadioButtonsEnabled(boolean enabled) {
-        questionYesRadioButtons[1].setEnabled(enabled);
-        questionNoRadioButtons[1].setEnabled(enabled);
+
+    /** Returns number of bag check in questions. */
+    public int getNumberOfBagCheckInQuestions() {
+        return QUESTIONS.length;
     }
 
-    /** Sets whether the questionYesRadioButtons[2] is enabled or not. */
-    public void setQuestionThreeRadioButtonsEnabled(boolean enabled) {
-        questionYesRadioButtons[2].setEnabled(enabled);
-        questionNoRadioButtons[2].setEnabled(enabled);
+    /** Sets bagCheckInQuestionAnswer. */
+    public void setBagCheckInQuestionAnswer(int index, int answer) {
+        if (answer == 1) {
+            answerYesRadioButtons[index].setSelected(true);
+        } else if (answer == -1) {
+            answerNoRadioButtons[index].setSelected(false);
+        }
     }
 
-    /** Sets whether the questionYesRadioButtons[3] is enabled or not. */
-    public void setQuestionFourRadioButtonsEnabled(boolean enabled) {
-        questionYesRadioButtons[3].setEnabled(enabled);
-        questionNoRadioButtons[3].setEnabled(enabled);
-    }
-
-    /** Sets whether the questionYesRadioButtons[4] is enabled or not. */
-    public void setQuestionFiveRadioButtonsEnabled(boolean enabled) {
-        questionYesRadioButtons[4].setEnabled(enabled);
-        questionNoRadioButtons[4].setEnabled(enabled);
-    }
-
-    /** Sets whether the questionYesRadioButtons[5] is enabled or not. */
-    public void setQuestionFiveBRadioButtonsEnabled(boolean enabled) {
-        questionYesRadioButtons[5].setEnabled(enabled);
-        questionNoRadioButtons[5].setEnabled(enabled);
-    }
-
-    /** Returns true if Question Five Yes is selected. */
-    public boolean isQuestionFiveYesRadioButtonSelected() {
-        return questionYesRadioButtons[4].isSelected();
+    /** Returns 1 if the answer of the question at index is yes,
+     * -1 if no.
+     * Otherwise, 0 if both is not selected.
+     */
+    public int getBagCheckInQuestionAnswer(int index) {
+        if (answerYesRadioButtons[index].isSelected()) {
+            return 1;
+        } else if (answerNoRadioButtons[index].isSelected()) {
+            return -1;
+        }
+        return 0;
     }
 
     /** Adds an ItemListener to checkboxForOthers. */
@@ -383,7 +374,7 @@ public class CheckInView {
 
     /** Adds an itemListener to the 5th yes radio button. */
     public void addQuestionFiveYesRadioButtonListener(ItemListener listenForQuestionFiveYesRadioButton) {
-        questionYesRadioButtons[4].addItemListener(listenForQuestionFiveYesRadioButton);
+        answerYesRadioButtons[4].addItemListener(listenForQuestionFiveYesRadioButton);
     }
 
     /** Adds an ActionListener to previousPassengerButton. */
@@ -613,8 +604,8 @@ public class CheckInView {
             // Adding the Question answer checkboxes to bagCheckInQuestionCheckBoxPanel.
 
             ButtonGroup btnGroup = new ButtonGroup();
-            btnGroup.add(questionNoRadioButtons[i]);
-            btnGroup.add(questionYesRadioButtons[i]);
+            btnGroup.add(answerNoRadioButtons[i]);
+            btnGroup.add(answerYesRadioButtons[i]);
 
             GridBagConstraints constraintsForQuestionNoCheckBox = new GridBagConstraints();
             constraintsForQuestionNoCheckBox.gridx = 0;
@@ -624,8 +615,8 @@ public class CheckInView {
             constraintsForQuestionYesCheckBox.gridx = 1;
             constraintsForQuestionYesCheckBox.gridy = 0;
 
-            bagCheckInQuestionRadioButtonPanel.add(questionNoRadioButtons[i], constraintsForQuestionNoCheckBox);
-            bagCheckInQuestionRadioButtonPanel.add(questionYesRadioButtons[i], constraintsForQuestionYesCheckBox);
+            bagCheckInQuestionRadioButtonPanel.add(answerNoRadioButtons[i], constraintsForQuestionNoCheckBox);
+            bagCheckInQuestionRadioButtonPanel.add(answerYesRadioButtons[i], constraintsForQuestionYesCheckBox);
 
             // Adding the question label and the answer checkboxes to the bagCheckInQuestionPanel.
             GridBagConstraints constraintsForBagCheckInQuestionLabel = new GridBagConstraints();
