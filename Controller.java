@@ -301,7 +301,7 @@ public class Controller {
         public void stateChanged(ChangeEvent e) {
             CheckInView checkInView = gui.getCheckInView();
 
-            int number = 4; // Question 1 - 5, not including 5b.
+            int number = 5; // Question 1 - 5, not including 5b.
             if (checkInView.getNumberOfBagsFromSpinner() > 0) {
                 for (int i = 0; i < number; i++) {
                     checkInView.setQuestionAnswerRadioButtonsEnabled(i, true);
@@ -368,15 +368,23 @@ public class Controller {
 
         int numberOfBagCheckInQuestions = checkInView.getNumberOfBagCheckInQuestions();
         if (numberOfBags > 0) {
-            for (int i = 0; i < numberOfBagCheckInQuestions; i++)
-            passenger.setBagCheckInQuestionAnswer(i, checkInView.getBagCheckInQuestionAnswer(i));
+            for (int i = 0; i < numberOfBagCheckInQuestions - 1; i++) {
+                passenger.setBagCheckInQuestionAnswer(i, checkInView.getBagCheckInQuestionAnswer(i));
+            }
+
+            if (checkInView.getBagCheckInQuestionAnswer(4) == 1) {
+                passenger.setBagCheckInQuestionAnswer(5, 1);
+            } else {
+                passenger.setBagCheckInQuestionAnswer(5, 0);
+            }
+
         } else {
             for (int i = 0; i < numberOfBagCheckInQuestions; i++) {
                 passenger.setBagCheckInQuestionAnswer(i, 0);
             }
         }
 
-        tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingNumber, passportNumber, fullName);
+        tempPassengersData[checkInViewPagingIndex] = passenger;
 
     }
 
@@ -401,14 +409,8 @@ public class Controller {
 
             if (passengerData.getNumberOfBags() > 0) {
                 checkInView.setNumberOfBagsSpinner(passengerData.getNumberOfBags());
-                for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions() - 1; i++) {
-                    //checkInView.setQuestionAnswerRadioButtonsEnabled(i, true);
+                for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions(); i++) {
                     checkInView.setBagCheckInQuestionAnswer(i, passengerData.getBagCheckInQuestionAnswer(i));
-                }
-
-                if (passengerData.getBagCheckInQuestionAnswer(4) == 1) {
-                   // checkInView.setQuestionAnswerRadioButtonsEnabled(5, true);
-                    checkInView.setBagCheckInQuestionAnswer(5, passengerData.getBagCheckInQuestionAnswer(5));
                 }
             }
 
