@@ -1,3 +1,5 @@
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,8 +25,8 @@ public class Controller {
      * used to keep track of which passenger's boarding pass to show.
      */
     private int boardingPassViewPagingIndex;
-    /** Temp data to keep track of which tempPassengerData's bookingID is invalid. */
-    private boolean[] tempInvalidBookingIDData;
+    /** Temp data to keep track of which tempPassengerData's bookingNumber is invalid. */
+    private boolean[] tempInvalidBookingNumberData;
 
     /** Creates a Controller object with GUI gui, and KioskCheckInModel kioskCheckInModel,
      * acts as the bridge between GUI gui and KioskCheckInModekl kioskCheckInModel,
@@ -36,6 +38,7 @@ public class Controller {
         this.kioskCheckInModel = kioskCheckInModel;
         addActionListeners();
         addItemListeners();
+        addChangeListeners();
     }
 
     /** Adds all the ActionListeners to the GUI respectively. */
@@ -56,10 +59,15 @@ public class Controller {
     /** Adds the ItemListeners to the GUI respectively. */
     private void addItemListeners() {
         gui.addOthersSpecialAccommodationCheckBox(new OthersSpecialAccommodationCheckBoxListener());
+        gui.addQuestionFiveYesRadioButtonListener(new QuestionFiveYesRadioButtonListener());
     }
 
-    // TODO: Add comments and TODO's for all the listener class.
-    
+    /** Adds the ChangeListeners to the GUI respectively. */
+    private void addChangeListeners() {
+        gui.addNumberOfBagsSpinnerListener(new NumberOfBagsSpinnerListener());
+    }
+
+    /** This class is used to change the view to the counterView. */
     public class CheckInCounterButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -69,6 +77,7 @@ public class Controller {
         }
     }
 
+    /** This class is used to change the view to the checkInOptionView. */
     public class CheckInKioskButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -80,6 +89,7 @@ public class Controller {
         }
     }
 
+    /** This class is used to change the view to the checkInView, with only 1 passenger. */
     public class SingleCheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -90,8 +100,8 @@ public class Controller {
             kioskCheckInModel.setNumberOfPassengers(1);
             checkInViewPagingIndex = 0;
             tempPassengersData = new Passenger[1];
-            tempInvalidBookingIDData = new boolean[1];
-            tempInvalidBookingIDData[0] = false;
+            tempInvalidBookingNumberData = new boolean[1];
+            tempInvalidBookingNumberData[0] = false;
             gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
             gui.getCheckInView().resetView();
             gui.getCheckInView().updateView();
@@ -99,6 +109,8 @@ public class Controller {
         }
     }
 
+    /** This class is used to change the view to the checkInView, with only N passengers,
+     * where N is set by the user. */
     public class GroupCheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -112,9 +124,9 @@ public class Controller {
                 checkInViewPagingIndex = 0;
                 gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
                 tempPassengersData = new Passenger[numberOfPassengers];
-                tempInvalidBookingIDData = new boolean[numberOfPassengers];
+                tempInvalidBookingNumberData = new boolean[numberOfPassengers];
                 for (int i = 0; i < numberOfPassengers; i++) {
-                    tempInvalidBookingIDData[i] = false;
+                    tempInvalidBookingNumberData[i] = false;
                 }
                 gui.getCheckInView().resetView();
                 gui.getCheckInView().updateView();
@@ -129,6 +141,7 @@ public class Controller {
         }
     }
 
+    /** This class is used to change the checkInView to the previous passenger data, only for group check in. */
     public class PreviousPassengerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -153,6 +166,7 @@ public class Controller {
         }
     }
 
+    /** This class is used to change the checkInView to the next passenger data, only for group check in. */
     public class NextPassengerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -175,6 +189,8 @@ public class Controller {
         }
     }
 
+    /** This class is used to change the boardingPassView and effectively checks in all the passengers filled,
+     * Will prompt error, if there is any such as invalid bookingNumber or empty information. */
     public class CheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -202,26 +218,26 @@ public class Controller {
 
 
                 boolean allValid = true;
-                int pageIndexOfInvalidBookingID = 0;
+                int pageIndexOfInvalidBookingNumber = 0;
                 boolean foundFirstInvalid = false;
 
-                // Validates all the bookingID.
+                // Validates all the bookingNumber.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
 
-                    if (!kioskCheckInModel.validateBookingID(tempPassengersData[i].getBookingID())) {
+                    if (!kioskCheckInModel.validateBookingNumber(tempPassengersData[i].getBookingNumber())) {
                         allValid = false;
 
-                        // If we have found the first invalid bookingID,
+                        // If we have found the first invalid bookingNumber,
                         // Keep track of the pagingIndex it is at.
                         if (!foundFirstInvalid) {
-                            pageIndexOfInvalidBookingID = i;
+                            pageIndexOfInvalidBookingNumber = i;
                             foundFirstInvalid = true;
                         }
 
-                        tempInvalidBookingIDData[i] = true;
+                        tempInvalidBookingNumberData[i] = true;
 
                     } else {
-                        tempInvalidBookingIDData[i] = false;
+                        tempInvalidBookingNumberData[i] = false;
                     }
                 }
 
@@ -234,7 +250,7 @@ public class Controller {
                         gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
                     }
                 } else {
-                    checkInViewPagingIndex = pageIndexOfInvalidBookingID;
+                    checkInViewPagingIndex = pageIndexOfInvalidBookingNumber;
                     gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
                     loadCacheCheckInViewData(checkInView);
                 }
@@ -268,6 +284,7 @@ public class Controller {
         }
     }
 
+    /** This class changes the view to mainMenuView. */
     public class MainMenuButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -275,7 +292,51 @@ public class Controller {
         }
     }
 
+    /** This class sets bag check in questions 1 to 5 radio buttons,
+     * whether to be enabled or not based on the number of bags the user has inputted,
+     * in checkInView.
+     */
+    public class NumberOfBagsSpinnerListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            CheckInView checkInView = gui.getCheckInView();
+            if (checkInView.getNumberOfBagsFromSpinner() > 0) {
+                checkInView.setQuestionOneRadioButtonsEnabled(true);
+                checkInView.setQuestionTwoRadioButtonsEnabled(true);
+                checkInView.setQuestionThreeRadioButtonsEnabled(true);
+                checkInView.setQuestionFourRadioButtonsEnabled(true);
+                checkInView.setQuestionFiveRadioButtonsEnabled(true);
+            } else {
+                checkInView.setQuestionOneRadioButtonsEnabled(false);
+                checkInView.setQuestionTwoRadioButtonsEnabled(false);
+                checkInView.setQuestionThreeRadioButtonsEnabled(false);
+                checkInView.setQuestionFourRadioButtonsEnabled(false);
+                checkInView.setQuestionFiveRadioButtonsEnabled(false);
+            }
+        }
+    }
 
+    /** This class sets bag check in questions 5b radio button,
+     * whether to be enabled or not based on question 5 yes radio button is selected,
+     * in checkInView.
+     */
+    public class QuestionFiveYesRadioButtonListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            CheckInView checkInView = gui.getCheckInView();
+
+            if (checkInView.isQuestionFiveYesRadioButtonSelected()) {
+                checkInView.setQuestionFiveBRadioButtonsEnabled(true);
+            } else {
+                checkInView.setQuestionFiveBRadioButtonsEnabled(false);
+            }
+        }
+
+    }
+
+    /** This class sets the othersSpecialAccommodationTextField to be enabled,
+     * based on whether or not the OtherSpecialAccommodation checkbox is selected in checkInView.
+     */
     public class OthersSpecialAccommodationCheckBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -299,9 +360,9 @@ public class Controller {
         boolean cacheFailed = false;
 
 
-        String bookingID = checkInView.getBookingNumberFromTextField();
+        String bookingNumber = checkInView.getBookingNumberFromTextField();
 
-        if (bookingID.isEmpty()) {
+        if (bookingNumber.isEmpty()) {
             checkInView.setWarnEmptyBookingNumberInput(true);
             cacheFailed = true;
         }
@@ -362,7 +423,7 @@ public class Controller {
             throw new NumberFormatException();
         }
 
-        tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingID, passportNumber, fullName);
+        tempPassengersData[checkInViewPagingIndex] = new Passenger(bookingNumber, passportNumber, fullName);
 
     }
 
@@ -377,15 +438,15 @@ public class Controller {
 
         if (nextPassengerData != null) {
 
-            String nextPassengerBookingID = nextPassengerData.getBookingID();
+            String nextPassengerBookingNumber = nextPassengerData.getBookingNumber();
             String nextPassengerPassportNumber = nextPassengerData.getPassportNumber();
             String nextPassengerFullName = nextPassengerData.getFullName();
 
-            checkInView.setBookingNumberTextField(nextPassengerBookingID);
+            checkInView.setBookingNumberTextField(nextPassengerBookingNumber);
             checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
             checkInView.setFullNameTextField(nextPassengerFullName);
 
-            checkInView.setWarnInvalidBookingID(tempInvalidBookingIDData[checkInViewPagingIndex]);
+            checkInView.setWarnInvalidBookingNumber(tempInvalidBookingNumberData[checkInViewPagingIndex]);
         }
         checkInView.updateView();
 
