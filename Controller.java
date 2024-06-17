@@ -18,8 +18,12 @@ public class Controller {
     private boolean[] tempInvalidBookingNumberData;
     /** Temp data to keep track of which tempPassengerData's bookingNumber is empty. */
     private boolean[] tempWarnEmptyBookingNumberData;
+    /** Temp data to keep track of which tempPassengerData's passportNumber is invalid. */
+    private boolean[] tempInvalidPassportNumber;
     /** Temp data to keep track of which tempPassengerData's passportNumber is empty. */
     private boolean[] tempWarnEmptyPassportNumberData;
+    /** Temp data to keep track of which tempPassengerData's fullName is invalid. */
+    private boolean[] tempInvalidFullName;
     /** Temp data to keep track of which tempPassengerData's fullName is empty. */
     private boolean[] tempWarnEmptyFullNameData;
     /** Temp data to keep track of which tempPassengerData's question is not answered. */
@@ -91,13 +95,17 @@ public class Controller {
         tempPassengersData = new Passenger[numberOfData];
         tempInvalidBookingNumberData = new boolean[numberOfData];
         tempWarnEmptyBookingNumberData = new boolean[numberOfData];
+        tempInvalidPassportNumber = new boolean[numberOfData];
         tempWarnEmptyPassportNumberData = new boolean[numberOfData];
+        tempInvalidFullName = new boolean[numberOfData];
         tempWarnEmptyFullNameData = new boolean[numberOfData];
         tempWarnQuestionNotAnsweredData = new boolean[numberOfData][gui.getCheckInView().getNumberOfBagCheckInQuestions()];
         for (int i = 0; i < numberOfData; i++) {
             tempInvalidBookingNumberData[i] = false;
             tempWarnEmptyBookingNumberData[i] = false;
+            tempInvalidPassportNumber[i] = false;
             tempWarnEmptyPassportNumberData[i] = false;
+            tempInvalidFullName[i] = false;
             tempWarnEmptyFullNameData[i] = false;
             for (int j = 0; j < gui.getCheckInView().getNumberOfBagCheckInQuestions(); j++) {
                 tempWarnQuestionNotAnsweredData[i][j] = false;
@@ -203,7 +211,6 @@ public class Controller {
 
             try {
 
-
                 cacheCheckInViewData(checkInView);
 
                 boolean emptyData = false;
@@ -215,6 +222,14 @@ public class Controller {
                         tempWarnEmptyPassportNumberData[i] = true;
                         tempWarnEmptyFullNameData[i] = true;
                         emptyData = true;
+                    }
+                    // TODO: @iZ86, Pls check if any error on this line of code
+                    if(!kioskCheckInModel.validatePassengerInformation(passengerData.getBookingNumber(), passengerData.getPassportNumber(), passengerData.getFullName())) {
+                        tempInvalidBookingNumberData[i] = true;
+                        tempInvalidPassportNumber[i] = true;
+                        tempInvalidFullName[i] = true;
+                        checkInView.setCheckInViewPagingIndex(i);
+
                     } else {
                         if (passengerData.getBookingNumber().isEmpty() || passengerData.getBookingNumber().isBlank()) {
                             tempWarnEmptyBookingNumberData[i] = true;
@@ -262,10 +277,10 @@ public class Controller {
                 int pageIndexOfInvalidBookingNumber = 0;
                 boolean foundFirstInvalid = false;
 
-                // Validates all the bookingNumber.
+                // Validates the bookingNumber, passportNumber and fullName.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
 
-                    if (!kioskCheckInModel.validateBookingNumber(tempPassengersData[i].getBookingNumber())) {
+                    if (!kioskCheckInModel.validatePassengerInformation(tempPassengersData[i].getBookingNumber(), tempPassengersData[i].getPassportNumber(), tempPassengersData[i].getFullName())) {
                         allValid = false;
 
                         // If we have found the first invalid bookingNumber,
