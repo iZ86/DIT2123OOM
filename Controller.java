@@ -1,9 +1,7 @@
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
 
 /** This class acts as the controller of the MVC structure in this program. */
@@ -67,6 +65,7 @@ public class Controller {
     private void addItemListeners() {
         gui.addOthersSpecialAccommodationCheckBox(new OthersSpecialAccommodationCheckBoxListener());
         gui.addQuestionFiveYesRadioButtonListener(new QuestionFiveYesRadioButtonListener());
+        gui.addQuestionAnswerRadioButtonListener(new QuestionAnswerRadioButtonListener());
     }
 
     /** Adds the ChangeListeners to the GUI respectively. */
@@ -96,6 +95,26 @@ public class Controller {
         }
     }
 
+    /** Initializes all the temp data arrays. */
+    private void initializeTempData(int numberOfData) {
+        tempPassengersData = new Passenger[numberOfData];
+        tempInvalidBookingNumberData = new boolean[numberOfData];
+        tempWarnEmptyBookingNumberData = new boolean[numberOfData];
+        tempWarnEmptyPassportNumberData = new boolean[numberOfData];
+        tempWarnEmptyFullNameData = new boolean[numberOfData];
+        tempWarnQuestionNotAnsweredData = new boolean[numberOfData][gui.getCheckInView().getNumberOfBagCheckInQuestions()];
+        for (int i = 0; i < numberOfData; i++) {
+            tempInvalidBookingNumberData[i] = false;
+            tempWarnEmptyBookingNumberData[i] = false;
+            tempWarnEmptyPassportNumberData[i] = false;
+            tempWarnEmptyFullNameData[i] = false;
+            for (int j = 0; j < gui.getCheckInView().getNumberOfBagCheckInQuestions(); j++) {
+                tempWarnQuestionNotAnsweredData[i][j] = false;
+            }
+        }
+
+    }
+
     /** This class is used to change the view to the checkInView, with only 1 passenger. */
     public class SingleCheckInButtonListener implements ActionListener {
         @Override
@@ -106,15 +125,14 @@ public class Controller {
             // TODO: Changes the GUIViewPanel to checkInView.
             kioskCheckInModel.setNumberOfPassengers(1);
             checkInViewPagingIndex = 0;
-            tempPassengersData = new Passenger[1];
-            tempInvalidBookingNumberData = new boolean[1];
-            tempInvalidBookingNumberData[0] = false;
+            initializeTempData(1);
             gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
             gui.getCheckInView().resetView();
             gui.getCheckInView().updateView();
             gui.changeView(GUI.CHECKINVIEWINDEX);
         }
     }
+
 
     /** This class is used to change the view to the checkInView, with only N passengers,
      * where N is set by the user. */
@@ -130,11 +148,7 @@ public class Controller {
                 kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
                 checkInViewPagingIndex = 0;
                 gui.getCheckInView().setCheckInViewPagingIndex(checkInViewPagingIndex);
-                tempPassengersData = new Passenger[numberOfPassengers];
-                tempInvalidBookingNumberData = new boolean[numberOfPassengers];
-                for (int i = 0; i < numberOfPassengers; i++) {
-                    tempInvalidBookingNumberData[i] = false;
-                }
+                initializeTempData(numberOfPassengers);
                 gui.getCheckInView().resetView();
                 gui.getCheckInView().updateView();
                 gui.changeView(GUI.CHECKINVIEWINDEX);
@@ -207,25 +221,57 @@ public class Controller {
 
             try {
 
+
                 cacheCheckInViewData(checkInView);
 
-                // Check if there is any empty data, if there is any,
-                // load it up and throw NumberFormatException (following the cacheCheckInView from the above line.
-                for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
-                    // TODO: keep track of what should be warned and where
-                    // TODO: so that when user changes page it will show
-                    // TODO: fill in button answer warning
-                    // TODO: if wrong button, new page and lock the bookingNumber
-                    if (tempPassengersData[i] == null) {
+                boolean emptyData = false;
+                for (int i = kioskCheckInModel.getNumberOfPassengers() - 1; i >= 0 ; i--) {
+                    Passenger passengerData = tempPassengersData[i];
+                    if (passengerData == null) {
                         checkInViewPagingIndex = i;
-                        checkInView.setCheckInViewPagingIndex(checkInViewPagingIndex);
-                        loadCacheCheckInViewData(checkInView);
-                        checkInView.setWarnEmptyBookingNumberInput(true);
-                        checkInView.setWarnEmptyPassportNumberInput(true);
-                        checkInView.setWarnEmptyFullNameInput(true);
-                        throw new NumberFormatException();
+                        tempWarnEmptyBookingNumberData[i] = true;
+                        tempWarnEmptyPassportNumberData[i] = true;
+                        tempWarnEmptyFullNameData[i] = true;
+                        emptyData = true;
+                    } else {
+                        if (passengerData.getBookingNumber().isEmpty() || passengerData.getBookingNumber().isBlank()) {
+                            tempWarnEmptyBookingNumberData[i] = true;
+                            checkInViewPagingIndex = i;
+                            emptyData = true;
+                        }
+                        if (passengerData.getPassportNumber().isEmpty() || passengerData.getPassportNumber().isBlank()) {
+                            tempWarnEmptyPassportNumberData[i] = true;
+                            checkInViewPagingIndex = i;
+                            emptyData = true;
+                        }
+                        if (passengerData.getFullName().isEmpty() || passengerData.getFullName().isBlank()) {
+                            tempWarnEmptyFullNameData[i] = true;
+                            checkInViewPagingIndex = i;
+                            emptyData = true;
+                        }
+                        if (passengerData.getNumberOfBags() > 0) {
+                            for (int j = 0; j < checkInView.getNumberOfBagCheckInQuestions() - 1; j++) {
+                                if (passengerData.getBagCheckInQuestionAnswer(j) == 0) {
+                                    tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][j] = true;
+                                    checkInViewPagingIndex = i;
+                                    emptyData = true;
+                                }
+                            }
+                            if (passengerData.getBagCheckInQuestionAnswer(4) == 1 && passengerData.getBagCheckInQuestionAnswer(5) == 0) {
+                                tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][5] = true;
+                                checkInViewPagingIndex = i;
+                                emptyData = true;
+                            }
+                        }
                     }
                 }
+
+                if (emptyData) {
+                    checkInView.setCheckInViewPagingIndex(checkInViewPagingIndex);
+                    loadCacheCheckInViewData(checkInView);
+                    throw new NumberFormatException();
+                }
+
 
 
                 boolean allValid = true;
@@ -320,7 +366,11 @@ public class Controller {
             } else {
                 for (int i = 0; i < number; i++) {
                     checkInView.setQuestionAnswerRadioButtonsEnabled(i, false);
+                    tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][i] = false;
+                    checkInView.setWarnUnansweredQuestions(i, false);
+                    checkInView.setBagCheckInQuestionAnswer(i, 0);
                 }
+                checkInView.updateView();
             }
         }
     }
@@ -359,8 +409,27 @@ public class Controller {
             }
             checkInView.updateView();
         }
+    }
 
 
+    /** This class is used to get rid of the warnings in checkInView when the radio button that represents
+     * the answers to the bag check in question is pressed.
+     */
+    public class QuestionAnswerRadioButtonListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            int answeredQuestionRadioButtonIndex = (int) ((JRadioButton) e.getSource()).getClientProperty("index");
+            String answeredQuestionChoice = (String) ((JRadioButton) e.getSource()).getClientProperty("answer");
+
+            gui.getCheckInView().setWarnUnansweredQuestions(answeredQuestionRadioButtonIndex, false);
+            tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][answeredQuestionRadioButtonIndex] = false;
+            if (answeredQuestionRadioButtonIndex == 4 && answeredQuestionChoice.equals("No")) {
+                gui.getCheckInView().setWarnUnansweredQuestions(answeredQuestionRadioButtonIndex + 1, false);
+                gui.getCheckInView().setBagCheckInQuestionAnswer(answeredQuestionRadioButtonIndex + 1, 0);
+                tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][answeredQuestionRadioButtonIndex + 1] = false;
+            }
+            gui.getCheckInView().updateView();
+        }
     }
 
     // TODO: Check if there is a way to NOT use kioskCheckInModel.setPassengerIndex,
@@ -372,9 +441,29 @@ public class Controller {
         String passportNumber = checkInView.getPassportNumberFromTextField();
         String fullName = checkInView.getFullNameFromTextField();
 
-        int numberOfBags = checkInView.getNumberOfBagsFromSpinner();
+        if (!(bookingNumber.isEmpty() && bookingNumber.isBlank())) {
+            tempWarnEmptyBookingNumberData[checkInViewPagingIndex] = false;
+        }
+
+        if (!(passportNumber.isEmpty() && passportNumber.isBlank())) {
+            tempWarnEmptyPassportNumberData[checkInViewPagingIndex] = false;
+        }
+
+        if (!(fullName.isEmpty() && fullName.isBlank())) {
+            tempWarnEmptyFullNameData[checkInViewPagingIndex] = false;
+        }
 
         Passenger passenger = new Passenger(bookingNumber, passportNumber, fullName);
+
+        passenger.setRequireWheelchair(checkInView.isWheelChairCheckBoxSelected());
+        passenger.setBlind(checkInView.isBlindnessCheckBoxSelected());
+        passenger.setDeaf(checkInView.isDeafnessCheckBoxSelected());
+        passenger.setOtherSpecialAccommodation(checkInView.isOthersSpecialAccommodationCheckBoxSelected());
+        if (passenger.isOtherSpecialAccommodation()) {
+            passenger.setOtherSpecialAccommodationDetails(checkInView.getOthersSpecialAccommodationTextField());
+        }
+
+        int numberOfBags = checkInView.getNumberOfBagsFromSpinner();
         passenger.setBagArraySize(numberOfBags);
 
         int numberOfBagCheckInQuestions = checkInView.getNumberOfBagCheckInQuestions();
@@ -384,9 +473,7 @@ public class Controller {
             }
 
             if (checkInView.getBagCheckInQuestionAnswer(4) == 1) {
-                passenger.setBagCheckInQuestionAnswer(5, 1);
-            } else {
-                passenger.setBagCheckInQuestionAnswer(5, 0);
+                passenger.setBagCheckInQuestionAnswer(5, checkInView.getBagCheckInQuestionAnswer(5));
             }
 
         } else {
@@ -404,9 +491,21 @@ public class Controller {
      */
     public void loadCacheCheckInViewData(CheckInView checkInView) {
 
+        // When checkInView.resetView() method is called, it modifies the numberOfBagsSpanner to 0.
+        // This causes the tempWarnQuestionNotAnsweredData[checkInViewPagingIndex] to be overridden to all false.
+        // During checkInButtonListener actionPerformed method.
+        // So this is needed to prevent the overridden.
+        int numberOfQuestions = tempWarnQuestionNotAnsweredData[checkInViewPagingIndex].length;
+        boolean[] tempUnansweredQuestions = new boolean[numberOfQuestions];
+        for (int i = 0; i < numberOfQuestions; i++) {
+            tempUnansweredQuestions[i] = tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][i];
+        }
 
         checkInView.resetView();
         Passenger passengerData = tempPassengersData[checkInViewPagingIndex];
+        
+
+        tempWarnQuestionNotAnsweredData[checkInViewPagingIndex] = tempUnansweredQuestions;
 
         if (passengerData != null) {
 
@@ -418,14 +517,28 @@ public class Controller {
             checkInView.setPassportNumberTextField(nextPassengerPassportNumber);
             checkInView.setFullNameTextField(nextPassengerFullName);
 
+            checkInView.setWheelchairCheckBoxSelected(passengerData.isRequireWheelchair());
+            checkInView.setBlindnessCheckBoxSelected(passengerData.isBlind());
+            checkInView.setDeafnessCheckBoxSelected(passengerData.isDeaf());
+            checkInView.setOthersSpecialAccommodationCheckBoxSelected(passengerData.isOtherSpecialAccommodation());
+            checkInView.setOthersSpecialAccommodationTextField(passengerData.getOtherSpecialAccommodationDetails());
+
+
+
             if (passengerData.getNumberOfBags() > 0) {
                 checkInView.setNumberOfBagsSpinner(passengerData.getNumberOfBags());
                 for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions(); i++) {
                     checkInView.setBagCheckInQuestionAnswer(i, passengerData.getBagCheckInQuestionAnswer(i));
                 }
             }
+        }
+        checkInView.setWarnInvalidBookingNumber(tempInvalidBookingNumberData[checkInViewPagingIndex]);
+        checkInView.setWarnEmptyBookingNumberInput(tempWarnEmptyBookingNumberData[checkInViewPagingIndex]);
+        checkInView.setWarnEmptyPassportNumberInput(tempWarnEmptyPassportNumberData[checkInViewPagingIndex]);
+        checkInView.setWarnEmptyFullNameInput(tempWarnEmptyFullNameData[checkInViewPagingIndex]);
 
-            checkInView.setWarnInvalidBookingNumber(tempInvalidBookingNumberData[checkInViewPagingIndex]);
+        for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions(); i++) {
+            checkInView.setWarnUnansweredQuestions(i, tempWarnQuestionNotAnsweredData[checkInViewPagingIndex][i]);
         }
         checkInView.updateView();
 
