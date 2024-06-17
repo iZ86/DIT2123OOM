@@ -190,4 +190,10 @@ public class GUI {
     public void addQuestionFiveYesRadioButtonListener(ItemListener listenForQuestionFiveYesRadioButton) {
         checkInView.addQuestionFiveYesRadioButtonListener(listenForQuestionFiveYesRadioButton);
     }
+
+
+    /** Adds an ItemListener to all the JRadioButton yes and no answers for the bag check in question in checkInView. */
+    public void addQuestionAnswerRadioButtonListener(ItemListener listenForQuestionAnswerRadioButton) {
+        checkInView.addQuestionAnswerRadioButtonListener(listenForQuestionAnswerRadioButton);
+    }
 }
