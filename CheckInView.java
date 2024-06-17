@@ -64,8 +64,12 @@ public class CheckInView {
     private boolean warnInvalidBookingNumber;
     /** True if there should be a warning prompt for empty booking number in bookingNumberTextField. */
     private boolean warnEmptyBookingNumberInput;
+    /** True if there should be a warning prompt for empty invalid passport number in passportNumberTextField. */
+    private boolean warnInvalidPassportNumber;
     /** True if there should be a warning prompt for empty passport number in passportNumberTextField. */
     private boolean warnEmptyPassportNumberInput;
+    /** True if there should be a warning prompt for empty invalid full name in fullNameTextField. */
+    private boolean warnInvalidFullName;
     /** True if there should be a warning prompt for empty full name in fullNameTextField. */
     private boolean warnEmptyFullNameInput;
     /** Yes radio buttons for every bag check in question. */
@@ -150,7 +154,9 @@ public class CheckInView {
 
         setWarnInvalidBookingNumber(false);
         setWarnEmptyBookingNumberInput(false);
+        setWarnInvalidPassportNumber(false);
         setWarnEmptyPassportNumberInput(false);
+        setWarnInvalidFullName(false);
         setWarnEmptyFullNameInput(false);
     }
 
@@ -240,11 +246,19 @@ public class CheckInView {
         this.warnEmptyBookingNumberInput = warnEmptyBookingNumberInput;
     }
 
+    /** Sets warnInvalidPassportNumber. */
+    public void setWarnInvalidPassportNumber(boolean warnInvalidPassportNumber) {
+        this.warnInvalidPassportNumber = warnInvalidPassportNumber;
+    }
+
     /** Sets warnEmptyPassportNumberInput. */
     public void setWarnEmptyPassportNumberInput(boolean warnEmptyPassportNumberInput) {
         this.warnEmptyPassportNumberInput  = warnEmptyPassportNumberInput;
     }
 
+    public void setWarnInvalidFullName(boolean warnInvalidFullName) {
+        this.warnInvalidFullName = warnInvalidFullName;
+    }
     /** Sets warnEmptyFullNameInput. */
     public void setWarnEmptyFullNameInput(boolean warnEmptyFullNameInput) {
         this.warnEmptyFullNameInput = warnEmptyFullNameInput;
@@ -454,8 +468,6 @@ public class CheckInView {
 
         JLabel fullNameLabel = new JLabel("Full Name");
 
-
-
         GridBagConstraints constraintsForBookingNumberLabel = new GridBagConstraints();
         constraintsForBookingNumberLabel.gridx = 0;
         constraintsForBookingNumberLabel.gridy = 0;
@@ -500,6 +512,16 @@ public class CheckInView {
         constraintsForPassportNumberTextField.fill = GridBagConstraints.HORIZONTAL;
         constraintsForPassportNumberTextField.ipady = verticalSizeOfTextField;
         constraintsForPassportNumberTextField.insets = new Insets(15, 0, 0, 0);
+
+        if (warnInvalidPassportNumber) {
+            JLabel warningInvalidPassportNumberLabel = new JLabel("Invalid Passport Number.");
+            warningInvalidPassportNumberLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForWarningInvalidPassportNumber = new GridBagConstraints();
+            constraintsForWarningInvalidPassportNumber.gridx = 1;
+            constraintsForWarningInvalidPassportNumber.gridy = 3;
+
+            textFieldPanel.add(warningInvalidPassportNumberLabel, constraintsForWarningInvalidPassportNumber);
+        }
 
         if (warnEmptyPassportNumberInput) {
 
