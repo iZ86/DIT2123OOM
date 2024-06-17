@@ -111,6 +111,11 @@ public class CheckInView {
         setupViewPanel();
     }
 
+    /** Returns the checkInViewPagingIndex. */
+    public int getCheckInViewPagingIndex() {
+        return checkInViewPagingIndex;
+    }
+
     /** Sets the checkInViewPagingIndex. */
     public void setCheckInViewPagingIndex(int checkInViewPagingIndex) {
         this.checkInViewPagingIndex = checkInViewPagingIndex;
@@ -747,14 +752,12 @@ public class CheckInView {
 
         constraintsForMainMenuButton.fill = GridBagConstraints.VERTICAL;
         constraintsForBackToCheckInOptionView.fill = GridBagConstraints.VERTICAL;
-
-        // TODO: Dont add if at certain page.
+        
         if (kioskCheckInModel.getNumberOfPassengers() > 0) {
             if (checkInViewPagingIndex > 0) {
 
                 panelForNextAndPreviousButton.add(previousPassengerButton, constraintsForPreviousButton);
             }
-            // TODO: Maybe change this.
             if (checkInViewPagingIndex < kioskCheckInModel.getNumberOfPassengers() - 1) {
 
                 panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
