@@ -13,6 +13,16 @@ public class Utils {
             "ABC123", "ABC124", "ABC125", "ABC223", "ABC323", "BAC123"
     };
 
+    /** A constant array of passportNumbers used for randomized data*/
+    public static final String[] PASSPORTNUMBERS = new String[]{
+            "PN0123", "PN1234", "PN2345", "PN3456", "PN7654", "PN9876"
+    };
+
+    /** A constant array of fullName used for randomized data*/
+    public static final String[] FULLNAME = new String[]{
+            "Emily Johnson", "Michael Smith", "Olivia Martinez", "David Brown", "Sophia Garcia", "James Wilson"
+    };
+
     /** A constant array of seat numbers, used for randomized data. */
     public static final String[] SEATNUMBERS = new String[]{
             "A-01", "A-02", "A-03", "Y-29", "E-14", "O-44"
