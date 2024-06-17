@@ -21,18 +21,20 @@ public class BoardingPassView {
     private JButton printBoardingPassButton = new JButton("Print");
     /** JButton that changes the view to the MainMenuView. */
     private JButton mainMenuButton = new JButton("Main Menu");
-    private JPanel panelForBoardingPassView;
+    /** Paging index for boarding pass view. */
+    private int boardingPassViewPagingIndex;
 
     /** Creates a BoardingPassView object with KioskCheckInModel kioskCheckInModel as the model. */
     public BoardingPassView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
+        boardingPassViewPagingIndex = 0;
         setupViewPanel();
     }
 
     /** Sets up the boardingPassViewPanel. */
     private void setupViewPanel() {
 
-        panelForBoardingPassView = new JPanel(new GridBagLayout());
+        JPanel panelForBoardingPassView = new JPanel(new GridBagLayout());
 
         JPanel informationAreaPanel = new JPanel(new GridBagLayout());
         informationAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()," Boarding Pass Details  ", TitledBorder.LEFT,TitledBorder.TOP));
@@ -89,26 +91,7 @@ public class BoardingPassView {
         // It will ask for null attributes, and that is an error.
         // TODO: @i4GS implement this however u like. but it MUST be implemented.
         if (kioskCheckInModel.getNumberOfBags() > 0) {
-            JLabel bagIdLabel = new JLabel("Bag ID: ");
-            JLabel bagColorLabel = new JLabel("Bag Color: ");
-            JLabel bagWeightLabel = new JLabel("Bag Weight: ");
-
-            JLabel bagIdDataLabel = new JLabel(kioskCheckInModel.getBagID());
-            JLabel bagWeightDataLabel = new JLabel();
-            constraintsForLabel.anchor = GridBagConstraints.WEST;
-            constraintsForLabel.insets = new Insets(10, 0, 15, 235);
-
-            panelForBagAreaPanel.add(bagIdLabel, constraintsForLabel);
-            panelForBagAreaPanel.add(bagIdDataLabel, constraintsForData);
-
-            constraintsForLabel.gridy = 4;
-            constraintsForData.gridy = 4;
-            panelForBagAreaPanel.add(bagColorLabel, constraintsForLabel);
-
-            constraintsForLabel.gridy = 5;
-            constraintsForData.gridy = 5;
-            panelForBagAreaPanel.add(bagWeightLabel, constraintsForLabel);
-            panelForBagAreaPanel.add(bagWeightDataLabel, constraintsForData);
+            // TODO: Removed, because.
         }
 
 
@@ -116,8 +99,6 @@ public class BoardingPassView {
 
         constraintsForButton.gridy = 6;
         constraintsForButton.gridx = 0;
-        //constraintsForButton.ipadx = horizontalSizeOfButton;
-        //constraintsForButton.ipady = verticalSizeOfButton;
         constraintsForButton.insets = new Insets(10, 10, 0, 0);
         constraintsForButton.anchor = GridBagConstraints.CENTER;
 
@@ -144,6 +125,16 @@ public class BoardingPassView {
     /** Returns the boardingPassViewPanel. */
     public JPanel getBoardingPassViewPanel() {
         return boardingPassViewPanel;
+    }
+
+    /** Returns boardingPassViewPagingIndex. */
+    public int getBoardingPassViewPagingIndex() {
+        return boardingPassViewPagingIndex;
+    }
+
+    /** Sets boardingPassViewPagingIndex. */
+    public void setBoardingPassViewPagingIndex(int boardingPassViewPagingIndex) {
+        this.boardingPassViewPagingIndex = boardingPassViewPagingIndex;
     }
 
     /** Adds an ActionListener to previousBoardingPassButton. */
