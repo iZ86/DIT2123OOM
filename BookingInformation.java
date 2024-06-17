@@ -1,14 +1,18 @@
 public class BookingInformation {
     String bookingID;
+    String passportNumber;
+    String fullName;
     String seatNumber;
     String destination;
     String flightStatus;
     int gateNumber;
     String boardingTime;
 
-    public BookingInformation(String bookingID, String seatNumber, String destination,
+    public BookingInformation(String bookingID, String passportNumber, String fullName, String seatNumber, String destination,
                               String flightStatus, int gateNumber, String boardingTime) {
         this.bookingID = bookingID;
+        this.passportNumber = passportNumber;
+        this.fullName = fullName;
         this.seatNumber = seatNumber;
         this.destination = destination;
         this.flightStatus = flightStatus;
