@@ -76,17 +76,27 @@ public class CheckInView {
     private ButtonGroup[] buttonGroup = new ButtonGroup[6];
     /** JSpinner to select the number of passengers */
     private JSpinner numberOfBagsSpinner;
+    /** True if there should be a warning prompt for unanswered questions. */
+    private boolean[] warnUnansweredQuestions = new boolean[6];
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
         this.kioskCheckInModel = kioskCheckInModel;
+
+        // This is used to identify the radio buttons, when pressed for,
+        // The ItemListener that will be added to them.
         for (int i = 0; i < answerYesRadioButtons.length; i++) {
             answerYesRadioButtons[i] = new JRadioButton("Yes");
             answerNoRadioButtons[i] = new JRadioButton("No");
             buttonGroup[i] = new ButtonGroup();
             buttonGroup[i].add(answerYesRadioButtons[i]);
             buttonGroup[i].add(answerNoRadioButtons[i]);
+            answerYesRadioButtons[i].putClientProperty("index", i);
+            answerYesRadioButtons[i].putClientProperty("answer", "Yes");
+            answerNoRadioButtons[i].putClientProperty("index", i);
+            answerNoRadioButtons[i].putClientProperty("answer", "No");
         }
+
 
         // Set limiter on spinner.
         SpinnerNumberModel numberOfBagsSpinnerModel = new SpinnerNumberModel(0, 0, 4, 1);
@@ -126,9 +136,11 @@ public class CheckInView {
         setBlindnessCheckBoxSelected(false);
         setOthersSpecialAccommodationCheckBoxSelected(false);
         setOthersSpecialAccommodationTextFieldEnabled(false);
+
         for (int i = 0; i < QUESTIONS.length; i++) {
             setQuestionAnswerRadioButtonsEnabled(i, false);
             setBagCheckInQuestionAnswer(i, 0);
+            setWarnUnansweredQuestions(i, false);
         }
 
         setWarnInvalidBookingNumber(false);
@@ -231,6 +243,11 @@ public class CheckInView {
     /** Sets warnEmptyFullNameInput. */
     public void setWarnEmptyFullNameInput(boolean warnEmptyFullNameInput) {
         this.warnEmptyFullNameInput = warnEmptyFullNameInput;
+    }
+
+    /** Sets warnsUnansweredQuestions[index]. */
+    public void setWarnUnansweredQuestions(int index, boolean warnUnansweredQuestion) {
+        warnUnansweredQuestions[index] = warnUnansweredQuestion;
     }
 
     /** Returns the checkInViewPanel. */
@@ -410,6 +427,14 @@ public class CheckInView {
         mainMenuButton.addActionListener(listenForMainMenuButton);
     }
 
+    /** Adds an ItemListener to all the answer radio buttons. */
+    public void addQuestionAnswerRadioButtonListener(ItemListener listenForQuestionAnswerRadioButton) {
+        for (int i = 0; i < QUESTIONS.length; i++) {
+            answerYesRadioButtons[i].addItemListener(listenForQuestionAnswerRadioButton);
+            answerNoRadioButtons[i].addItemListener(listenForQuestionAnswerRadioButton);
+        }
+    }
+
 
     /** Sets up the JTextField, JLabel and adjusting micro position for JLabel and JTextFields. */
     private JPanel setupViewTextFieldPanel() {
@@ -510,8 +535,6 @@ public class CheckInView {
         }
 
 
-
-
         textFieldPanel.add(bookingNumberLabel, constraintsForBookingNumberLabel);
         textFieldPanel.add(bookingNumberTextField, constraintsForBookingNumberTextField);
         textFieldPanel.add(passportLabel, constraintsForPassportLabel);
@@ -603,7 +626,7 @@ public class CheckInView {
         JPanel bagCheckInQuestionsPanel = new JPanel(new GridBagLayout());
 
         // Questions
-        for (int i = 0; i < QUESTIONS.length; i++) {
+        for (int i = 0; i < QUESTIONS.length; i ++) {
             JPanel bagCheckInQuestionPanel = new JPanel(new GridBagLayout());
             JPanel bagCheckInQuestionRadioButtonPanel = new JPanel(new GridBagLayout());
             JLabel bagCheckInQuestionLabel = new JLabel(String.format(HTML, 250, QUESTIONS[i]));
@@ -628,9 +651,21 @@ public class CheckInView {
             constraintsForBagCheckInQuestionLabel.gridx = 0;
             constraintsForBagCheckInQuestionLabel.gridy = 0;
 
+
+
+            if (warnUnansweredQuestions[i]) {
+                JLabel warnUnansweredQuestionLabel = new JLabel("Please answer this question!");
+                warnUnansweredQuestionLabel.setForeground(Color.RED);
+                GridBagConstraints constraintsForWarnUnansweredQuestionLabel = new GridBagConstraints();
+                constraintsForWarnUnansweredQuestionLabel.gridx = 0;
+                constraintsForWarnUnansweredQuestionLabel.gridy = 1;
+                bagCheckInQuestionPanel.add(warnUnansweredQuestionLabel, constraintsForWarnUnansweredQuestionLabel);
+            }
+
+
             GridBagConstraints constraintsForBagCheckInQuestionCheckBoxPanel = new GridBagConstraints();
             constraintsForBagCheckInQuestionCheckBoxPanel.gridx = 0;
-            constraintsForBagCheckInQuestionCheckBoxPanel.gridy = 1;
+            constraintsForBagCheckInQuestionCheckBoxPanel.gridy = 2;
 
             bagCheckInQuestionPanel.add(bagCheckInQuestionLabel, constraintsForBagCheckInQuestionLabel);
             bagCheckInQuestionPanel.add(bagCheckInQuestionRadioButtonPanel, constraintsForBagCheckInQuestionCheckBoxPanel);
@@ -638,7 +673,7 @@ public class CheckInView {
             // Adding bagCheckInQuestionPanel to the checkInViewPanel.
             GridBagConstraints constraintsForBagCheckInQuestionPanel = new GridBagConstraints();
             constraintsForBagCheckInQuestionPanel.gridx = 0;
-            constraintsForBagCheckInQuestionPanel.gridy = i; // 2 because other components take up gridy 1 and 0 in the viewPanel.
+            constraintsForBagCheckInQuestionPanel.gridy = i;
             constraintsForBagCheckInQuestionPanel.insets = new Insets(0, 0 , 20, 0);
 
             bagCheckInQuestionsPanel.add(bagCheckInQuestionPanel, constraintsForBagCheckInQuestionPanel);
