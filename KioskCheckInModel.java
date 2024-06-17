@@ -37,15 +37,16 @@ public class KioskCheckInModel {
     /** Setups up the bookingInformationData. */
     private void setupBookingInformationData() {
         for (int i = 0; i < Utils.NUMBEROFDATA; i++) {
-            bookingInformationData.put(Utils.BOOKINGNUMBERS[i], new BookingInformation(Utils.BOOKINGNUMBERS[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", utils.generateRandomGateNumber(), Utils.BOARDINGTIMES[i]));
+            bookingInformationData.put(Utils.BOOKINGNUMBERS[i], new BookingInformation(Utils.BOOKINGNUMBERS[i], Utils.PASSPORTNUMBERS[i], Utils.FULLNAME[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", utils.generateRandomGateNumber(), Utils.BOARDINGTIMES[i]));
         }
     }
 
     /** Used to validate bookingNumber entered by user,
-     * returns true iff it's a valid bookingID.
+     * returns true if it's a valid bookingID, passportNumber and fullName.
      * Otherwise, returns false. */
-    public boolean validateBookingNumber(String bookingNumber) {
-        return bookingInformationData.containsKey(bookingNumber);
+    public boolean validatePassengerInformation(String bookingNumber, String passportNumber, String fullName) {
+        // TODO: @iZ86, Pls check here too
+        return bookingInformationData.containsKey(bookingNumber) && bookingInformationData.containsKey(passportNumber) && bookingInformationData.containsKey(fullName);
     }
    
     /** Sets the number of passengers to be checked in. */
