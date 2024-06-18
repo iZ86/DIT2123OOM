@@ -550,6 +550,16 @@ public class CheckInView {
         constraintsForFullNameTextField.ipady = verticalSizeOfTextField;
         constraintsForFullNameTextField.insets = new Insets(15, 0, 0, 0);
 
+        if (warnInvalidFullName) {
+            JLabel warningInvalidFullNameLabel = new JLabel("Invalid Full Name.");
+            warningInvalidFullNameLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForWarningInvalidFullName = new GridBagConstraints();
+            constraintsForWarningInvalidFullName.gridx = 1;
+            constraintsForWarningInvalidFullName.gridy = 5;
+
+            textFieldPanel.add(warningInvalidFullNameLabel, constraintsForWarningInvalidFullName);
+        }
+
         if (warnEmptyFullNameInput) {
 
             JLabel warningEmptyFullNameLabel = new JLabel("Empty Field.");
