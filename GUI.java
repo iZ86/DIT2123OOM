@@ -22,6 +22,8 @@ public class GUI {
     private BoardingPassView boardingPassView;
     /** The done view. */
     private DoneView doneView;
+    /** The locked booking number view. */
+    private LockedBookingNumberView lockedBookingNumberView;
     /** Index used to access mainMenuView in the GUIViewPanel. */
     public static final String MAINMENUVIEWINDEX = "MainMenuView";
     /** Index used to access counterView in the GUIViewPanel. */
@@ -34,6 +36,8 @@ public class GUI {
     public static final String BOARDINGPASSVIEWINDEX = "BoardingPassView";
     /** Index used to access doneView in the GUIViewPanel. */
     public static final String DONEVIEWINDEX = "DoneView";
+    /** Index used to access lockedBookingNumberView in the GUIViewPanel. */
+    public static final String LOCKEDBOOKINGNUMERVIEWINDEX = "LockedBookingNumberView";
 
     /** Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use. */
     public GUI(CounterModel counterModel, KioskCheckInModel kioskCheckInModel) {
@@ -46,6 +50,7 @@ public class GUI {
         checkInView = new CheckInView(kioskCheckInModel);
         boardingPassView = new BoardingPassView(kioskCheckInModel);
         doneView = new DoneView();
+        lockedBookingNumberView = new LockedBookingNumberView();
 
         setupGUI();
 
@@ -64,6 +69,7 @@ public class GUI {
         GUIViewPanel.add(checkInView.getCheckInViewPanel(), CHECKINVIEWINDEX);
         GUIViewPanel.add(boardingPassView.getBoardingPassViewPanel(), BOARDINGPASSVIEWINDEX);
         GUIViewPanel.add(doneView.getDoneViewPanel(), DONEVIEWINDEX);
+        GUIViewPanel.add(lockedBookingNumberView.getLockedBookingNumberViewPanel(), LOCKEDBOOKINGNUMERVIEWINDEX);
     }
 
     /** Displays the GUI JFrame window. */
@@ -105,6 +111,11 @@ public class GUI {
     /** Returns the boardingPassView. */
     public BoardingPassView getBoardingPassView() {
         return boardingPassView;
+    }
+
+    /** Returns the lockedBookingNumberView. */
+    public LockedBookingNumberView getLockedBookingNumberView() {
+        return lockedBookingNumberView;
     }
 
     /** Adds an ActionListener to ALL checkInCounterButton in all the view objects. */
@@ -180,6 +191,7 @@ public class GUI {
         counterView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         checkInView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         doneView.addMainMenuButtonListener(listenForAllMainMenuButtons);
+        lockedBookingNumberView.addMainMenuButtonListener(listenForAllMainMenuButtons);
     }
 
     /** Adds an ActionListener to doneButton in boardingPassView. */
