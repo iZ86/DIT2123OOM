@@ -20,6 +20,8 @@ public class GUI {
     private CheckInView checkInView;
     /** The boarding pass view. */
     private BoardingPassView boardingPassView;
+    /** The done view. */
+    private DoneView doneView;
     /** Index used to access mainMenuView in the GUIViewPanel. */
     public static final String MAINMENUVIEWINDEX = "MainMenuView";
     /** Index used to access counterView in the GUIViewPanel. */
@@ -30,6 +32,8 @@ public class GUI {
     public static final String CHECKINVIEWINDEX = "CheckInView";
     /** Index used to access boardingPassView in the GUIViewPanel. */
     public static final String BOARDINGPASSVIEWINDEX = "BoardingPassView";
+    /** Index used to access doneView in the GUIViewPanel. */
+    public static final String DONEVIEWINDEX = "DoneView";
 
     /** Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use. */
     public GUI(CounterModel counterModel, KioskCheckInModel kioskCheckInModel) {
@@ -41,6 +45,7 @@ public class GUI {
         checkInOptionView = new CheckInOptionView();
         checkInView = new CheckInView(kioskCheckInModel);
         boardingPassView = new BoardingPassView(kioskCheckInModel);
+        doneView = new DoneView();
 
         setupGUI();
 
@@ -58,6 +63,7 @@ public class GUI {
         GUIViewPanel.add(checkInOptionView.getCheckInOptionViewPanel(), CHECKINOPTIONVIEWINDEX);
         GUIViewPanel.add(checkInView.getCheckInViewPanel(), CHECKINVIEWINDEX);
         GUIViewPanel.add(boardingPassView.getBoardingPassViewPanel(), BOARDINGPASSVIEWINDEX);
+        GUIViewPanel.add(doneView.getDoneViewPanel(), DONEVIEWINDEX);
     }
 
     /** Displays the GUI JFrame window. */
@@ -173,7 +179,12 @@ public class GUI {
         checkInOptionView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         counterView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         checkInView.addMainMenuButtonListener(listenForAllMainMenuButtons);
-        boardingPassView.addMainMenuButtonListener(listenForAllMainMenuButtons);
+        doneView.addMainMenuButtonListener(listenForAllMainMenuButtons);
+    }
+
+    /** Adds an ActionListener to doneButton in boardingPassView. */
+    public void addDoneButtonListener(ActionListener listenForDoneButton) {
+        boardingPassView.addDoneButtonListener(listenForDoneButton);
     }
 
     /** Adds an ItemListener to the JCheckBox othersSpecialAccommodationCheckBox in checkInView. */
