@@ -7,8 +7,6 @@ public class Passenger {
     private String fullName; 
     /** Bags of the passenger. */
     private Bag[] bags;
-    /** Special needs status of the passenger. */
-    private boolean specialNeed;
     /** Wheelchair status of the passenger. */
     private boolean requireWheelchair;
     /** Blindness status of the passenger. */
@@ -42,6 +40,9 @@ public class Passenger {
     /** Sets the bags. */
     public void setBagArraySize(int numberOfBags) {
         bags = new Bag[numberOfBags];
+        for (int i = 0; i < bags.length; i++) {
+            bags[i] = new Bag();
+        }
     }
 
     /** Returns the bookingNumber. */
@@ -62,16 +63,6 @@ public class Passenger {
     /** Returns the bag at int INDEX, returns null, if the bag index doesn't exist. */
     public Bag getBag(int index) {
         return bags[index];
-    }
-
-    /** Returns specialNeed. */
-    public boolean isSpecialNeed() {
-        return specialNeed;
-    }
-
-    /** Sets specialNeed. */
-    public void setSpecialNeed(boolean specialNeed) {
-        this.specialNeed = specialNeed;
     }
 
     /** Returns requireWheelchair. */
@@ -109,16 +100,6 @@ public class Passenger {
         return otherSpecialAccommodation;
     }
 
-    /** Returns answer of the bag check in question at index. */
-    public int getBagCheckInQuestionAnswer(int index) {
-        return bagCheckInQuestionAnswers[index];
-    }
-
-    /** Sets the answer of the back check in question at index. */
-    public void setBagCheckInQuestionAnswer(int index, int answer) {
-        bagCheckInQuestionAnswers[index] = answer;
-    }
-
     /** Sets otherSpecialAccommodation. */
     public void setOtherSpecialAccommodation(boolean otherSpecialAccommodation) {
         this.otherSpecialAccommodation = otherSpecialAccommodation;
@@ -134,4 +115,13 @@ public class Passenger {
         this.otherSpecialAccommodationDetails = otherSpecialAccommodationDetails;
     }
 
+    /** Returns answer of the bag check in question at index. */
+    public int getBagCheckInQuestionAnswer(int index) {
+        return bagCheckInQuestionAnswers[index];
+    }
+
+    /** Sets the answer of the back check in question at index. */
+    public void setBagCheckInQuestionAnswer(int index, int answer) {
+        bagCheckInQuestionAnswers[index] = answer;
+    }
 }
