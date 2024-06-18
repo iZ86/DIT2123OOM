@@ -291,7 +291,6 @@ public class Controller {
                         }
 
                     } else {
-                        tempWarnAlreadyCheckedInBookingNumber[i] = false;
                         if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())){
 
                             allValid = false;
@@ -305,7 +304,7 @@ public class Controller {
                             setBookingNumberWarning(1, i);
                         } else {
 
-                            tempInvalidBookingNumberData[i] = false;
+                            setBookingNumberWarning(0, i);
 
                             if (!kioskCheckInModel.validatePassportNumber(passengerData.getBookingNumber(), passengerData.getPassportNumber())) {
                                 allValid = false;
@@ -317,7 +316,7 @@ public class Controller {
 
                                 setPassportNumberWarning(1, i);
                             } else {
-                                tempInvalidPassportNumber[i] = false;
+                                setFullNameWarning(0, i);
                             }
 
                             if (!kioskCheckInModel.validateFullName(passengerData.getBookingNumber(), passengerData.getFullName())) {
@@ -330,7 +329,7 @@ public class Controller {
 
                                 setFullNameWarning(1, i);
                             } else {
-                                tempInvalidFullName[i] = false;
+                                setPassportNumberWarning(0, i);
                             }
                         }
                     }
@@ -629,47 +628,61 @@ public class Controller {
 
     }
 
+    /** This method sets the booking number warning, that should be shown. */
     public void setBookingNumberWarning(int warning, int index) {
-        if(warning == 1) {
+        if (warning == 1) {
+            // Warn invalid booking number and remove other booking number warnings.
             tempInvalidBookingNumberData[index] = true;
             tempWarnEmptyBookingNumberData[index] = false;
             tempWarnAlreadyCheckedInBookingNumber[index] = false;
+
         } else if (warning == 2) {
+            // Warn empty booking number and remove other booking number warnings.
             tempWarnEmptyBookingNumberData[index] = true;
             tempInvalidBookingNumberData[index] = false;
             tempWarnAlreadyCheckedInBookingNumber[index] = false;
         } else if (warning == 3) {
+            // Warn already checked in booking number and remove other booking number warnings.
             tempWarnAlreadyCheckedInBookingNumber[index] = true;
             tempWarnEmptyBookingNumberData[index] = false;
             tempInvalidBookingNumberData[index] = false;
         } else if(warning == 0) {
+            // Remove all warnings.
             tempWarnAlreadyCheckedInBookingNumber[index] = false;
             tempWarnEmptyBookingNumberData[index] = false;
             tempInvalidBookingNumberData[index] = false;
         }
     }
 
+    /** This method sets the passport number warning that should be shown. */
     public void setPassportNumberWarning(int warning, int index) {
-        if(warning == 1) {
+        if (warning == 1) {
+            // Warn invalid passport number and remove other passport warnings.
             tempInvalidPassportNumber[index] = true;
             tempWarnEmptyPassportNumberData[index] = false;
         } else if (warning == 2) {
+            // Warn empty passport number and remove other passport warnings.
             tempWarnEmptyPassportNumberData[index] = true;
             tempInvalidPassportNumber[index] = false;
-        } else if(warning == 0) {
+        } else if (warning == 0) {
+            // Remove all passport warnings.
             tempWarnEmptyPassportNumberData[index] = false;
             tempInvalidPassportNumber[index] = false;
         }
     }
 
+    /** This method sets the full name warning that should be shown. */
     public void setFullNameWarning(int warning, int index) {
-        if(warning == 1) {
+        if (warning == 1) {
+            // Warn invalid full name and remove other full name warnings.
             tempInvalidFullName[index] = true;
             tempWarnEmptyFullNameData[index] = false;
         } else if (warning == 2) {
+            // Warn empty full name and remove other full name warnings.
             tempWarnEmptyFullNameData[index] = true;
             tempInvalidFullName[index] = false;
         } else if(warning == 0) {
+            // Remove all warnings.
             tempWarnEmptyFullNameData[index] = false;
             tempInvalidFullName[index] = false;
         }
