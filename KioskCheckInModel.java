@@ -131,6 +131,16 @@ public class KioskCheckInModel {
         return passengers[passengerIndex].getBag(bagIndex).getBagID();
     }
 
+    /** Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
+    public double getBagWeight(int bagIndex) {
+        return passengers[passengerIndex].getBag(bagIndex).getBagWeight();
+    }
+
+    /** Returns the bag screening status at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
+    public String getBagScreeningStatus(int bagIndex) {
+        return passengers[passengerIndex].getBag(bagIndex).getScreeningStatus();
+    }
+
     /** Returns seatNumber. */
     public String getSeatNumber() {
         return checkedInBookings.get(passengerIndex).getSeatNumber();
