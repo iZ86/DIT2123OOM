@@ -316,7 +316,7 @@ public class Controller {
 
                                 setPassportNumberWarning(1, i);
                             } else {
-                                setFullNameWarning(0, i);
+                                setPassportNumberWarning(0, i);
                             }
 
                             if (!kioskCheckInModel.validateFullName(passengerData.getBookingNumber(), passengerData.getFullName())) {
@@ -329,7 +329,7 @@ public class Controller {
 
                                 setFullNameWarning(1, i);
                             } else {
-                                setPassportNumberWarning(0, i);
+                                setFullNameWarning(0, i);
                             }
                         }
                     }
