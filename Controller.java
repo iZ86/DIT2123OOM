@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.*;
+import java.util.TreeMap;
 
 
 /** This class acts as the controller of the MVC structure in this program. */
@@ -104,7 +105,7 @@ public class Controller {
         tempWarnEmptyPassportNumberData = new boolean[numberOfData];
         tempInvalidFullName = new boolean[numberOfData];
         tempWarnEmptyFullNameData = new boolean[numberOfData];
-        tempWarnQuestionNotAnsweredData = new boolean[numberOfData][gui.getCheckInView().getNumberOfBagCheckInQuestions()];
+        tempWarnQuestionNotAnsweredData = new boolean[numberOfData][kioskCheckInModel.getNumberOfBagCheckInQuestions()];
         tempWarnAlreadyCheckedInBookingNumber = new boolean[numberOfData];
         for (int i = 0; i < numberOfData; i++) {
             tempInvalidBookingNumberData[i] = false;
@@ -113,7 +114,7 @@ public class Controller {
             tempWarnEmptyPassportNumberData[i] = false;
             tempInvalidFullName[i] = false;
             tempWarnEmptyFullNameData[i] = false;
-            for (int j = 0; j < gui.getCheckInView().getNumberOfBagCheckInQuestions(); j++) {
+            for (int j = 0; j < kioskCheckInModel.getNumberOfBagCheckInQuestions(); j++) {
                 tempWarnQuestionNotAnsweredData[i][j] = false;
             }
         }
@@ -247,7 +248,7 @@ public class Controller {
 
 
                         if (passengerData.getNumberOfBags() > 0) {
-                            for (int j = 0; j < checkInView.getNumberOfBagCheckInQuestions() - 1; j++) {
+                            for (int j = 0; j < kioskCheckInModel.getNumberOfBagCheckInQuestions() - 1; j++) {
                                 if (passengerData.getBagCheckInQuestionAnswer(j) == 0) {
                                     tempWarnQuestionNotAnsweredData[checkInView.getCheckInViewPagingIndex()][j] = true;
                                     checkInView.setCheckInViewPagingIndex(i);
@@ -338,12 +339,40 @@ public class Controller {
 
 
                 if (allValid) {
+
+
+                    // The key will be the bookingNumber, where the value will be null.
+                    // This is because we use TreeMap for faster look up.
+                    // And to order them automatically.
+                    TreeMap<String, String> lockedBookingNumber = new TreeMap<>();
+
                     for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
-                        kioskCheckInModel.insertPassenger(tempPassengersData[i]);
+                        Passenger passengerData = tempPassengersData[i];
+                        if (kioskCheckInModel.isBookingNumberLocked(passengerData.getBookingNumber())) {
+                            lockedBookingNumber.put(passengerData.getBookingNumber(), null);
+                        } else if (passengerData.getNumberOfBags() > 0 && !kioskCheckInModel.checkAnswers(passengerData)) {
+                            kioskCheckInModel.lockBookingNumber(passengerData.getBookingNumber());
+                            lockedBookingNumber.put(passengerData.getBookingNumber(), null);
+                        }
                     }
-                    gui.getBoardingPassView().setBoardingPassViewPagingIndex(0);
-                    gui.getBoardingPassView().updateView();
-                    gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+
+                    if (!lockedBookingNumber.isEmpty()) {
+                        LockedBookingNumberView lockedBookingNumberView = gui.getLockedBookingNumberView();
+                        lockedBookingNumberView.setLockedBookingNumbers(lockedBookingNumber);
+                        lockedBookingNumberView.updateView();
+                        gui.changeView(GUI.LOCKEDBOOKINGNUMERVIEWINDEX);
+
+                    } else {
+                        for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                            kioskCheckInModel.insertPassenger(tempPassengersData[i]);
+                        }
+                        gui.getBoardingPassView().setBoardingPassViewPagingIndex(0);
+                        gui.getBoardingPassView().updateView();
+                        gui.changeView(GUI.BOARDINGPASSVIEWINDEX);
+                    }
+
+
+
                 } else {
                     gui.getCheckInView().setCheckInViewPagingIndex(pageIndexOfInvalidBookingNumber);
                     loadCacheCheckInViewData(checkInView);
@@ -520,7 +549,7 @@ public class Controller {
         int numberOfBags = checkInView.getNumberOfBagsFromSpinner();
         passenger.setBagArraySize(numberOfBags);
 
-        int numberOfBagCheckInQuestions = checkInView.getNumberOfBagCheckInQuestions();
+        int numberOfBagCheckInQuestions = kioskCheckInModel.getNumberOfBagCheckInQuestions();
         if (numberOfBags > 0) {
             for (int i = 0; i < numberOfBagCheckInQuestions - 1; i++) {
                 passenger.setBagCheckInQuestionAnswer(i, checkInView.getBagCheckInQuestionAnswer(i));
@@ -581,7 +610,7 @@ public class Controller {
 
             if (passengerData.getNumberOfBags() > 0) {
                 checkInView.setNumberOfBagsSpinner(passengerData.getNumberOfBags());
-                for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions(); i++) {
+                for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i++) {
                     checkInView.setBagCheckInQuestionAnswer(i, passengerData.getBagCheckInQuestionAnswer(i));
                 }
             }
@@ -592,64 +621,11 @@ public class Controller {
         checkInView.setWarnEmptyPassportNumberInput(tempWarnEmptyPassportNumberData[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyFullNameInput(tempWarnEmptyFullNameData[checkInView.getCheckInViewPagingIndex()]);
 
-        for (int i = 0; i < checkInView.getNumberOfBagCheckInQuestions(); i++) {
+        for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i++) {
             checkInView.setWarnUnansweredQuestions(i, tempWarnQuestionNotAnsweredData[checkInView.getCheckInViewPagingIndex()][i]);
         }
         checkInView.updateView();
 
 
-    }
-
-    /** This method is used to validate,
-     * that the string is in the format of a double.
-     */
-    private boolean isValidDouble(String d) {
-
-        if (d.isBlank()) {
-            return false;
-        }
-
-        int numberOfDecimalPoint = 0;
-
-        for (int i = 0; i < d.length(); i++) {
-            char character = d.charAt(i);
-
-            if (isCharacterDecimalPoint(character)) {
-                numberOfDecimalPoint += 1;
-            }
-
-            /* Return false, if character is not a number or a decimal place,
-            or if it has more than one decimal point,
-            or if the whole score is just one decimal point,
-            or if it has more than two decimal places.
-             */
-            if ((!isCharacterNumber(character) && !isCharacterDecimalPoint(character))
-                    || numberOfDecimalPoint > 1
-                    || (numberOfDecimalPoint == 1 && (d.length() == 1))
-                    || (numberOfDecimalPoint == 1 && ((d.length() - i) > 3))) {
-                return false;
-            }
-        }
-
-        // subjectScore cannot be less than 0, or more than 100.
-        double subjectScore = Double.parseDouble(d);
-        if (subjectScore < 0 || subjectScore > 100) {
-            return false;
-        }
-        return true;
-    }
-
-    /** Return true, iff char CHARACTER is a decimal point.
-     * Otherwise, return false.
-     */
-    public boolean isCharacterDecimalPoint(char character) {
-        return (character == 46);
-    }
-
-    /** Return true, iff char NUMBER iS a number.
-     * Otherwise, return false.
-     */
-    public boolean isCharacterNumber(char number) {
-        return (number >= 48 && number <= 57);
     }
 }
