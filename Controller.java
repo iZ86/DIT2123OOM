@@ -225,23 +225,23 @@ public class Controller {
                     Passenger passengerData = tempPassengersData[i];
                     if (passengerData == null) {
                         checkInView.setCheckInViewPagingIndex(i);
-                        tempWarnEmptyBookingNumberData[i] = true;
-                        tempWarnEmptyPassportNumberData[i] = true;
-                        tempWarnEmptyFullNameData[i] = true;
+                        setBookingNumberWarning(2, i);
+                        setPassportNumberWarning(2, i);
+                        setFullNameWarning(2, i);
                         emptyData = true;
                     } else {
                         if (passengerData.getBookingNumber().isEmpty() || passengerData.getBookingNumber().isBlank()) {
-                            tempWarnEmptyBookingNumberData[i] = true;
+                            setBookingNumberWarning(2, i);
                             checkInView.setCheckInViewPagingIndex(i);
                             emptyData = true;
                         }
                         if (passengerData.getPassportNumber().isEmpty() || passengerData.getPassportNumber().isBlank()) {
-                            tempWarnEmptyPassportNumberData[i] = true;
+                            setPassportNumberWarning(2, i);
                             checkInView.setCheckInViewPagingIndex(i);
                             emptyData = true;
                         }
                         if (passengerData.getFullName().isEmpty() || passengerData.getFullName().isBlank()) {
-                            tempWarnEmptyFullNameData[i] = true;
+                            setFullNameWarning(2, i);
                             checkInView.setCheckInViewPagingIndex(i);
                             emptyData = true;
                         }
@@ -280,7 +280,7 @@ public class Controller {
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
                     Passenger passengerData = tempPassengersData[i];
                     if (kioskCheckInModel.isBookingNumberCheckedIn(passengerData.getBookingNumber())) {
-                        tempWarnAlreadyCheckedInBookingNumber[i] = true;
+                        setBookingNumberWarning(3, i);
                         allValid = false;
 
                         // If we have found the first invalid bookingNumber,
@@ -292,7 +292,7 @@ public class Controller {
 
                     } else {
                         tempWarnAlreadyCheckedInBookingNumber[i] = false;
-                        if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())) {
+                        if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())){
 
                             allValid = false;
 
@@ -302,8 +302,7 @@ public class Controller {
                                 pageIndexOfInvalidBookingNumber = i;
                                 foundFirstInvalid = true;
                             }
-
-                            tempInvalidBookingNumberData[i] = true;
+                            setBookingNumberWarning(1, i);
                         } else {
 
                             tempInvalidBookingNumberData[i] = false;
@@ -316,7 +315,7 @@ public class Controller {
                                     foundFirstInvalid = true;
                                 }
 
-                                tempInvalidPassportNumber[i] = true;
+                                setPassportNumberWarning(1, i);
                             } else {
                                 tempInvalidPassportNumber[i] = false;
                             }
@@ -329,7 +328,7 @@ public class Controller {
                                     foundFirstInvalid = true;
                                 }
 
-                                tempInvalidFullName[i] = true;
+                                setFullNameWarning(1, i);
                             } else {
                                 tempInvalidFullName[i] = false;
                             }
@@ -339,7 +338,6 @@ public class Controller {
 
 
                 if (allValid) {
-
 
                     // The key will be the bookingNumber, where the value will be null.
                     // This is because we use TreeMap for faster look up.
@@ -629,5 +627,51 @@ public class Controller {
         checkInView.updateView();
 
 
+    }
+
+    public void setBookingNumberWarning(int warning, int index) {
+        if(warning == 1) {
+            tempInvalidBookingNumberData[index] = true;
+            tempWarnEmptyBookingNumberData[index] = false;
+            tempWarnAlreadyCheckedInBookingNumber[index] = false;
+        } else if (warning == 2) {
+            tempWarnEmptyBookingNumberData[index] = true;
+            tempInvalidBookingNumberData[index] = false;
+            tempWarnAlreadyCheckedInBookingNumber[index] = false;
+        } else if (warning == 3) {
+            tempWarnAlreadyCheckedInBookingNumber[index] = true;
+            tempWarnEmptyBookingNumberData[index] = false;
+            tempInvalidBookingNumberData[index] = false;
+        } else if(warning == 0) {
+            tempWarnAlreadyCheckedInBookingNumber[index] = false;
+            tempWarnEmptyBookingNumberData[index] = false;
+            tempInvalidBookingNumberData[index] = false;
+        }
+    }
+
+    public void setPassportNumberWarning(int warning, int index) {
+        if(warning == 1) {
+            tempInvalidPassportNumber[index] = true;
+            tempWarnEmptyPassportNumberData[index] = false;
+        } else if (warning == 2) {
+            tempWarnEmptyPassportNumberData[index] = true;
+            tempInvalidPassportNumber[index] = false;
+        } else if(warning == 0) {
+            tempWarnEmptyPassportNumberData[index] = false;
+            tempInvalidPassportNumber[index] = false;
+        }
+    }
+
+    public void setFullNameWarning(int warning, int index) {
+        if(warning == 1) {
+            tempInvalidFullName[index] = true;
+            tempWarnEmptyFullNameData[index] = false;
+        } else if (warning == 2) {
+            tempWarnEmptyFullNameData[index] = true;
+            tempInvalidFullName[index] = false;
+        } else if(warning == 0) {
+            tempWarnEmptyFullNameData[index] = false;
+            tempInvalidFullName[index] = false;
+        }
     }
 }
