@@ -1,6 +1,17 @@
 import java.util.HashMap;
 
 public class KioskCheckInModel {
+    /** Questions to ask users regarding their baggage. */
+    private static final String[] QUESTIONS = new String[]{
+            "1. Have you packed your baggage yourself?",
+            "2. Has anyone asked you to carry anything on board for them?",
+            "3. Have you left your baggage unattended at any time?",
+            "4. Did you remember to turn off all electronic devices and remove their batteries, if removable, before checking in your luggage?",
+            "5. Are you carrying any liquids, gels, or aerosols in your carry-on luggage?",
+            "5b. If so, are they in containers of 100mL or less and stored in a clear, resealable plastic bag?"
+    };
+    /** Answers to the questions, 1 for yes, -1 for no, -2 for both is correct. */
+    private static final int[] ANSWERS = new int[]{1, -1, -1, 1, -2, 1};
     /**The number of passengers to check in */
     private int numberOfPassengers; 
     /** Array of passengers, used to keep track of different passengers data */
@@ -67,7 +78,36 @@ public class KioskCheckInModel {
         return bookingInformationData.get(bookingNumber).getFullName().equals(fullName);
     }
 
-   
+    /** Checks the answer, if all the answers are correct.
+     * Return true. Otherwise, return false.
+     */
+    public boolean checkAnswers(Passenger passengerData) {
+        for (int i = 0; i < QUESTIONS.length - 1; i++) {
+            // If the answer is not the same, and the answer is not -2.
+            if ((passengerData.getBagCheckInQuestionAnswer(i) != ANSWERS[i]) && ANSWERS[i] != -2) {
+                return false;
+            }
+        }
+
+        // If qn 5 is yes, check if qn 5b is correct or not.
+        if (passengerData.getBagCheckInQuestionAnswer(4) == 1 && passengerData.getBagCheckInQuestionAnswer(5) != ANSWERS[5]) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /** Returns the questions at int index. */
+    public String getBagCheckInQuestions(int index) {
+        return QUESTIONS[index];
+    }
+
+    /** Returns the number of bag checked in quetions. */
+    public int getNumberOfBagCheckInQuestions() {
+        return QUESTIONS.length;
+    }
+
     /** Sets the number of passengers to be checked in. */
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
@@ -141,6 +181,41 @@ public class KioskCheckInModel {
     /** Returns the full name of the passenger in Passenger[] passengers at passengerIndex. */
     public String getFullName() {
         return passengers[passengerIndex].getFullName();
+    }
+
+    /** Returns the passenger in Passenger[] passengers at passengerIndex,
+     * status of requireWheelchair.
+     */
+    public boolean isRequireWheelchair() {
+        return passengers[passengerIndex].isRequireWheelchair();
+    }
+
+    /** Returns the passenger in Passenger[] passengers at passengerIndex,
+     * status of blindness.
+     */
+    public boolean isBlind() {
+        return passengers[passengerIndex].isBlind();
+    }
+
+    /** Returns the passenger in Passenger[] passengers at passengerIndex,
+     * status of deafness.
+     */
+    public boolean isDeaf() {
+        return passengers[passengerIndex].isDeaf();
+    }
+
+    /** Returns the passenger in Passenger[] passengers at passengerIndex,
+     * status of any other special accommodation.
+     */
+    public boolean isOtherSpecialAccommodation() {
+        return passengers[passengerIndex].isOtherSpecialAccommodation();
+    }
+
+    /** Returns the passenger in Passenger[] passengers at passengerIndex,
+     * the details of the special accommodation details if any.
+     */
+    public String getOtherSpecialAccommodationDetails() {
+        return passengers[passengerIndex].getOtherSpecialAccommodationDetails();
     }
 
     /** Returns the number of bags the passenger has in Passenger[] passenger at passengerIndex. */
