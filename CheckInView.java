@@ -64,6 +64,8 @@ public class CheckInView {
     private boolean warnInvalidBookingNumber;
     /** True if there should be a warning prompt for empty booking number in bookingNumberTextField. */
     private boolean warnEmptyBookingNumberInput;
+    /** True if there should be a prompt for already checkedin bookingNumber. */
+    private boolean warnAlreadyCheckedInBookingNumber;
     /** True if there should be a warning prompt for empty invalid passport number in passportNumberTextField. */
     private boolean warnInvalidPassportNumber;
     /** True if there should be a warning prompt for empty passport number in passportNumberTextField. */
@@ -154,6 +156,7 @@ public class CheckInView {
 
         setWarnInvalidBookingNumber(false);
         setWarnEmptyBookingNumberInput(false);
+        setWarnAlreadyCheckedInBookingNumber(false);
         setWarnInvalidPassportNumber(false);
         setWarnEmptyPassportNumberInput(false);
         setWarnInvalidFullName(false);
@@ -244,6 +247,11 @@ public class CheckInView {
     /** Sets warnEmptyBookingNumberInput. */
     public void setWarnEmptyBookingNumberInput(boolean warnEmptyBookingNumberInput) {
         this.warnEmptyBookingNumberInput = warnEmptyBookingNumberInput;
+    }
+
+    /** Sets warnAlreadyCheckedInBookingNumber. */
+    public void setWarnAlreadyCheckedInBookingNumber(boolean warnAlreadyCheckedInBookingNumber) {
+        this.warnAlreadyCheckedInBookingNumber = warnAlreadyCheckedInBookingNumber;
     }
 
     /** Sets warnInvalidPassportNumber. */
@@ -479,6 +487,16 @@ public class CheckInView {
         constraintsForBookingNumberTextField.ipadx = horizontalSizeOfTextField;
         constraintsForBookingNumberTextField.ipady = verticalSizeOfTextField;
         constraintsForBookingNumberTextField.insets = new Insets(15, 0, 0, 0);
+
+        if (warnAlreadyCheckedInBookingNumber) {
+            JLabel invalidBookingNumberLabel = new JLabel("Booking Number already checked in.");
+            invalidBookingNumberLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForInvalidBookingNumberLabel = new GridBagConstraints();
+            constraintsForInvalidBookingNumberLabel.gridx = 1;
+            constraintsForInvalidBookingNumberLabel.gridy = 1;
+
+            textFieldPanel.add(invalidBookingNumberLabel, constraintsForInvalidBookingNumberLabel);
+        }
 
         if (warnInvalidBookingNumber) {
             JLabel invalidBookingNumberLabel = new JLabel("Invalid Booking Number.");
