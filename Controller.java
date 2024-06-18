@@ -54,6 +54,7 @@ public class Controller {
         gui.addAllNextBoardingPassButtonsListener(new NextBoardingPassButtonListener());
         gui.addAllPrintBoardingPassButtonsListener(new PrintBoardingPassButtonListener());
         gui.addAllMainMenuButtonsListener(new MainMenuButtonListener());
+        gui.addDoneButtonListener(new DoneButtonListener());
     }
 
     /** Adds the ItemListeners to the GUI respectively. */
@@ -222,14 +223,6 @@ public class Controller {
                         tempWarnEmptyPassportNumberData[i] = true;
                         tempWarnEmptyFullNameData[i] = true;
                         emptyData = true;
-                    }
-                    // TODO: @iZ86, Pls check if any error on this line of code
-                    if(!kioskCheckInModel.validatePassengerInformation(passengerData.getBookingNumber(), passengerData.getPassportNumber(), passengerData.getFullName())) {
-                        tempInvalidBookingNumberData[i] = true;
-                        tempInvalidPassportNumber[i] = true;
-                        tempInvalidFullName[i] = true;
-                        checkInView.setCheckInViewPagingIndex(i);
-
                     } else {
                         if (passengerData.getBookingNumber().isEmpty() || passengerData.getBookingNumber().isBlank()) {
                             tempWarnEmptyBookingNumberData[i] = true;
@@ -279,8 +272,9 @@ public class Controller {
 
                 // Validates the bookingNumber, passportNumber and fullName.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
+                    Passenger passengerData = tempPassengersData[i];
+                    if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())) {
 
-                    if (!kioskCheckInModel.validatePassengerInformation(tempPassengersData[i].getBookingNumber(), tempPassengersData[i].getPassportNumber(), tempPassengersData[i].getFullName())) {
                         allValid = false;
 
                         // If we have found the first invalid bookingNumber,
@@ -291,9 +285,35 @@ public class Controller {
                         }
 
                         tempInvalidBookingNumberData[i] = true;
-
                     } else {
+
                         tempInvalidBookingNumberData[i] = false;
+
+                        if (!kioskCheckInModel.validatePassportNumber(passengerData.getBookingNumber(), passengerData.getPassportNumber())) {
+                            allValid = false;
+
+                            if (!foundFirstInvalid) {
+                                pageIndexOfInvalidBookingNumber = i;
+                                foundFirstInvalid = true;
+                            }
+
+                            tempInvalidPassportNumber[i] = true;
+                        } else {
+                            tempInvalidPassportNumber[i] = false;
+                        }
+
+                        if (!kioskCheckInModel.validateFullName(passengerData.getBookingNumber(), passengerData.getFullName())) {
+                            allValid = false;
+
+                            if (!foundFirstInvalid) {
+                                pageIndexOfInvalidBookingNumber = i;
+                                foundFirstInvalid = true;
+                            }
+
+                            tempInvalidFullName[i] = true;
+                        } else {
+                            tempInvalidFullName[i] = false;
+                        }
                     }
                 }
 
@@ -349,6 +369,14 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             gui.changeView(GUI.MAINMENUVIEWINDEX);
+        }
+    }
+
+    /** This class changes the view to doneView. */
+    public class DoneButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gui.changeView(GUI.DONEVIEWINDEX);
         }
     }
 
