@@ -343,6 +343,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             BoardingPassView boardingPassView = gui.getBoardingPassView();
             boardingPassView.setBoardingPassViewPagingIndex(boardingPassView.getBoardingPassViewPagingIndex() - 1);
+            kioskCheckInModel.setPassengerIndex(kioskCheckInModel.getPassengerIndex() - 1);
             boardingPassView.updateView();
 
         }
@@ -353,6 +354,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             BoardingPassView boardingPassView = gui.getBoardingPassView();
             boardingPassView.setBoardingPassViewPagingIndex(boardingPassView.getBoardingPassViewPagingIndex() + 1);
+            kioskCheckInModel.setPassengerIndex(kioskCheckInModel.getPassengerIndex() + 1);
             boardingPassView.updateView();
         }
     }
