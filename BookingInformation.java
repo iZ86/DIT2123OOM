@@ -1,21 +1,21 @@
 /** This class holds the booking information data. */
 public class BookingInformation {
     /** Booking Number. */
-    String bookingNumber;
+    private String bookingNumber;
     /** Passport Number. */
-    String passportNumber;
+    private String passportNumber;
     /** Full name. */
-    String fullName;
+    private String fullName;
     /** Seat number. */
-    String seatNumber;
+    private String seatNumber;
     /** Destination. */
-    String destination;
+    private String destination;
     /** Flight status. */
-    String flightStatus;
+    private String flightStatus;
     /** Gate number. */
-    int gateNumber;
+    private int gateNumber;
     /** Boarding time. */
-    String boardingTime;
+    private String boardingTime;
 
     /** Creates a BookingInformation object with all the booking information data. */
     public BookingInformation(String bookingNumber, String passportNumber, String fullName, String seatNumber, String destination,
