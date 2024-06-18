@@ -6,17 +6,11 @@ import java.awt.event.ItemListener;
 
 /** This class represents the view for users to check in. */
 public class CheckInView {
-    /** Questions to ask users regarding their baggage. */
-    public static final String[] QUESTIONS = new String[]{
-            "1. Have you packed your baggage yourself?",
-            "2. Has anyone asked you to carry anything on board for them?",
-            "3. Have you left your baggage unattended at any time?",
-            "4. Did you remember to turn off all electronic devices and remove their batteries, if removable, before checking in your luggage?",
-            "5. Are you carrying any liquids, gels, or aerosols in your carry-on luggage?",
-            "5b. If so, are they in containers of 100mL or less and stored in a clear, resealable plastic bag?"
-    };
-    /** CSS used to wrap String in JLabels. */
-    public static final String HTML = "<html><body style='width: %1spx'>%1s";
+
+    /** CSS used to wrap String in JLabels for questions. */
+    private static final String CSSFORMAT = "<html><body style='width: %1spx'>%1s";
+    /** CSS used to wrap String in JLabels for warnAlreadyCheckedInBookingNumber. */
+    private static final String CSSFORMAT1= "<html><body style='width: %1spx; text-align: center;'>%1s";
     /** JPanel for the CheckInView. */
     private JPanel checkInViewPanel = new JPanel(new GridBagLayout());
     /** The model that holds the passenger and their bag data. */
@@ -148,7 +142,7 @@ public class CheckInView {
         setOthersSpecialAccommodationCheckBoxSelected(false);
         setOthersSpecialAccommodationTextFieldEnabled(false);
 
-        for (int i = 0; i < QUESTIONS.length; i++) {
+        for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i++) {
             setQuestionAnswerRadioButtonsEnabled(i, false);
             setBagCheckInQuestionAnswer(i, 0);
             setWarnUnansweredQuestions(i, false);
@@ -384,12 +378,6 @@ public class CheckInView {
         answerNoRadioButtons[index].setEnabled(enabled);
     }
 
-
-    /** Returns number of bag check in questions. */
-    public int getNumberOfBagCheckInQuestions() {
-        return QUESTIONS.length;
-    }
-
     /** Sets bagCheckInQuestionAnswer. */
     public void setBagCheckInQuestionAnswer(int index, int answer) {
         if (answer == 1) {
@@ -456,7 +444,7 @@ public class CheckInView {
 
     /** Adds an ItemListener to all the answer radio buttons. */
     public void addQuestionAnswerRadioButtonListener(ItemListener listenForQuestionAnswerRadioButton) {
-        for (int i = 0; i < QUESTIONS.length; i++) {
+        for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i++) {
             answerYesRadioButtons[i].addItemListener(listenForQuestionAnswerRadioButton);
             answerNoRadioButtons[i].addItemListener(listenForQuestionAnswerRadioButton);
         }
@@ -489,13 +477,13 @@ public class CheckInView {
         constraintsForBookingNumberTextField.insets = new Insets(15, 0, 0, 0);
 
         if (warnAlreadyCheckedInBookingNumber) {
-            JLabel invalidBookingNumberLabel = new JLabel("Booking Number already checked in.");
-            invalidBookingNumberLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForInvalidBookingNumberLabel = new GridBagConstraints();
-            constraintsForInvalidBookingNumberLabel.gridx = 1;
-            constraintsForInvalidBookingNumberLabel.gridy = 1;
+            JLabel alreadyCheckedInBookingNumberLabel = new JLabel(String.format(CSSFORMAT1, 150, "Booking Number already checked in."));
+            alreadyCheckedInBookingNumberLabel.setForeground(Color.RED);
+            GridBagConstraints constraintsForAlreadyCheckedInBookingNumberLabel = new GridBagConstraints();
+            constraintsForAlreadyCheckedInBookingNumberLabel.gridx = 1;
+            constraintsForAlreadyCheckedInBookingNumberLabel.gridy = 1;
 
-            textFieldPanel.add(invalidBookingNumberLabel, constraintsForInvalidBookingNumberLabel);
+            textFieldPanel.add(alreadyCheckedInBookingNumberLabel, constraintsForAlreadyCheckedInBookingNumberLabel);
         }
 
         if (warnInvalidBookingNumber) {
@@ -671,10 +659,10 @@ public class CheckInView {
         JPanel bagCheckInQuestionsPanel = new JPanel(new GridBagLayout());
 
         // Questions
-        for (int i = 0; i < QUESTIONS.length; i ++) {
+        for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i ++) {
             JPanel bagCheckInQuestionPanel = new JPanel(new GridBagLayout());
             JPanel bagCheckInQuestionRadioButtonPanel = new JPanel(new GridBagLayout());
-            JLabel bagCheckInQuestionLabel = new JLabel(String.format(HTML, 250, QUESTIONS[i]));
+            JLabel bagCheckInQuestionLabel = new JLabel(String.format(CSSFORMAT, 250, kioskCheckInModel.getBagCheckInQuestions(i)));
 
 
             // Adding the Question answer checkboxes to bagCheckInQuestionCheckBoxPanel.
