@@ -18,6 +18,10 @@ public class Controller {
     private boolean[] tempInvalidBookingNumberData;
     /** Temp data to keep track of which tempPassengerData's bookingNumber is empty. */
     private boolean[] tempWarnEmptyBookingNumberData;
+    /** Temp data to keep track of which tempPassengerData's bookingNumber,
+     * that has already been checked in.
+      */
+    private boolean[] tempWarnAlreadyCheckedInBookingNumber;
     /** Temp data to keep track of which tempPassengerData's passportNumber is invalid. */
     private boolean[] tempInvalidPassportNumber;
     /** Temp data to keep track of which tempPassengerData's passportNumber is empty. */
@@ -101,6 +105,7 @@ public class Controller {
         tempInvalidFullName = new boolean[numberOfData];
         tempWarnEmptyFullNameData = new boolean[numberOfData];
         tempWarnQuestionNotAnsweredData = new boolean[numberOfData][gui.getCheckInView().getNumberOfBagCheckInQuestions()];
+        tempWarnAlreadyCheckedInBookingNumber = new boolean[numberOfData];
         for (int i = 0; i < numberOfData; i++) {
             tempInvalidBookingNumberData[i] = false;
             tempWarnEmptyBookingNumberData[i] = false;
@@ -273,8 +278,8 @@ public class Controller {
                 // Validates the bookingNumber, passportNumber and fullName.
                 for (int i = 0; i < kioskCheckInModel.getNumberOfPassengers(); i++) {
                     Passenger passengerData = tempPassengersData[i];
-                    if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())) {
-
+                    if (kioskCheckInModel.isBookingNumberCheckedIn(passengerData.getBookingNumber())) {
+                        tempWarnAlreadyCheckedInBookingNumber[i] = true;
                         allValid = false;
 
                         // If we have found the first invalid bookingNumber,
@@ -284,35 +289,49 @@ public class Controller {
                             foundFirstInvalid = true;
                         }
 
-                        tempInvalidBookingNumberData[i] = true;
                     } else {
+                        tempWarnAlreadyCheckedInBookingNumber[i] = false;
+                        if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())) {
 
-                        tempInvalidBookingNumberData[i] = false;
-
-                        if (!kioskCheckInModel.validatePassportNumber(passengerData.getBookingNumber(), passengerData.getPassportNumber())) {
                             allValid = false;
 
+                            // If we have found the first invalid bookingNumber,
+                            // Keep track of the pagingIndex it is at.
                             if (!foundFirstInvalid) {
                                 pageIndexOfInvalidBookingNumber = i;
                                 foundFirstInvalid = true;
                             }
 
-                            tempInvalidPassportNumber[i] = true;
+                            tempInvalidBookingNumberData[i] = true;
                         } else {
-                            tempInvalidPassportNumber[i] = false;
-                        }
 
-                        if (!kioskCheckInModel.validateFullName(passengerData.getBookingNumber(), passengerData.getFullName())) {
-                            allValid = false;
+                            tempInvalidBookingNumberData[i] = false;
 
-                            if (!foundFirstInvalid) {
-                                pageIndexOfInvalidBookingNumber = i;
-                                foundFirstInvalid = true;
+                            if (!kioskCheckInModel.validatePassportNumber(passengerData.getBookingNumber(), passengerData.getPassportNumber())) {
+                                allValid = false;
+
+                                if (!foundFirstInvalid) {
+                                    pageIndexOfInvalidBookingNumber = i;
+                                    foundFirstInvalid = true;
+                                }
+
+                                tempInvalidPassportNumber[i] = true;
+                            } else {
+                                tempInvalidPassportNumber[i] = false;
                             }
 
-                            tempInvalidFullName[i] = true;
-                        } else {
-                            tempInvalidFullName[i] = false;
+                            if (!kioskCheckInModel.validateFullName(passengerData.getBookingNumber(), passengerData.getFullName())) {
+                                allValid = false;
+
+                                if (!foundFirstInvalid) {
+                                    pageIndexOfInvalidBookingNumber = i;
+                                    foundFirstInvalid = true;
+                                }
+
+                                tempInvalidFullName[i] = true;
+                            } else {
+                                tempInvalidFullName[i] = false;
+                            }
                         }
                     }
                 }
@@ -569,6 +588,7 @@ public class Controller {
         }
         checkInView.setWarnInvalidBookingNumber(tempInvalidBookingNumberData[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyBookingNumberInput(tempWarnEmptyBookingNumberData[checkInView.getCheckInViewPagingIndex()]);
+        checkInView.setWarnAlreadyCheckedInBookingNumber(tempWarnAlreadyCheckedInBookingNumber[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyPassportNumberInput(tempWarnEmptyPassportNumberData[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyFullNameInput(tempWarnEmptyFullNameData[checkInView.getCheckInViewPagingIndex()]);
 
