@@ -19,8 +19,8 @@ public class BoardingPassView {
     private JButton nextBoardingPassButton = new JButton("Next");
     /** JButton that saves a PDF file of the BoardingPassView. */
     private JButton printBoardingPassButton = new JButton("Print");
-    /** JButton that changes the view to the MainMenuView. */
-    private JButton mainMenuButton = new JButton("Main Menu");
+    /** JButton that changes the view to the doneView. */
+    private JButton doneButton = new JButton("Done");
     /** Paging index for boarding pass view. */
     private int boardingPassViewPagingIndex;
 
@@ -106,7 +106,7 @@ public class BoardingPassView {
         panelForBoardingPassView.add(nextBoardingPassButton,constraintsForButton);
 
         constraintsForButton.gridy = 7;
-        panelForBoardingPassView.add(mainMenuButton, constraintsForButton);
+        panelForBoardingPassView.add(doneButton, constraintsForButton);
 
         constraintsForButton.gridy = 8;
         panelForBoardingPassView.add(printBoardingPassButton,constraintsForButton);
@@ -152,8 +152,8 @@ public class BoardingPassView {
         printBoardingPassButton.addActionListener(listenForPrintBoardingPassButton);
     }
 
-    /** Adds an ActionListener to mainMenuButton. */
-    public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
-        mainMenuButton.addActionListener(listenForMainMenuButton);
+    /** Adds an ActionListener to doneButton. */
+    public void addDoneButtonListener(ActionListener listenForDoneButton) {
+        doneButton.addActionListener(listenForDoneButton);
     }
 }
