@@ -42,12 +42,26 @@ public class KioskCheckInModel {
     }
 
     /** Used to validate bookingNumber entered by user,
-     * returns true if it's a valid bookingID, passportNumber and fullName.
+     * returns true if it's a valid bookingNumber.
      * Otherwise, returns false. */
-    public boolean validatePassengerInformation(String bookingNumber, String passportNumber, String fullName) {
-        // TODO: @iZ86, Pls check here too
-        return bookingInformationData.containsKey(bookingNumber) && bookingInformationData.containsKey(passportNumber) && bookingInformationData.containsKey(fullName);
+    public boolean validateBookingNumber(String bookingNumber) {
+        return bookingInformationData.containsKey(bookingNumber);
     }
+
+    /** Used to validate passportNumber entered by user,
+     * returns true if it's the right passportNumber under the bookingNumber.
+     * Otherwise, returns false. */
+    public boolean validatePassportNumber(String bookingNumber, String passportNumber) {
+        return bookingInformationData.get(bookingNumber).getPassportNumber().equals(passportNumber);
+    }
+
+    /** Used to validate fullName entered by user,
+     * returns true if it's the right fullName under the bookingNumber.
+     * Otherwise, returns false. */
+    public boolean validateFullName(String bookingNumber, String fullName) {
+        return bookingInformationData.get(bookingNumber).getFullName().equals(fullName);
+    }
+
    
     /** Sets the number of passengers to be checked in. */
     public void setNumberOfPassengers(int numberOfPassengers) {
