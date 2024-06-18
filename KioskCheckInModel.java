@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class KioskCheckInModel {
@@ -9,10 +10,6 @@ public class KioskCheckInModel {
      * Mostly for getter and setter method use.
      */
     private int passengerIndex;
-    /** Index of bag in the Passenger whose data should be accessed,
-     * Mostly for getter and setter method use.
-     */
-    private int bagIndex;
     /** Index for keeping track of the amoutn of passengers that was inserted. */
     private int addPassengerIndex;
     /** HashMap used to store bookingNumber and their respective bookingInformation,
@@ -23,12 +20,13 @@ public class KioskCheckInModel {
     private Utils utils = new Utils();
     /** Number of bags checked in. */
     private int numberOfBagsCheckedIn;
+    /** Arraylist to hold the booking information that has been checked in. */
+    public ArrayList<BookingInformation> checkedInBookings = new ArrayList<>();
 
     public KioskCheckInModel() {
         // An edge case fix for now.
         passengers = new Passenger[]{new Passenger(null, null, null)};
         passengerIndex = 0;
-        bagIndex = 0;
         numberOfBagsCheckedIn = 0;
         bookingInformationData = new HashMap<>();
         setupBookingInformationData();
@@ -95,6 +93,7 @@ public class KioskCheckInModel {
         }
         passengers[addPassengerIndex] = passenger;
         addPassengerIndex += 1;
+        checkedInBookings.add(bookingInformationData.get(passenger.getBookingNumber()));
     }
 
     /** Returns the passengerIndex. */
@@ -105,16 +104,6 @@ public class KioskCheckInModel {
     /** Sets the passengerIndex. */
     public void setPassengerIndex(int passengerIndex) {
         this.passengerIndex = passengerIndex;
-    }
-
-    /** Returns the bagIndex. */
-    public int getBagIndex() {
-        return bagIndex;
-    }
-
-    /** Sets the bagIndex. */
-    public void setBagIndex(int bagIndex) {
-        this.bagIndex = bagIndex;
     }
 
     /** Returns the bookingNumber of the passenger in Passenger[] passengers at passengerIndex. */
@@ -138,13 +127,34 @@ public class KioskCheckInModel {
     }
 
     /** Returns the bagID at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
-    public String getBagID() {
+    public String getBagID(int bagIndex) {
         return passengers[passengerIndex].getBag(bagIndex).getBagID();
     }
 
-    /** Returns the bag weight at bagIndex of the passenger in Passenger[] passengers at passengerIndex. */
-    public double getBagWeight() {
-        return passengers[passengerIndex].getBag(bagIndex).getBagWeight();
+    /** Returns seatNumber. */
+    public String getSeatNumber() {
+        return checkedInBookings.get(passengerIndex).getSeatNumber();
     }
+
+    /** Returns destination. */
+    public String getDestination() {
+        return checkedInBookings.get(passengerIndex).getDestination();
+    }
+
+    /** Returns flightStatus. */
+    public String getFlightStatus() {
+        return checkedInBookings.get(passengerIndex).getFlightStatus();
+    }
+
+    /** Returns gateNumber. */
+    public int getGateNumber() {
+        return checkedInBookings.get(passengerIndex).getGateNumber();
+    }
+
+    /** Returns boardingTime. */
+    public String getBoardingTime() {
+        return checkedInBookings.get(passengerIndex).getBoardingTime();
+    }
+
 
 }
