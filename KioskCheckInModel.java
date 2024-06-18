@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class KioskCheckInModel {
@@ -20,8 +19,16 @@ public class KioskCheckInModel {
     private Utils utils = new Utils();
     /** Number of bags checked in. */
     private int numberOfBagsCheckedIn;
-    /** Arraylist to hold the booking information that has been checked in. */
-    public ArrayList<BookingInformation> checkedInBookings = new ArrayList<>();
+    /** HashMap to hold the booking number that has been checked in,
+     * the key will be the bookingNumber, but the value will always be null.
+     * HashMap is used for faster look up.
+     */
+    public HashMap<String, String> checkedInBookingNumbers = new HashMap<>();
+    /** HashMap to hold all the bookingNumber that cannot be checked in,
+     * due to being locked for various reasons,
+     * the key will be the bookingNumber, but the value will always be null.
+     * HashMap is used for faster look up. */
+    public HashMap<String, String> lockedBookingNumbers = new HashMap<>();
 
     public KioskCheckInModel() {
         // An edge case fix for now.
@@ -93,7 +100,22 @@ public class KioskCheckInModel {
         }
         passengers[addPassengerIndex] = passenger;
         addPassengerIndex += 1;
-        checkedInBookings.add(bookingInformationData.get(passenger.getBookingNumber()));
+        checkedInBookingNumbers.put(passenger.getBookingNumber(), null);
+    }
+
+    /** Insert bookingNumbers that cannot be checked in. */
+    public void lockBookingNumber(String bookingNumber) {
+        lockedBookingNumbers.put(bookingNumber, null);
+    }
+
+    /** Returns true if the bookingNumber has been locked. */
+    public boolean isBookingNumberLocked(String bookingNumber) {
+        return lockedBookingNumbers.containsKey(bookingNumber);
+    }
+
+    /** Returns true if the bookingNumber has already been checked in. */
+    public boolean isBookingNumberCheckedIn(String bookingNumber) {
+        return checkedInBookingNumbers.containsKey(bookingNumber);
     }
 
     /** Returns the passengerIndex. */
@@ -143,28 +165,26 @@ public class KioskCheckInModel {
 
     /** Returns seatNumber. */
     public String getSeatNumber() {
-        return checkedInBookings.get(passengerIndex).getSeatNumber();
+        return bookingInformationData.get(passengers[passengerIndex].getBookingNumber()).getSeatNumber();
     }
 
     /** Returns destination. */
     public String getDestination() {
-        return checkedInBookings.get(passengerIndex).getDestination();
+        return bookingInformationData.get(passengers[passengerIndex].getBookingNumber()).getDestination();
     }
 
     /** Returns flightStatus. */
     public String getFlightStatus() {
-        return checkedInBookings.get(passengerIndex).getFlightStatus();
+        return bookingInformationData.get(passengers[passengerIndex].getBookingNumber()).getFlightStatus();
     }
 
     /** Returns gateNumber. */
     public int getGateNumber() {
-        return checkedInBookings.get(passengerIndex).getGateNumber();
+        return bookingInformationData.get(passengers[passengerIndex].getBookingNumber()).getGateNumber();
     }
 
     /** Returns boardingTime. */
     public String getBoardingTime() {
-        return checkedInBookings.get(passengerIndex).getBoardingTime();
+        return bookingInformationData.get(passengers[passengerIndex].getBookingNumber()).getBoardingTime();
     }
-
-
 }
