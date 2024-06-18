@@ -618,7 +618,9 @@ public class Controller {
         checkInView.setWarnInvalidBookingNumber(tempInvalidBookingNumberData[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyBookingNumberInput(tempWarnEmptyBookingNumberData[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnAlreadyCheckedInBookingNumber(tempWarnAlreadyCheckedInBookingNumber[checkInView.getCheckInViewPagingIndex()]);
+        checkInView.setWarnInvalidPassportNumber(tempInvalidPassportNumber[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyPassportNumberInput(tempWarnEmptyPassportNumberData[checkInView.getCheckInViewPagingIndex()]);
+        checkInView.setWarnInvalidFullName(tempInvalidFullName[checkInView.getCheckInViewPagingIndex()]);
         checkInView.setWarnEmptyFullNameInput(tempWarnEmptyFullNameData[checkInView.getCheckInViewPagingIndex()]);
 
         for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i++) {
