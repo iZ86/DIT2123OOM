@@ -7,13 +7,7 @@ public class Bag {
     /** Status of the bag screening. */
     private String screeningStatus;
 
-    /** Creates a bag object to hold data about a bag. */
-    public Bag(String bagID, double bagWeight, String screeningStatus) {
-        this.bagID = bagID;
-        this.bagWeight = bagWeight;
-        this.screeningStatus = screeningStatus;
-    }
-
+    /** Sets bagID. */
     public void setBagID(String bagID) {
         this.bagID = bagID;
     }
@@ -23,6 +17,7 @@ public class Bag {
         return bagID;
     }
 
+    /** Sets bagWeight. */
     public void setBagWeight(double bagWeight) {
         this.bagWeight = bagWeight;
     }
