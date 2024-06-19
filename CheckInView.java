@@ -78,6 +78,8 @@ public class CheckInView {
     private JSpinner numberOfBagsSpinner;
     /** True if there should be a warning prompt for unanswered questions. */
     private boolean[] warnUnansweredQuestions = new boolean[6];
+    /** True if there should be a warning prompt for the same booking number. */
+    private boolean warnSameBookingNumber;
 
     /** Creates a CheckInView object with a model KioskCheckInModel kioskCheckInModel */
     public CheckInView(KioskCheckInModel kioskCheckInModel) {
@@ -269,6 +271,11 @@ public class CheckInView {
     /** Sets warnsUnansweredQuestions[index]. */
     public void setWarnUnansweredQuestions(int index, boolean warnUnansweredQuestion) {
         warnUnansweredQuestions[index] = warnUnansweredQuestion;
+    }
+
+    /** Sets warnSameBookingNumber. */
+    public void setWarnSameBookingNumber(boolean warnSameBookingNumber) {
+        this.warnSameBookingNumber = warnSameBookingNumber;
     }
 
     /** Returns the checkInViewPanel. */
@@ -476,36 +483,27 @@ public class CheckInView {
         constraintsForBookingNumberTextField.ipady = verticalSizeOfTextField;
         constraintsForBookingNumberTextField.insets = new Insets(15, 0, 0, 0);
 
+        JLabel bookingNumberWarningLabel;
+
         if (warnAlreadyCheckedInBookingNumber) {
-            JLabel alreadyCheckedInBookingNumberLabel = new JLabel(String.format(CSSFORMAT1, 150, "Booking Number already checked in."));
-            alreadyCheckedInBookingNumberLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForAlreadyCheckedInBookingNumberLabel = new GridBagConstraints();
-            constraintsForAlreadyCheckedInBookingNumberLabel.gridx = 1;
-            constraintsForAlreadyCheckedInBookingNumberLabel.gridy = 1;
-
-            textFieldPanel.add(alreadyCheckedInBookingNumberLabel, constraintsForAlreadyCheckedInBookingNumberLabel);
+            bookingNumberWarningLabel = setupWarningJLabel("Booking Number already checked in");
+        } else if (warnInvalidBookingNumber) {
+            bookingNumberWarningLabel = setupWarningJLabel("Invalid Booking Number");
+        } else if (warnEmptyBookingNumberInput) {
+            bookingNumberWarningLabel = setupWarningJLabel("Empty Field");
+        } else if (warnSameBookingNumber) {
+            bookingNumberWarningLabel = setupWarningJLabel("Cannot check in the same booking number");
+        } else {
+            bookingNumberWarningLabel = null;
         }
 
-        if (warnInvalidBookingNumber) {
-            JLabel invalidBookingNumberLabel = new JLabel("Invalid Booking Number.");
-            invalidBookingNumberLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForInvalidBookingNumberLabel = new GridBagConstraints();
-            constraintsForInvalidBookingNumberLabel.gridx = 1;
-            constraintsForInvalidBookingNumberLabel.gridy = 1;
-
-            textFieldPanel.add(invalidBookingNumberLabel, constraintsForInvalidBookingNumberLabel);
+        if (bookingNumberWarningLabel != null) {
+            GridBagConstraints constraintsForWarningLabel = new GridBagConstraints();
+            constraintsForWarningLabel.gridx = 1;
+            constraintsForWarningLabel.gridy = 1;
+            textFieldPanel.add(bookingNumberWarningLabel, constraintsForWarningLabel);
         }
 
-        if (warnEmptyBookingNumberInput) {
-
-            JLabel warningEmptyBookingNumberLabel = new JLabel("Empty Field.");
-            warningEmptyBookingNumberLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForWarningEmptyBookingNumberLabel = new GridBagConstraints();
-            constraintsForWarningEmptyBookingNumberLabel.gridx = 1;
-            constraintsForWarningEmptyBookingNumberLabel.gridy = 1;
-
-            textFieldPanel.add(warningEmptyBookingNumberLabel, constraintsForWarningEmptyBookingNumberLabel);
-        }
 
         GridBagConstraints constraintsForPassportLabel = new GridBagConstraints();
         constraintsForPassportLabel.gridx = 0;
@@ -519,25 +517,21 @@ public class CheckInView {
         constraintsForPassportNumberTextField.ipady = verticalSizeOfTextField;
         constraintsForPassportNumberTextField.insets = new Insets(15, 0, 0, 0);
 
-        if (warnInvalidPassportNumber) {
-            JLabel warningInvalidPassportNumberLabel = new JLabel("Invalid Passport Number.");
-            warningInvalidPassportNumberLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForWarningInvalidPassportNumber = new GridBagConstraints();
-            constraintsForWarningInvalidPassportNumber.gridx = 1;
-            constraintsForWarningInvalidPassportNumber.gridy = 3;
+        JLabel passportNumberWarningLabel;
 
-            textFieldPanel.add(warningInvalidPassportNumberLabel, constraintsForWarningInvalidPassportNumber);
+        if (warnInvalidPassportNumber) {
+            passportNumberWarningLabel = setupWarningJLabel("Invalid Passport Number");
+        } else if (warnEmptyPassportNumberInput) {
+            passportNumberWarningLabel = setupWarningJLabel("Empty Field");
+        } else {
+            passportNumberWarningLabel = null;
         }
 
-        if (warnEmptyPassportNumberInput) {
-
-            JLabel warningEmptyPassportNumberLabel = new JLabel("Empty Field.");
-            warningEmptyPassportNumberLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForWarningEmptyPassportNumberLabel = new GridBagConstraints();
-            constraintsForWarningEmptyPassportNumberLabel.gridx = 1;
-            constraintsForWarningEmptyPassportNumberLabel.gridy = 3;
-
-            textFieldPanel.add(warningEmptyPassportNumberLabel, constraintsForWarningEmptyPassportNumberLabel);
+        if (passportNumberWarningLabel != null) {
+            GridBagConstraints constraintsForPassportNumberWarningLabel = new GridBagConstraints();
+            constraintsForPassportNumberWarningLabel.gridx = 1;
+            constraintsForPassportNumberWarningLabel.gridy = 3;
+            textFieldPanel.add(passportNumberWarningLabel, constraintsForPassportNumberWarningLabel);
         }
 
         // constraints.gridy = 4 for fullNameLabel and fullNameTextField
@@ -556,25 +550,21 @@ public class CheckInView {
         constraintsForFullNameTextField.ipady = verticalSizeOfTextField;
         constraintsForFullNameTextField.insets = new Insets(15, 0, 0, 0);
 
-        if (warnInvalidFullName) {
-            JLabel warningInvalidFullNameLabel = new JLabel("Invalid Full Name.");
-            warningInvalidFullNameLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForWarningInvalidFullName = new GridBagConstraints();
-            constraintsForWarningInvalidFullName.gridx = 1;
-            constraintsForWarningInvalidFullName.gridy = 5;
+        JLabel fullNameWarningLabel;
 
-            textFieldPanel.add(warningInvalidFullNameLabel, constraintsForWarningInvalidFullName);
+        if (warnInvalidFullName) {
+            fullNameWarningLabel = setupWarningJLabel("Invalid Full Name");
+        } else if (warnEmptyFullNameInput) {
+            fullNameWarningLabel = setupWarningJLabel("Empty Field");
+        } else {
+            fullNameWarningLabel = null;
         }
 
-        if (warnEmptyFullNameInput) {
-
-            JLabel warningEmptyFullNameLabel = new JLabel("Empty Field.");
-            warningEmptyFullNameLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForWarningEmptyFullNameLabel = new GridBagConstraints();
-            constraintsForWarningEmptyFullNameLabel.gridx = 1;
-            constraintsForWarningEmptyFullNameLabel.gridy = 5;
-
-            textFieldPanel.add(warningEmptyFullNameLabel, constraintsForWarningEmptyFullNameLabel);
+        if (fullNameWarningLabel != null) {
+            GridBagConstraints constraintsForFullNameWarningLabel = new GridBagConstraints();
+            constraintsForFullNameWarningLabel.gridx = 1;
+            constraintsForFullNameWarningLabel.gridy = 5;
+            textFieldPanel.add(fullNameWarningLabel, constraintsForFullNameWarningLabel);
         }
 
 
@@ -587,6 +577,13 @@ public class CheckInView {
 
 
         return textFieldPanel;
+    }
+
+    /** Sets up warning JLabel for every input. */
+    private JLabel setupWarningJLabel(String warningMessage) {
+        JLabel warningJLabel = new JLabel(String.format(CSSFORMAT1, 150, warningMessage));
+        warningJLabel.setForeground(Color.RED);
+        return warningJLabel;
     }
 
     /** Sets up the panelForSpecialAccommodationInput. */
