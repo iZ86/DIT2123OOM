@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
  */
 public class DoneView {
     /** JPanel for DoneView. */
-    JPanel doneViewPanel = new JPanel(new GridBagLayout());
+    private final JPanel doneViewPanel = new JPanel(new GridBagLayout());
     /** Main Menu Button. */
-    JButton mainMenuButton = new JButton("Return to Main Menu");
+    private final JButton mainMenuButton = new JButton("Return to Main Menu");
 
     /** Creates the DoneView object. */
     public DoneView() {
