@@ -43,7 +43,8 @@ public class KioskCheckInModel {
 
     public KioskCheckInModel() {
         // An edge case fix for now.
-        passengers = new Passenger[]{new Passenger(null, null, null)};
+        passengers = null;
+        numberOfPassengers = 0;
         passengerIndex = 0;
         numberOfBagsCheckedIn = 0;
         bookingInformationData = new HashMap<>();
