@@ -41,7 +41,7 @@ public class GUI {
 
     /** Creates a GUI object that takes in KioskCheckInModel kioskCheckInModel for the view to use. */
     public GUI(CounterModel counterModel, KioskCheckInModel kioskCheckInModel) {
-        GUI = new JFrame("Aerocheck in");
+        GUI = new JFrame("AeroCheck Check-In System");
 
         GUIViewPanel = new JPanel(new CardLayout());
         mainMenuView = new MainMenuView();

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -22,64 +23,71 @@ public class CounterView {
     /** Sets up the counterViewPanel. */
     private void setupViewPanel() {
 
-        // Staff and counter information
-        JLabel counterNumberLabel = new JLabel(String.format("Counter: %d", counterModel.getCounter()));
-        JLabel staffIDLabel = new JLabel("Staff ID: " + counterModel.getStaffID());
-        JLabel staffNameLabel = new JLabel("Staff Name: " + counterModel.getStaffName());
-        JLabel staffRoleLabel = new JLabel("Staff Role: " + counterModel.getStaffRole());
+        GridBagConstraints titleConstraints = new GridBagConstraints();
+        GridBagConstraints infoAreaConstraints = new GridBagConstraints();
+        GridBagConstraints mainMenuConstraints = new GridBagConstraints();
 
+        // Title panel with titled border
+        JPanel titlePanel = new JPanel(new GridBagLayout());
 
-        GridBagConstraints constraintsForTitleLabel = new GridBagConstraints();
-        GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
-        GridBagConstraints constraintsForCounterNumberLabel = new GridBagConstraints();
-        GridBagConstraints constraintsForStaffNameLabel = new GridBagConstraints();
-        GridBagConstraints constraintsForStaffRoleLabel = new GridBagConstraints();
-        GridBagConstraints constraintsForStaffIDLabel = new GridBagConstraints();
+        JLabel titleLabel = new JLabel("Check-In Counter", JLabel.CENTER);
+        titleLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
 
-        int widthOfButton = 30;
-        int heightOfButton = 15;
+        GridBagConstraints constraintsForTitlePanel = new GridBagConstraints();
+        constraintsForTitlePanel.gridx = 0;
+        constraintsForTitlePanel.gridy = 0;
+        constraintsForTitlePanel.insets = new Insets(0, 0, 30, 0);
+        titlePanel.add(titleLabel, constraintsForTitlePanel);
 
+        titleConstraints.gridx = 0;
+        titleConstraints.gridy = 0;
+        titleConstraints.fill = GridBagConstraints.BOTH;
+        titleConstraints.insets = new Insets(20, 0, 10, 0);
+        counterViewPanel.add(titlePanel, titleConstraints);
 
-        // Title
-        JLabel titleLabel = new JLabel("Check In Counter");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 17));
-        constraintsForTitleLabel.gridx = 0;
-        constraintsForTitleLabel.gridy = 0;
-        counterViewPanel.add(titleLabel, constraintsForTitleLabel);
+        // Panel for staff and counter information
+        JPanel infoAreaPanel = new JPanel(new GridBagLayout());
+        infoAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Staff and Counter Information ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 14)));
+        infoAreaPanel.setPreferredSize(new Dimension(330, 240));
 
-        // Add counter number to panel
-        constraintsForCounterNumberLabel.gridx = 0;
-        constraintsForCounterNumberLabel.gridy = 1;
-        constraintsForCounterNumberLabel.insets = new Insets(30, 0, 0, 0);
-        counterViewPanel.add(counterNumberLabel, constraintsForCounterNumberLabel);
+        infoAreaConstraints.gridx = 0;
+        infoAreaConstraints.gridy = 1;
+        infoAreaConstraints.insets = new Insets(0, 0, 20, 0);
+        counterViewPanel.add(infoAreaPanel, infoAreaConstraints);
 
-        // Add staff ID to panel
-        constraintsForStaffIDLabel.gridx = 0;
-        constraintsForStaffIDLabel.gridy = 2;
-        constraintsForStaffIDLabel.insets = new Insets(30, 0, 0, 0);
-        counterViewPanel.add(staffIDLabel, constraintsForStaffIDLabel);
+        GridBagConstraints infoConstraints = new GridBagConstraints();
+        infoConstraints.gridx = 0;
+        infoConstraints.insets = new Insets(15, 0, 15, 0);
+        infoConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        // Add staff name to panel
-        constraintsForStaffNameLabel.gridx = 0;
-        constraintsForStaffNameLabel.gridy = 3;
-        constraintsForStaffNameLabel.insets = new Insets(30, 0, 0, 0);
-        counterViewPanel.add(staffNameLabel, constraintsForStaffNameLabel);
-    
-        // Add staff role to panel
-        constraintsForStaffRoleLabel.gridx = 0;
-        constraintsForStaffRoleLabel.gridy = 4;
-        constraintsForStaffRoleLabel.insets = new Insets(30, 0, 0, 0);
-        counterViewPanel.add(staffRoleLabel, constraintsForStaffRoleLabel);
-        
+        JLabel counterNumberLabel = new JLabel(String.format("Counter: %d", counterModel.getCounter()), JLabel.CENTER);
+        counterNumberLabel.setFont(new Font("Lucida Sans", Font.BOLD, 14));
+        infoConstraints.gridy = 0;
+        infoAreaPanel.add(counterNumberLabel, infoConstraints);
 
+        JLabel staffIDLabel = new JLabel("Staff ID: " + counterModel.getStaffID(), JLabel.CENTER);
+        staffIDLabel.setFont(new Font("Lucida Sans", Font.BOLD, 14));
+        infoConstraints.gridy = 1;
+        infoAreaPanel.add(staffIDLabel, infoConstraints);
 
-        // Add Back To Main Menu button to panel
-        constraintsForMainMenuButton.ipadx = widthOfButton;
-        constraintsForMainMenuButton.ipady = heightOfButton;
-        constraintsForMainMenuButton.gridx = 0;
-        constraintsForMainMenuButton.gridy = 5;
-        constraintsForMainMenuButton.insets = new Insets(30, 0, 0, 0);
-        counterViewPanel.add(mainMenuButton, constraintsForMainMenuButton);
+        JLabel staffNameLabel = new JLabel("Staff Name: " + counterModel.getStaffName(), JLabel.CENTER);
+        staffNameLabel.setFont(new Font("Lucida Sans", Font.BOLD, 14));
+        infoConstraints.gridy = 2;
+        infoAreaPanel.add(staffNameLabel, infoConstraints);
+
+        JLabel staffRoleLabel = new JLabel("Staff Role: " + counterModel.getStaffRole(), JLabel.CENTER);
+        staffRoleLabel.setFont(new Font("Lucida Sans", Font.BOLD, 14));
+        infoConstraints.gridy = 3;
+        infoAreaPanel.add(staffRoleLabel, infoConstraints);
+
+        // Main Menu button outside the titled border
+        mainMenuButton.setPreferredSize(new Dimension(240, 50));
+        mainMenuButton.setFont(new Font("Lucida Sans", Font.BOLD, 14));
+        mainMenuButton.setFocusPainted(false);
+        mainMenuConstraints.gridx = 0;
+        mainMenuConstraints.gridy = 2; // Adjust this index to place it below the infoAreaPanel
+        mainMenuConstraints.insets = new Insets(30, 0, 0, 0);
+        counterViewPanel.add(mainMenuButton, mainMenuConstraints);
     }
 
     /** Clears the view. */

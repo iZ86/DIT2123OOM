@@ -34,6 +34,9 @@ public class BoardingPassView {
     /** Sets up the boardingPassViewPanel. */
     private void setupViewPanel() {
 
+        Font labelFont = new Font("Verdana", Font.PLAIN, 12);
+        Font dataFont = new Font("Lucida Sans", Font.BOLD, 13);
+
         if (kioskCheckInModel.getNumberOfPassengers() > 0) {
             JPanel panelForBoardingPassView = new JPanel(new GridBagLayout());
 
@@ -60,16 +63,21 @@ public class BoardingPassView {
             constraintsForLabel.insets = new Insets(5, 0, 7, 0);
 
             JLabel nameLabel = new JLabel("Mr / Ms " + kioskCheckInModel.getFullName()+",");
+            nameLabel.setFont(labelFont);
             JLabel bookingIdLabel = new JLabel("Booking ID");
+            bookingIdLabel.setFont(labelFont);
             JLabel passportNumberLabel = new JLabel("Passport Number");
+            passportNumberLabel.setFont(labelFont);
 
             constraintsForLabel.gridx = 0;
             constraintsForLabel.gridy = 0;
             informationAreaPanel.add(nameLabel, constraintsForLabel);
 
             JLabel bookingIdValueLabel = new JLabel(kioskCheckInModel.getBookingNumber());
+            bookingIdValueLabel.setFont(dataFont);
             bookingIdValueLabel.setForeground(Color.BLUE.darker());
             JLabel passportNumberValueLabel = new JLabel(kioskCheckInModel.getPassportNumber());
+            passportNumberValueLabel.setFont(dataFont);
             passportNumberValueLabel.setForeground(Color.BLUE.darker());
 
             constraintsForLabel.gridy++;
@@ -86,6 +94,7 @@ public class BoardingPassView {
 
             if (hasSpecialNeeds) {
                 JLabel specialNeedsLabel = new JLabel("Special Needs");
+                specialNeedsLabel.setFont(new Font("Verdana", Font.BOLD, 12));
                 specialNeedsLabel.setForeground(Color.RED.darker());
                 constraintsForLabel.gridy++;
                 constraintsForLabel.gridx = 0;
@@ -107,6 +116,7 @@ public class BoardingPassView {
                 }
 
                 JLabel specialNeedsDetailsLabel = new JLabel(specialNeedsDetails.toString());
+                specialNeedsDetailsLabel.setFont(dataFont);
                 specialNeedsDetailsLabel.setForeground(Color.RED);
                 constraintsForLabel.gridy++;
                 informationAreaPanel.add(specialNeedsDetailsLabel, constraintsForLabel);
@@ -135,13 +145,17 @@ public class BoardingPassView {
 
             if (kioskCheckInModel.getNumberOfBags() < 1) {
                 JLabel noBagsLabel = new JLabel("No Bags Added");
+                noBagsLabel.setFont(dataFont);
                 constraintsForBagLabel.gridy = 0;
                 panelForBagAreaPanel.add(noBagsLabel, constraintsForBagLabel);
             } else {
                 // Otherwise, display bag details in columns
                 JLabel bagIdHeaderLabel = new JLabel("Bag ID", JLabel.CENTER);
+                bagIdHeaderLabel.setFont(labelFont);
                 JLabel bagWeightHeaderLabel = new JLabel("Bag Weight", JLabel.CENTER);
+                bagWeightHeaderLabel.setFont(labelFont);
                 JLabel bagStatusHeaderLabel = new JLabel("Bag Status", JLabel.CENTER);
+                bagStatusHeaderLabel.setFont(labelFont);
 
                 constraintsForBagLabel.gridx = 0;
                 constraintsForBagLabel.gridy = 0;
@@ -165,8 +179,11 @@ public class BoardingPassView {
                     String bagStatus = kioskCheckInModel.getBagScreeningStatus(i);
 
                     JLabel bagIdLabel = new JLabel(bagId, JLabel.CENTER);
+                    bagIdLabel.setFont(dataFont);
                     JLabel bagWeightLabel = new JLabel(bagWeight, JLabel.CENTER);
+                    bagWeightLabel.setFont(dataFont);
                     JLabel bagStatusLabel = new JLabel(bagStatus, JLabel.CENTER);
+                    bagStatusLabel.setFont(dataFont);
 
                     constraintsForBagLabel.gridx = 0;
                     panelForBagAreaPanel.add(bagIdLabel, constraintsForBagLabel);
@@ -183,28 +200,50 @@ public class BoardingPassView {
 
             JPanel flightDetailsPanel = new JPanel(new GridBagLayout());
 
-            TitledBorder flightDetailsBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Flight Details  ", TitledBorder.LEFT, TitledBorder.TOP);
-            flightDetailsPanel.setBorder(flightDetailsBorder);
-            flightDetailsPanel.setPreferredSize(new Dimension(350, 150));
+            TitledBorder FlightTitledBorder;
+            if (hasSpecialNeeds) {
+                FlightTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), " Flight Details  ", TitledBorder.LEFT, TitledBorder.TOP);
+                FlightTitledBorder.setTitleColor(Color.RED.darker());
+            } else {
+                FlightTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Flight Details  ", TitledBorder.LEFT, TitledBorder.TOP);
+            }
+
+            flightDetailsPanel.setBorder(FlightTitledBorder);
+            flightDetailsPanel.setPreferredSize(new Dimension(350, 160));
 
             GridBagConstraints constraintsForFlightLabel = new GridBagConstraints();
             constraintsForFlightLabel.anchor = GridBagConstraints.CENTER;
             constraintsForFlightLabel.insets = new Insets(2, 0, 7, 0);
 
             JLabel seatNumberLabel = new JLabel("Seat Number: ");
-            JLabel seatNumberValueLabel = new JLabel();
+            seatNumberLabel.setFont(labelFont);
+            JLabel seatNumberValueLabel = new JLabel(kioskCheckInModel.getSeatNumber());
+            seatNumberValueLabel.setFont(dataFont);
+            seatNumberValueLabel.setForeground(Color.BLUE.darker());
 
             JLabel destinationLabel = new JLabel("Destination: ");
-            JLabel destinationValueLabel = new JLabel();
+            destinationLabel.setFont(labelFont);
+            JLabel destinationValueLabel = new JLabel(kioskCheckInModel.getDestination());
+            destinationValueLabel.setFont(dataFont);
+            destinationValueLabel.setForeground(Color.BLUE.darker());
 
             JLabel flightStatusLabel = new JLabel("Flight Status: ");
-            JLabel flightStatusValueLabel = new JLabel();
+            flightStatusLabel.setFont(labelFont);
+            JLabel flightStatusValueLabel = new JLabel(kioskCheckInModel.getFlightStatus());
+            flightStatusValueLabel.setFont(dataFont);
+            flightStatusValueLabel.setForeground(Color.GREEN.darker());
 
-            JLabel gateNumberLabel = new JLabel("Gate Number: ");
-            JLabel gateNumberValueLabel = new JLabel();
+            JLabel gateNumberLabel = new JLabel("Gate Number:");
+            gateNumberLabel.setFont(labelFont);
+            JLabel gateNumberValueLabel = new JLabel(String.valueOf(kioskCheckInModel.getGateNumber()));
+            gateNumberValueLabel.setFont(dataFont);
+            gateNumberValueLabel.setForeground(Color.BLUE.darker());
 
             JLabel boardingTimeLabel = new JLabel("Boarding Time: ");
-            JLabel boardingTimeValueLabel = new JLabel();
+            boardingTimeLabel.setFont(labelFont);
+            JLabel boardingTimeValueLabel = new JLabel(kioskCheckInModel.getBoardingTime());
+            boardingTimeValueLabel.setFont(dataFont);
+            boardingTimeValueLabel.setForeground(Color.cyan.darker());
 
             constraintsForFlightLabel.gridx = 0;
             constraintsForFlightLabel.gridy = 0;

@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -32,75 +33,78 @@ public class CheckInOptionView {
     /** Sets up the CheckInOptionViewPanel */
     private void setupViewPanel() {
 
+        GridBagConstraints titleConstraints = new GridBagConstraints();
+        GridBagConstraints infoAreaConstraints = new GridBagConstraints();
 
-        JLabel titleText = new JLabel("Check In Option");
+        JPanel titlePanel = new JPanel(new GridBagLayout());
 
-        GridBagConstraints mainMenuButtonConstraints = new GridBagConstraints();
-        GridBagConstraints titleTextConstraints = new GridBagConstraints();
-        GridBagConstraints groupButtonConstraints = new GridBagConstraints();
+        JLabel titleLabel = new JLabel("Check-In Option", JLabel.CENTER);
+        titleLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+
+        GridBagConstraints constraintsForTitlePanel = new GridBagConstraints();
+        constraintsForTitlePanel.gridx = 0;
+        constraintsForTitlePanel.gridy = 0;
+        constraintsForTitlePanel.insets = new Insets(0, 0, 30, 0);
+        titlePanel.add(titleLabel, constraintsForTitlePanel);
+
+        titleConstraints.gridx = 0;
+        titleConstraints.gridy = 0;
+        titleConstraints.fill = GridBagConstraints.BOTH;
+        titleConstraints.insets = new Insets(20, 0, 10, 0);
+        checkInOptionViewPanel.add(titlePanel, titleConstraints);
+
+        JPanel infoAreaPanel = new JPanel(new GridBagLayout());
+        infoAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Choose A Type ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 14)));
+        infoAreaPanel.setPreferredSize(new Dimension(330, 280));
+
+        infoAreaConstraints.gridx = 0;
+        infoAreaConstraints.gridy = 1;
+        infoAreaConstraints.insets = new Insets(0, 0, 20, 0);
+        checkInOptionViewPanel.add(infoAreaPanel, infoAreaConstraints);
+
+        singleButton.setPreferredSize(new Dimension(240, 50));
+        singleButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         GridBagConstraints singleButtonConstraints = new GridBagConstraints();
-        GridBagConstraints numberOfPeopleConstraints = new GridBagConstraints();
-
-        int widthSizeOfButton = 20;
-        int heightSizeOfButton = 10;
-        int widthOfJSpanner = 65;
-        int heightOfJSpanner = 15;
-
-        // Title
-        titleText.setFont(new Font("Arial", Font.BOLD, 17));
-        titleTextConstraints.ipadx = widthSizeOfButton;
-        titleTextConstraints.ipady = heightSizeOfButton;
-        titleTextConstraints.gridx = 0;
-        titleTextConstraints.gridy = 0;
-        titleTextConstraints.gridwidth = 2;
-        titleTextConstraints.insets = new Insets(0, 0, 0, 0);
-        checkInOptionViewPanel.add(titleText, titleTextConstraints);
-
-        // JSpinner for number of people
-        numberOfPeopleConstraints.ipadx = widthOfJSpanner;
-        numberOfPeopleConstraints.ipady = heightOfJSpanner;
-        numberOfPeopleConstraints.gridx = 1;
-        numberOfPeopleConstraints.gridy = 1;
-        // Insets 15 to the left to follow the group button.
-        numberOfPeopleConstraints.insets = new Insets(40, 15, 0, 0);
-        checkInOptionViewPanel.add(numberOfPassengers, numberOfPeopleConstraints);
-
-        // Add Single button to panel
-        singleButtonConstraints.ipadx = widthSizeOfButton;
-        singleButtonConstraints.ipady = heightSizeOfButton;
         singleButtonConstraints.gridx = 0;
-        singleButtonConstraints.gridy = 2;
-        singleButtonConstraints.insets = new Insets(10, 0, 0, 15);
-        checkInOptionViewPanel.add(singleButton, singleButtonConstraints);
-        
-        // Add Group button to panel
-        groupButtonConstraints.ipadx = widthSizeOfButton;
-        groupButtonConstraints.ipady = heightSizeOfButton;
-        groupButtonConstraints.gridx = 1;
-        groupButtonConstraints.gridy = 2;
-        groupButtonConstraints.insets = new Insets(10, 15, 0, 0);
-        checkInOptionViewPanel.add(groupButton, groupButtonConstraints);
+        singleButtonConstraints.gridy = 0;
+        singleButtonConstraints.insets = new Insets(20, 0, 15, 0);
+        infoAreaPanel.add(singleButton, singleButtonConstraints);
+
+        groupButton.setPreferredSize(new Dimension(240, 50));
+        groupButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        GridBagConstraints groupButtonConstraints = new GridBagConstraints();
+        groupButtonConstraints.gridx = 0;
+        groupButtonConstraints.gridy = 1;
+        groupButtonConstraints.insets = new Insets(20, 0, 0, 0);
+        infoAreaPanel.add(groupButton, groupButtonConstraints);
+
+        numberOfPassengers.setPreferredSize(new Dimension(50, 30));
+        GridBagConstraints spinnerConstraints = new GridBagConstraints();
+        spinnerConstraints.gridx = 0;
+        spinnerConstraints.gridy = 2;
+        spinnerConstraints.insets = new Insets(20, 0, 0, 0);
+        spinnerConstraints.anchor = GridBagConstraints.CENTER; // Center the spinner horizontally
+        infoAreaPanel.add(numberOfPassengers, spinnerConstraints);
 
         if (warnMinimumNumberOfPassengers) {
-            JLabel warnMinimumNumberOfPassengersLabel = new JLabel("Minimum number is 2!");
-            warnMinimumNumberOfPassengersLabel.setFont(new Font("Arial", Font.PLAIN, 8));
-
-            warnMinimumNumberOfPassengersLabel.setForeground(Color.RED);
-            GridBagConstraints constraintsForWarnMinimumNumberOfPassengersLabel = new GridBagConstraints();
-
-            constraintsForWarnMinimumNumberOfPassengersLabel.gridx = 1;
-            constraintsForWarnMinimumNumberOfPassengersLabel.gridy = 3;
-            constraintsForWarnMinimumNumberOfPassengersLabel.insets = new Insets(0, 15, 0, 0);
-            checkInOptionViewPanel.add(warnMinimumNumberOfPassengersLabel, constraintsForWarnMinimumNumberOfPassengersLabel);
+            JLabel warnLabel = new JLabel("Error: Minimum number is 2 !", JLabel.CENTER);
+            warnLabel.setFont(new Font("Lucida Sans", Font.PLAIN, 12));
+            warnLabel.setForeground(Color.RED);
+            GridBagConstraints warnConstraints = new GridBagConstraints();
+            warnConstraints.gridx = 0;
+            warnConstraints.gridy = 3;
+            warnConstraints.gridwidth = 1;
+            warnConstraints.insets = new Insets(15, 0, 0, 0);
+            infoAreaPanel.add(warnLabel, warnConstraints);
         }
 
-        // Add Back To Main Menu button to panel
-        mainMenuButtonConstraints.ipadx = widthSizeOfButton;
-        mainMenuButtonConstraints.ipady = heightSizeOfButton;
+        mainMenuButton.setPreferredSize(new Dimension(240, 50));
+        mainMenuButton.setFont(new Font("Lucida Sans", Font.BOLD, 14));
+        GridBagConstraints mainMenuButtonConstraints = new GridBagConstraints();
         mainMenuButtonConstraints.gridx = 0;
-        mainMenuButtonConstraints.gridy = 4;
-        mainMenuButtonConstraints.gridwidth = 2;
-        mainMenuButtonConstraints.insets = new Insets(50, 0, 0, 0);
+        mainMenuButtonConstraints.gridy = 2;
+        mainMenuButtonConstraints.gridwidth = 1;
+        mainMenuButtonConstraints.insets = new Insets(30, 0, 0, 0);
         checkInOptionViewPanel.add(mainMenuButton, mainMenuButtonConstraints);
     }
 

@@ -23,60 +23,66 @@ public class MainMenuView {
     
     /** GUI */
     public void setupViewPanel() {
-        GridBagConstraints welcomeTitleConstraints = new GridBagConstraints();
-        GridBagConstraints staffButtonConstraints = new GridBagConstraints();
-        GridBagConstraints kioskButtonConstraints = new GridBagConstraints();
+        GridBagConstraints titleConstraints = new GridBagConstraints();
+        GridBagConstraints buttonAreaConstraints = new GridBagConstraints();
+
+        JPanel titlePanel = new JPanel(new GridBagLayout());
+        titlePanel.setPreferredSize(new Dimension(330, 150));
+
+        JLabel welcomeLabel = new JLabel("WELCOME", JLabel.CENTER);
+        welcomeLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+
+        JLabel aeroCheckLabel = new JLabel("AeroCheck", JLabel.CENTER);
+        aeroCheckLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+
+        JLabel checkInSystemLabel = new JLabel("Check-In System", JLabel.CENTER);
+        checkInSystemLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+
+        GridBagConstraints constraintsForTitlePanel = new GridBagConstraints();
+        constraintsForTitlePanel.gridx = 0;
+        constraintsForTitlePanel.gridy = 0;
+        constraintsForTitlePanel.insets = new Insets(0, 0, 10, 0);
+        titlePanel.add(welcomeLabel, constraintsForTitlePanel);
+
+        constraintsForTitlePanel.gridy = 1;
+        constraintsForTitlePanel.insets = new Insets(0, 0, 10, 0);
+        titlePanel.add(aeroCheckLabel, constraintsForTitlePanel);
+
+        constraintsForTitlePanel.gridy = 2;
+        constraintsForTitlePanel.insets = new Insets(0, 0, 20, 0);
+        titlePanel.add(checkInSystemLabel, constraintsForTitlePanel);
+
+        titleConstraints.gridx = 0;
+        titleConstraints.gridy = 0;
+        titleConstraints.fill = GridBagConstraints.BOTH;
+        titleConstraints.insets = new Insets(20, 0, 10, 0);
+        mainMenuViewPanel.add(titlePanel, titleConstraints);
 
         JPanel buttonAreaPanel = new JPanel(new GridBagLayout());
-        buttonAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "  AeroCheck Check-In System   ", TitledBorder.CENTER, TitledBorder.TOP));
-        buttonAreaPanel.setPreferredSize(new Dimension(330, 430));
-        mainMenuViewPanel.add(buttonAreaPanel);
+        buttonAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()," Select Check-In Mode ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 14)));
+        buttonAreaPanel.setPreferredSize(new Dimension(330, 230));
 
-        // JLabel to display a welcome title 
-        JLabel welcomeTitle = new JLabel("Welcome!");
-        
-        // Set font for welcome title
-        welcomeTitle.setFont(new Font("Arial", Font.BOLD, 15));
-        
-        // Add welcome title to panel
-        welcomeTitleConstraints.gridx = 0;
-        welcomeTitleConstraints.gridy = 0;
-        welcomeTitleConstraints.fill = GridBagConstraints.CENTER;
-
-        // Adjust the welcome title position
-        welcomeTitleConstraints.gridwidth = 2;
-        welcomeTitleConstraints.insets = new Insets(20, 0, 10, 0);
-        mainMenuViewPanel.add(welcomeTitle, welcomeTitleConstraints);
-
-        // Set size for staff button
-        checkInCounterButton.setPreferredSize(new Dimension(230, 40));
-
-        // Set size for kiosk button 
-        checkInKioskButton.setPreferredSize(new Dimension(230, 40));
-
-        GridBagConstraints buttonAreaConstraints = new GridBagConstraints();
-        buttonAreaConstraints.gridx = 1;
+        buttonAreaConstraints.gridx = 0;
         buttonAreaConstraints.gridy = 1;
-        buttonAreaConstraints.weightx = 1.0;
-        buttonAreaConstraints.weighty = 1.0;
+        buttonAreaConstraints.insets = new Insets(0, 0, 20, 0);
         mainMenuViewPanel.add(buttonAreaPanel, buttonAreaConstraints);
 
+        GridBagConstraints buttonConstraintsForTitlePanel = new GridBagConstraints();
+        buttonConstraintsForTitlePanel.gridx = 0;
+        buttonConstraintsForTitlePanel.insets = new Insets(15, 0, 15, 0);
+        buttonConstraintsForTitlePanel.fill = GridBagConstraints.HORIZONTAL;
 
-        // Add checkInCounter(this is staff) button to panel 
-        staffButtonConstraints.gridx = 0;
-        staffButtonConstraints.gridy = 0;
+        checkInCounterButton.setPreferredSize(new Dimension(240, 50));
+        checkInCounterButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        checkInCounterButton.setFocusPainted(false);
+        buttonConstraintsForTitlePanel.gridy = 0;
+        buttonAreaPanel.add(checkInCounterButton, buttonConstraintsForTitlePanel);
 
-        // Adjust the staff button position
-        staffButtonConstraints.insets = new Insets(0, 0, 50, 0);
-        buttonAreaPanel.add(checkInCounterButton, staffButtonConstraints);
-
-        // Add checkInKiosk(this is kiosk) button to panel 
-        kioskButtonConstraints.gridx = 0;
-        kioskButtonConstraints.gridy = 1;
-
-        // Adjust the kiosk button position
-        kioskButtonConstraints.insets = new Insets(20, 0, 0, 0);
-        buttonAreaPanel.add(checkInKioskButton, kioskButtonConstraints);
+        checkInKioskButton.setPreferredSize(new Dimension(240, 50));
+        checkInKioskButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        checkInKioskButton.setFocusPainted(false);
+        buttonConstraintsForTitlePanel.gridy = 1;
+        buttonAreaPanel.add(checkInKioskButton, buttonConstraintsForTitlePanel);
     }
 
     public JPanel getMainMenuViewPanel() {

@@ -24,18 +24,31 @@ public class DoneView {
     /** Sets up the view panel. */
     private void setupDoneViewPanel() {
 
-        JLabel thankYouLabel = new JLabel("Thank you for using aero-check in service!");
-        GridBagConstraints constraintsForThankYouLabel = new GridBagConstraints();
-        constraintsForThankYouLabel.gridx = 0;
-        constraintsForThankYouLabel.gridy = 0;
+        JLabel thankYouLabel1 = new JLabel("Thank You For Using");
+        thankYouLabel1.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+        JLabel thankYouLabel2 = new JLabel("AeroCheck Check-In Service");
+        thankYouLabel2.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+
+        GridBagConstraints constraintsForThankYouLabel1 = new GridBagConstraints();
+        constraintsForThankYouLabel1.gridx = 0;
+        constraintsForThankYouLabel1.gridy = 0;
+        constraintsForThankYouLabel1.insets = new Insets(0, 0, 10, 0);
+
+        GridBagConstraints constraintsForThankYouLabel2 = new GridBagConstraints();
+        constraintsForThankYouLabel2.gridx = 0;
+        constraintsForThankYouLabel2.gridy = 1;
 
         GridBagConstraints constraintsForMainMenuButton = new GridBagConstraints();
         constraintsForMainMenuButton.gridx = 0;
-        constraintsForMainMenuButton.gridy = 1;
+        constraintsForMainMenuButton.gridy = 2;
+        constraintsForMainMenuButton.insets = new Insets(50, 0, 0, 0);
 
-        doneViewPanel.add(thankYouLabel, constraintsForThankYouLabel);
+        doneViewPanel.add(thankYouLabel1, constraintsForThankYouLabel1);
+        doneViewPanel.add(thankYouLabel2, constraintsForThankYouLabel2);
+
+        mainMenuButton.setPreferredSize(new Dimension(240, 50));
+        mainMenuButton.setFont(new Font("Lucida Sans", Font.BOLD, 14));
         doneViewPanel.add(mainMenuButton, constraintsForMainMenuButton);
-
     }
 
     /** Adds an action listener to main menu button. */
