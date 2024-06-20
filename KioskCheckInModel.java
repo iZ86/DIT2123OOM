@@ -123,6 +123,7 @@ public class KioskCheckInModel {
             bagID.append("0");
         }
         bagID.append(numberOfBagsCheckedInString);
+        numberOfBagsCheckedIn += 1;
         return bagID.toString();
     }
 
