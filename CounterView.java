@@ -5,16 +5,13 @@ import java.awt.event.*;
 /* This class represents the view for showing the user their designated physical counter, after choosing to check in physically. */
 public class CounterView {
     /* JPanel for the CounterView. */
-    private JPanel counterViewPanel = new JPanel(new GridBagLayout());
+    private final JPanel counterViewPanel = new JPanel(new GridBagLayout());
 
     /** The model that holds the staff and counter information. */
-    private CounterModel counterModel;
+    private final CounterModel counterModel;
 
     /** JButton that changes the view to the MainMenuView. */
-    private JButton mainMenuButton = new JButton("Main Menu");
-
-
-
+    private final JButton mainMenuButton = new JButton("Main Menu");
 
     /** Creates a CounterView object. */
     public CounterView(CounterModel counterModel) {

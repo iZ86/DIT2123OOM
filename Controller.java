@@ -9,11 +9,11 @@ import java.util.TreeMap;
 /** This class acts as the controller of the MVC structure in this program. */
 public class Controller {
     /** gui. */
-    private GUI gui;
+    private final GUI gui;
     /** The model that holds data for counterView. */
-    private CounterModel counterModel;
+    private final CounterModel counterModel;
     /** The model to hold all the data. */
-    private KioskCheckInModel kioskCheckInModel;
+    private final KioskCheckInModel kioskCheckInModel;
     /** Temp passenger data including their bag data. */
     private Passenger[] tempPassengersData;
     /** Temp data to keep track of which tempPassengerData's bookingNumber is invalid. */

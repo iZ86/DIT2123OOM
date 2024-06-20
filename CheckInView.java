@@ -12,46 +12,46 @@ public class CheckInView {
     /** CSS used to wrap String in JLabels for warnAlreadyCheckedInBookingNumber. */
     private static final String CSSFORMAT1= "<html><body style='width: %1spx; text-align: center;'>%1s";
     /** JPanel for the CheckInView. */
-    private JPanel checkInViewPanel = new JPanel(new GridBagLayout());
+    private final JPanel checkInViewPanel = new JPanel(new GridBagLayout());
     /** The model that holds the passenger and their bag data. */
-    private KioskCheckInModel kioskCheckInModel;
+    private final KioskCheckInModel kioskCheckInModel;
     /** The text field where user enters their bookingNumber. */
-    private JTextField bookingNumberTextField = new JTextField();
+    private final JTextField bookingNumberTextField = new JTextField();
     /** The text field where user enters their passport number. */
-    private JTextField passportNumberTextField = new JTextField();
+    private final JTextField passportNumberTextField = new JTextField();
     /** The text field where the user enters their full name. */
-    private JTextField fullNameTextField = new JTextField();
+    private final JTextField fullNameTextField = new JTextField();
     /** JButton that changes the CheckInView to display the previous Passenger information.
      * This button will not be displayed when showing the FIRST Passenger's data.
      */
-    private JButton previousPassengerButton = new JButton("< ~ ~ ~");
+    private final JButton previousPassengerButton = new JButton("< ~ ~ ~");
     /** JButton that changes the CheckInView to display an empty CheckInView,
      * if the Passenger information hasn't been added yet.
      * Otherwise, shows the Passenger information that has been added.
      * This button will not be displayed when showing the LAST Passenger data.
      */
-    private JButton nextPassengerButton = new JButton("~ ~ ~ >");
+    private final JButton nextPassengerButton = new JButton("~ ~ ~ >");
     /** JButton that checks in all the Passengers and their data,
      * changing the view to the BoardingPassView.
      * For user to check in, once all sufficient data is added.
      * An error will be shown, if there is a Passenger information not filled
      * or invalid bookingNumber.
      */
-    private JButton checkInButton = new JButton("Check In");
+    private final JButton checkInButton = new JButton("Check In");
     /** JButton that changes the view back to CheckInOptionView. */
-    private JButton checkInKioskButton = new JButton("Last Page");
+    private final JButton checkInKioskButton = new JButton("Last Page");
     /** JButton that changes the view to the MainMenuView. */
-    private JButton mainMenuButton = new JButton("Main Menu");
+    private final JButton mainMenuButton = new JButton("Main Menu");
     /** Check Box for Wheelchair Option. */
-    private JCheckBox wheelchairCheckBox = new JCheckBox("Wheelchair");
+    private final JCheckBox wheelchairCheckBox = new JCheckBox("Wheelchair");
     /** Check Box for Blindness Option. */
-    private JCheckBox blindnessCheckBox = new JCheckBox("Blindness");
+    private final JCheckBox blindnessCheckBox = new JCheckBox("Blindness");
     /** Check Bo for Deafness Option. */
-    private JCheckBox deafnessCheckbox = new JCheckBox("Deafness");
+    private final JCheckBox deafnessCheckbox = new JCheckBox("Deafness");
     /** Check Box for Others Option. */
-    private JCheckBox othersSpecialAccommodationCheckBox = new JCheckBox("Others");
+    private final JCheckBox othersSpecialAccommodationCheckBox = new JCheckBox("Others");
     /** Text Field to let user enter if user choose OTHERS Option. */
-    private JTextField othersSpecialAccommodationTextField = new JTextField();
+    private final JTextField othersSpecialAccommodationTextField = new JTextField();
     /** checkInViewPagingIndex, used to show the page that the user is at. */
     private int checkInViewPagingIndex;
     /** True if there should be a warning prompt for empty invalid booking number in bookingNumberTextField. */
@@ -69,13 +69,13 @@ public class CheckInView {
     /** True if there should be a warning prompt for empty full name in fullNameTextField. */
     private boolean warnEmptyFullNameInput;
     /** Yes radio buttons for every bag check in question. */
-    private JRadioButton[] answerYesRadioButtons = new JRadioButton[6];
+    private final JRadioButton[] answerYesRadioButtons = new JRadioButton[6];
     /** No radio buttons for every bag check in question. */
-    private JRadioButton[] answerNoRadioButtons = new JRadioButton[6];
+    private final JRadioButton[] answerNoRadioButtons = new JRadioButton[6];
     /** Button group that contains both answerYesRadioButton and answerNoRadioButton. */
-    private ButtonGroup[] buttonGroup = new ButtonGroup[6];
+    private final ButtonGroup[] buttonGroup = new ButtonGroup[6];
     /** JSpinner to select the number of passengers */
-    private JSpinner numberOfBagsSpinner;
+    private final JSpinner numberOfBagsSpinner;
     /** True if there should be a warning prompt for unanswered questions. */
     private boolean[] warnUnansweredQuestions = new boolean[6];
     /** True if there should be a warning prompt for the same booking number. */

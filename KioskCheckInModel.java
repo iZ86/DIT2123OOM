@@ -27,7 +27,7 @@ public class KioskCheckInModel {
      */
     private HashMap<String, BookingInformation> bookingInformationData;
     /** Utilities class. */
-    private Utils utils = new Utils();
+    private final Utils utils = new Utils();
     /** Number of bags checked in. */
     private int numberOfBagsCheckedIn;
     /** HashMap to hold the booking number that has been checked in,
