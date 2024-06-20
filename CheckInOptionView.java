@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -24,12 +25,12 @@ public class CheckInOptionView {
 
 
     /** Creates a CheckInOptionView object */
-    public CheckInOptionView(){
+    public CheckInOptionView() {
         setupViewPanel();
     }
 
     /** Sets up the CheckInOptionViewPanel */
-    private void setupViewPanel(){
+    private void setupViewPanel() {
 
 
         JLabel titleText = new JLabel("Check In Option");
@@ -61,7 +62,7 @@ public class CheckInOptionView {
         numberOfPeopleConstraints.gridx = 1;
         numberOfPeopleConstraints.gridy = 1;
         // Insets 15 to the left to follow the group button.
-        numberOfPeopleConstraints.insets = new Insets(40 ,15, 0, 0);
+        numberOfPeopleConstraints.insets = new Insets(40, 15, 0, 0);
         checkInOptionViewPanel.add(numberOfPassengers, numberOfPeopleConstraints);
 
         // Add Single button to panel
@@ -127,7 +128,7 @@ public class CheckInOptionView {
         this.warnMinimumNumberOfPassengers = warnMinimumNumberOfPassengers;
     }
     /** Returns the CheckInOptionViewPanel */
-    public JPanel getCheckInOptionViewPanel(){
+    public JPanel getCheckInOptionViewPanel() {
         return checkInOptionViewPanel;
     }
 
@@ -141,7 +142,7 @@ public class CheckInOptionView {
         this.numberOfPassengers.setValue(numberOfPassengers);
     }
     /** Adds an ActionListener to the JButton mainMenuButton */
-    public void addMainMenuButtonListener(ActionListener listenForMainMenuButton){
+    public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
         mainMenuButton.addActionListener(listenForMainMenuButton);
     }
 

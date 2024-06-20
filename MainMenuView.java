@@ -22,13 +22,13 @@ public class MainMenuView {
     }
     
     /** GUI */
-    public void setupViewPanel(){
+    public void setupViewPanel() {
         GridBagConstraints welcomeTitleConstraints = new GridBagConstraints();
         GridBagConstraints staffButtonConstraints = new GridBagConstraints();
         GridBagConstraints kioskButtonConstraints = new GridBagConstraints();
 
         JPanel buttonAreaPanel = new JPanel(new GridBagLayout());
-        buttonAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),"  AeroCheck Check-In System   ", TitledBorder.CENTER,TitledBorder.TOP));
+        buttonAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "  AeroCheck Check-In System   ", TitledBorder.CENTER, TitledBorder.TOP));
         buttonAreaPanel.setPreferredSize(new Dimension(330, 430));
         mainMenuViewPanel.add(buttonAreaPanel);
 
@@ -49,7 +49,7 @@ public class MainMenuView {
         mainMenuViewPanel.add(welcomeTitle, welcomeTitleConstraints);
 
         // Set size for staff button
-        checkInCounterButton.setPreferredSize(new Dimension(230,40));
+        checkInCounterButton.setPreferredSize(new Dimension(230, 40));
 
         // Set size for kiosk button 
         checkInKioskButton.setPreferredSize(new Dimension(230, 40));
@@ -79,17 +79,17 @@ public class MainMenuView {
         buttonAreaPanel.add(checkInKioskButton, kioskButtonConstraints);
     }
 
-    public JPanel getMainMenuViewPanel(){
+    public JPanel getMainMenuViewPanel() {
         return mainMenuViewPanel;    
     }
 
     /** Adds an Action Listener to checkInCounterButton */
-    public void addCheckInCounterButtonListener(ActionListener listenForCheckInCounterButton){
+    public void addCheckInCounterButtonListener(ActionListener listenForCheckInCounterButton) {
         checkInCounterButton.addActionListener(listenForCheckInCounterButton);
     }
 
     /** Adds an ActionListener to checkInKioskButton */
-    public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton){
+    public void addCheckInKioskButtonListener(ActionListener listenForCheckInKioskButton) {
         checkInKioskButton.addActionListener(listenForCheckInKioskButton);
     }
 }

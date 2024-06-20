@@ -22,7 +22,7 @@ public class Passenger {
      * -1 if the answer is no,
      * 0 if there is no answer.
      * */
-    private int bagCheckInQuestionAnswers[] = new int[6];
+    private int[] bagCheckInQuestionAnswers = new int[6];
 
     /** Creates a Passenger object to hold data. */
     public Passenger(String bookingNumber, String passportNumber, String fullName) {

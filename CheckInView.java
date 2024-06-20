@@ -10,7 +10,7 @@ public class CheckInView {
     /** CSS used to wrap String in JLabels for questions. */
     private static final String CSSFORMAT = "<html><body style='width: %1spx'>%1s";
     /** CSS used to wrap String in JLabels for warnAlreadyCheckedInBookingNumber. */
-    private static final String CSSFORMAT1= "<html><body style='width: %1spx; text-align: center;'>%1s";
+    private static final String CSSFORMAT1 = "<html><body style='width: %1spx; text-align: center;'>%1s";
     /** JPanel for the CheckInView. */
     private final JPanel checkInViewPanel = new JPanel(new GridBagLayout());
     /** The model that holds the passenger and their bag data. */
@@ -187,13 +187,13 @@ public class CheckInView {
         GridBagConstraints constraintsForSpecialAccommodationInputPanel = new GridBagConstraints();
         constraintsForSpecialAccommodationInputPanel.gridx = 0;
         constraintsForSpecialAccommodationInputPanel.gridy = 1;
-        constraintsForSpecialAccommodationInputPanel.insets = new Insets(0,0,20,0);
+        constraintsForSpecialAccommodationInputPanel.insets = new Insets(0, 0, 20, 0);
 
         // Number Of Bags Spinner.
         GridBagConstraints constraintsForNumberOfBagsSpinnerPanel = new GridBagConstraints();
         constraintsForNumberOfBagsSpinnerPanel.gridx = 0;
         constraintsForNumberOfBagsSpinnerPanel.gridy = 2;
-        constraintsForNumberOfBagsSpinnerPanel.insets = new Insets(0,0,20,0);
+        constraintsForNumberOfBagsSpinnerPanel.insets = new Insets(0, 0, 20, 0);
 
         // Questions panel.
         GridBagConstraints constraintsForBagCheckInQuestionsPanel = new GridBagConstraints();
@@ -622,7 +622,7 @@ public class CheckInView {
         constraintsForOtherNeedsTextField.gridwidth = GridBagConstraints.REMAINDER;
         constraintsForOtherNeedsTextField.ipady = verticalSizeOfSpecialNeedsTextField;
         constraintsForOtherNeedsTextField.ipadx = horizontalSizeOfSpecialNeedsTextField;
-        constraintsForOtherNeedsTextField.insets = new Insets(5,0,0,0);
+        constraintsForOtherNeedsTextField.insets = new Insets(5, 0, 0, 0);
 
         specialAccommodationInputPanel.add(labelForSpecialNeeds, constraintsForSpecialNeedsLabel);
         specialAccommodationInputPanel.add(wheelchairCheckBox, constraintsForWheelChairJCheckBox);
@@ -666,7 +666,7 @@ public class CheckInView {
         JPanel bagCheckInQuestionsPanel = new JPanel(new GridBagLayout());
 
         // Questions
-        for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i ++) {
+        for (int i = 0; i < kioskCheckInModel.getNumberOfBagCheckInQuestions(); i++) {
             JPanel bagCheckInQuestionPanel = new JPanel(new GridBagLayout());
             JPanel bagCheckInQuestionRadioButtonPanel = new JPanel(new GridBagLayout());
             JLabel bagCheckInQuestionLabel = new JLabel(String.format(CSSFORMAT, 250, kioskCheckInModel.getBagCheckInQuestions(i)));
@@ -714,7 +714,7 @@ public class CheckInView {
             GridBagConstraints constraintsForBagCheckInQuestionPanel = new GridBagConstraints();
             constraintsForBagCheckInQuestionPanel.gridx = 0;
             constraintsForBagCheckInQuestionPanel.gridy = i;
-            constraintsForBagCheckInQuestionPanel.insets = new Insets(0, 0 , 20, 0);
+            constraintsForBagCheckInQuestionPanel.insets = new Insets(0, 0, 20, 0);
 
             bagCheckInQuestionsPanel.add(bagCheckInQuestionPanel, constraintsForBagCheckInQuestionPanel);
         }
@@ -758,8 +758,8 @@ public class CheckInView {
         constraintsForNextButton.insets = new Insets(0, 10, 0, 0); // Add spacing of 10 pixels to the left
         constraintsForNextAndPreviousButtonPanel.insets = new Insets(15, 0, 10, 0);
         constraintsForBackToCheckInOptionView.insets = new Insets(0, 10, 0, 10);
-        constraintsForPassengerIndexLabel.insets = new Insets(20,0,0,0);
-        constraintsForOtherButtonPanel.insets = new Insets(5,0,0,0);
+        constraintsForPassengerIndexLabel.insets = new Insets(20, 0, 0, 0);
+        constraintsForOtherButtonPanel.insets = new Insets(5, 0, 0, 0);
 
         constraintsForPreviousButton.gridx = 0;
         constraintsForPreviousButton.gridy = 0;

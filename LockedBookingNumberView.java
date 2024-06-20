@@ -43,9 +43,9 @@ public class LockedBookingNumberView {
     private void setupViewPanel() {
         JLabel noticeLabel = new JLabel(String.format(CSSFORMAT,
                 300,
-                "Unfortunately, these booking numbers has been locked, " +
-                        "due to answering incorrectly. " +
-                        "Please head to any counter to resolve this issue."));
+                "Unfortunately, these booking numbers has been locked, "
+                        + "due to answering incorrectly. "
+                        + "Please head to any counter to resolve this issue."));
         noticeLabel.setForeground(Color.RED);
 
         String lockedBookingNumbersString = setupLockedBookingNumbersString();

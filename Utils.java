@@ -39,6 +39,11 @@ public class Utils {
             "JHB", "JHB", "JHB", "JHB", "LAX", "SYD"
     };
 
+    /** A constant array of boarding gates. */
+    public static final int[] BOARDINGGATES = new int[] {
+            5, 5, 5, 5, 6, 1
+    };
+
     /** A constant array of staff ID's, used for randomized data. */
     public static final String[] STAFFID = new String[] {
             "S874",
@@ -108,10 +113,4 @@ public class Utils {
     public double getRandomBagWeight() {
         return random.nextDouble(30.0);
     }
-
-    // TODO: ...
-    public int generateRandomGateNumber() {
-        return 0;
-    }
-
 }

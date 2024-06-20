@@ -92,7 +92,6 @@ public class Controller {
     public class CheckInKioskButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: Changes the view to the GUIViewPanel to checkInOptionView.
             CheckInOptionView checkInOptionView = gui.getCheckInOptionView();
             checkInOptionView.resetView();
             checkInOptionView.updateView();
@@ -130,10 +129,6 @@ public class Controller {
     public class SingleCheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: set the kioskCheckInModel number of passengers to 1.
-            // TODO: the kioskCheckInModel should automatically adjust itself
-            // TODO: so no need to touch kioskCheckInModel.
-            // TODO: Changes the GUIViewPanel to checkInView.
             kioskCheckInModel.setNumberOfPassengers(1);
             initializeTempData(1);
             gui.getCheckInView().setCheckInViewPagingIndex(0);
@@ -149,10 +144,6 @@ public class Controller {
     public class GroupCheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: sets the kioskCheckInModel number of passengers to N.
-            // TODO: N must be greater than 2.
-            // TODO: Otherwise, error message, this can be done through JOptionPane.
-            // TODO: Or even better, modify the checkInOptionView and have some kind of feedback.
             int numberOfPassengers = gui.getCheckInOptionView().getNumberOfPassengersFromJSpinner();
             if (numberOfPassengers >= 2) {
                 kioskCheckInModel.setNumberOfPassengers(numberOfPassengers);
@@ -167,7 +158,6 @@ public class Controller {
                 checkInOptionView.setWarnMinimumNumberOfPassengers(true);
                 checkInOptionView.updateView();
             }
-
         }
     }
 
@@ -175,8 +165,6 @@ public class Controller {
     public class PreviousPassengerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: Tells the checkInView to show different data
-            // TODO: in the checkInView.
 
             CheckInView checkInView = gui.getCheckInView();
             try {
@@ -217,8 +205,6 @@ public class Controller {
     public class CheckInButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: Need to keep track of bags in Passenger properly.
-            // TODO: Use a different passenger index to add the passengers.
             CheckInView checkInView = gui.getCheckInView();
 
             try {
@@ -227,7 +213,7 @@ public class Controller {
 
                 // Check if there is any empty input.
                 boolean emptyData = false;
-                for (int i = kioskCheckInModel.getNumberOfPassengers() - 1; i >= 0 ; i--) {
+                for (int i = kioskCheckInModel.getNumberOfPassengers() - 1; i >= 0; i--) {
                     Passenger passengerData = tempPassengersData[i];
                     if (passengerData == null) {
                         checkInView.setCheckInViewPagingIndex(i);
@@ -311,7 +297,7 @@ public class Controller {
                     } else {
 
                         // Validate booking number.
-                        if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())){
+                        if (!kioskCheckInModel.validateBookingNumber(passengerData.getBookingNumber())) {
 
                             allValid = false;
 
@@ -560,8 +546,6 @@ public class Controller {
         }
     }
 
-    // TODO: Check if there is a way to NOT use kioskCheckInModel.setPassengerIndex,
-    // TODO: Try to take out removeAllBagPartialViews method and updateView method in loadCacheCheckInView method.
     /** Caches the checkInView data inputted by the user into tempPassengersData. */
     public void cacheCheckInViewData(CheckInView checkInView) {
 
