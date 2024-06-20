@@ -12,11 +12,11 @@ public class BoardingPassView {
     /** JButton to show the previous passenger's and their bag's data,
      * this button won't be displayed if the passenger is the first passenger on the list.
      */
-    private JButton previousBoardingPassButton = new JButton("Previous");
+    private JButton previousBoardingPassButton = new JButton("< ~ ~ ~");
     /** JButton to show the next passenger's and their bag's data,
      * this button won't be displayed if the passenger is the last passenger on the list.
      */
-    private JButton nextBoardingPassButton = new JButton("Next");
+    private JButton nextBoardingPassButton = new JButton("~ ~ ~ >");
     /** JButton that saves a PDF file of the BoardingPassView. */
     private JButton printBoardingPassButton = new JButton("Print");
     /** JButton that changes the view to the doneView. */
@@ -39,77 +39,117 @@ public class BoardingPassView {
         JPanel informationAreaPanel = new JPanel(new GridBagLayout());
         informationAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()," Boarding Pass Details  ", TitledBorder.LEFT,TitledBorder.TOP));
         informationAreaPanel.setPreferredSize(new Dimension(350, 200));
-
         panelForBoardingPassView.add(informationAreaPanel);
 
-        JLabel nameLabel = new JLabel("Mr/Ms ");
-        JLabel bookingIdLabel = new JLabel("Booking ID: ");
-        JLabel passportNumberLabel = new JLabel("Passport Number: ");
-
-        JLabel nameDataLabel = new JLabel(kioskCheckInModel.getFullName());
-        JLabel bookingIdDataLabel = new JLabel(kioskCheckInModel.getBookingNumber());
-        JLabel passportNumberDataLabel = new JLabel(kioskCheckInModel.getPassportNumber());
+        JLabel nameLabel = new JLabel("Mr/Ms " + kioskCheckInModel.getFullName());
+        JLabel bookingIdLabel = new JLabel("Booking ID: " + kioskCheckInModel.getBookingNumber());
+        JLabel passportNumberLabel = new JLabel("Passport Number: " + kioskCheckInModel.getPassportNumber());
 
         GridBagConstraints constraintsForLabel = new GridBagConstraints();
-        GridBagConstraints constraintsForData = new GridBagConstraints();
         GridBagConstraints constraintsForButton = new GridBagConstraints();
         GridBagConstraints constraintsForPanel = new GridBagConstraints();
 
         constraintsForLabel.anchor = GridBagConstraints.WEST;
-        constraintsForLabel.insets = new Insets(10, 0, 15, 200);
-
-        constraintsForData.anchor = GridBagConstraints.WEST;
-        constraintsForData.insets = new Insets(0, 0, 5, 0);
+        constraintsForLabel.insets = new Insets(10, 0, 15, 160);
 
         constraintsForButton.anchor = GridBagConstraints.CENTER;
         constraintsForButton.insets = new Insets(15, 0, 1500, 0);
 
         informationAreaPanel.add(nameLabel, constraintsForLabel);
-        informationAreaPanel.add(nameDataLabel, constraintsForData);
 
         constraintsForLabel.gridy = 1;
-        constraintsForData.gridy = 1;
         informationAreaPanel.add(bookingIdLabel, constraintsForLabel);
-        informationAreaPanel.add(bookingIdDataLabel, constraintsForData);
 
         constraintsForLabel.gridy = 2;
-        constraintsForData.gridy = 2;
         informationAreaPanel.add(passportNumberLabel, constraintsForLabel);
-        informationAreaPanel.add(passportNumberDataLabel, constraintsForData);
 
         constraintsForPanel.gridy = 1;
 
         JPanel panelForBagAreaPanel = new JPanel(new GridBagLayout());
         panelForBagAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()," Baggage Details  ", TitledBorder.LEFT,TitledBorder.TOP));
-        panelForBagAreaPanel.setPreferredSize(new Dimension(350, 200));
+        panelForBagAreaPanel.setPreferredSize(new Dimension(350, 230));
         constraintsForPanel.insets = new Insets(20, 0, 0, 0);
         panelForBoardingPassView.add(panelForBagAreaPanel,constraintsForPanel);
 
-        // Checks if the passenger has any number of bags.
-        // If got adds it to the view.
-        // This is to prevent exception when the passenger has no bags.
-        // It will ask for null attributes, and that is an error.
-        // TODO: @i4GS implement this however u like. but it MUST be implemented.
-        if (kioskCheckInModel.getNumberOfBags() > 0) {
-            // TODO: Removed, because.
+        JLabel bagDetailsHeaderLabel = new JLabel("Bag ID                Bag Weight                Bag Status");
+        GridBagConstraints constraintsForBagHeaderLabel = new GridBagConstraints();
+        constraintsForBagHeaderLabel.anchor = GridBagConstraints.WEST;
+        constraintsForBagHeaderLabel.insets = new Insets(15, 0, 25, 0);
+        constraintsForBagHeaderLabel.gridy = 0;
+        panelForBagAreaPanel.add(bagDetailsHeaderLabel, constraintsForBagHeaderLabel);
+
+        GridBagConstraints constraintsForBagLabel = new GridBagConstraints();
+        constraintsForBagLabel.anchor = GridBagConstraints.WEST;
+        constraintsForBagLabel.insets = new Insets(0, 0, 15, 0);
+
+        for (int i = 0; i < kioskCheckInModel.getNumberOfBags(); i++) {
+            String bagDetails = String.format("%s                %.2f kg                     %s",
+                    kioskCheckInModel.getBagID(i),
+                    kioskCheckInModel.getBagWeight(i),
+                    kioskCheckInModel.getBagScreeningStatus(i));
+            JLabel bagDetailsLabel = new JLabel(bagDetails);
+            constraintsForBagLabel.gridy = i + 1;
+            panelForBagAreaPanel.add(bagDetailsLabel, constraintsForBagLabel);
         }
 
+        JPanel informationPageButtonPanel = new JPanel(new GridBagLayout());
+        JPanel panelForNextAndPreviousButton = new JPanel(new GridBagLayout());
+        JPanel panelForOtherButtons = new JPanel(new GridBagLayout());
+        JLabel labelForPassengerPageIndex = new JLabel("Passenger " + (boardingPassViewPagingIndex + 1) + " / " + kioskCheckInModel.getNumberOfPassengers());
 
+        int horizontalSizeOfButton = 18;
+        int verticalSizeOfButton = 4;
 
+        GridBagConstraints constraintsForNextButton = new GridBagConstraints();
+        GridBagConstraints constraintsForPreviousButton = new GridBagConstraints();
+        GridBagConstraints constraintsForDoneButton = new GridBagConstraints();
+        GridBagConstraints constraintsForNextAndPreviousButtonPanel = new GridBagConstraints();
+        GridBagConstraints constraintsForOtherButtonPanel = new GridBagConstraints();
+        GridBagConstraints constraintsForPassengerIndexLabel = new GridBagConstraints();
 
-        constraintsForButton.gridy = 6;
-        constraintsForButton.gridx = 0;
-        constraintsForButton.insets = new Insets(10, 10, 0, 0);
-        constraintsForButton.anchor = GridBagConstraints.CENTER;
+        constraintsForNextButton.ipadx = horizontalSizeOfButton;
+        constraintsForNextButton.ipady = verticalSizeOfButton;
 
-        panelForBoardingPassView.add(previousBoardingPassButton,constraintsForButton);
-        panelForBoardingPassView.add(nextBoardingPassButton,constraintsForButton);
+        constraintsForPreviousButton.ipadx = horizontalSizeOfButton;
+        constraintsForPreviousButton.ipady = verticalSizeOfButton;
 
-        constraintsForButton.gridy = 7;
-        panelForBoardingPassView.add(doneButton, constraintsForButton);
+        constraintsForPreviousButton.insets = new Insets(0, 0, 0, 0);
+        constraintsForNextButton.insets = new Insets(0, 10, 0, 0);
+        constraintsForNextAndPreviousButtonPanel.insets = new Insets(15, 0, 10, 0);
+        constraintsForDoneButton.insets = new Insets(0, 10, 0, 10);
+        constraintsForPassengerIndexLabel.insets = new Insets(0, 0, 0, 0);
+        constraintsForOtherButtonPanel.insets = new Insets(5, 0, 0, 0);
 
-        constraintsForButton.gridy = 8;
-        panelForBoardingPassView.add(printBoardingPassButton,constraintsForButton);
+        constraintsForPreviousButton.gridx = 0;
+        constraintsForPreviousButton.gridy = 0;
+
+        constraintsForNextButton.gridx = 1;
+        constraintsForNextButton.gridy = 0;
+
+        constraintsForPassengerIndexLabel.gridy = 0;
+        constraintsForPassengerIndexLabel.gridx = 0;
+
+        constraintsForNextAndPreviousButtonPanel.gridy = 1;
+        constraintsForNextAndPreviousButtonPanel.gridx = 0;
+
+        constraintsForOtherButtonPanel.gridy = 2;
+        constraintsForOtherButtonPanel.gridx = 0;
+
+        if (kioskCheckInModel.getNumberOfPassengers() > 0) {
+            if (boardingPassViewPagingIndex > 0) {
+                panelForNextAndPreviousButton.add(previousBoardingPassButton, constraintsForPreviousButton);
+            }
+            if (boardingPassViewPagingIndex < kioskCheckInModel.getNumberOfPassengers() - 1) {
+                panelForNextAndPreviousButton.add(nextBoardingPassButton, constraintsForNextButton);
+            }
+        }
+
+        informationPageButtonPanel.add(labelForPassengerPageIndex, constraintsForPassengerIndexLabel);
+        informationPageButtonPanel.add(panelForNextAndPreviousButton, constraintsForNextAndPreviousButtonPanel);
+        informationPageButtonPanel.add(panelForOtherButtons, constraintsForOtherButtonPanel);
+
+        constraintsForPanel.gridy = 2;
+        panelForBoardingPassView.add(informationPageButtonPanel, constraintsForPanel);
 
         boardingPassViewPanel.add(panelForBoardingPassView);
     }
