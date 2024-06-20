@@ -9,13 +9,13 @@ public class LockedBookingNumberView {
     /** CSS used to wrap String in JLabels. */
     private static final String CSSFORMAT = "<html><body style='width: %1spx; text-align: center;'>%1s";
     /** JPanel for LockedBookingNumberView. */
-    private JPanel lockedBookingNumberViewPanel = new JPanel(new GridBagLayout());
+    private final JPanel lockedBookingNumberViewPanel = new JPanel(new GridBagLayout());
     /** List of locked booking numbers, key is the booking numbers, value is always null.
      * This is because of faster look up and automatically ordered.
      */
     private TreeMap<String, String> lockedBookingNumbers = new TreeMap<>();
     /** Main menu button. */
-    private JButton mainMenuButton = new JButton("Main Menu");
+    private final JButton mainMenuButton = new JButton("Main Menu");
 
     public LockedBookingNumberView() {
         setupViewPanel();

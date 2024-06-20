@@ -7,19 +7,19 @@ import java.awt.event.*;
 public class CheckInOptionView {
     
     /** JPanel for the checkInOptionView */
-    private JPanel checkInOptionViewPanel = new JPanel(new GridBagLayout());
+    private final JPanel checkInOptionViewPanel = new JPanel(new GridBagLayout());
 
     /** JButton that changes the view to the MainMenuView */
-    private JButton mainMenuButton = new JButton("Main Menu");
+    private final JButton mainMenuButton = new JButton("Main Menu");
 
     /** JButton that changes the view to  */
-    private JButton groupButton = new JButton("Group");
+    private final JButton groupButton = new JButton("Group");
 
     /** JButton that changes the view to  */
-    private JButton singleButton = new JButton("Single");
+    private final JButton singleButton = new JButton("Single");
 
     /** JSpinner to select the number of passengers */
-    private JSpinner numberOfPassengers = new JSpinner();
+    private final JSpinner numberOfPassengers = new JSpinner();
     /** True if there should be warning prompt for minimum number of passengers. */
     private boolean warnMinimumNumberOfPassengers;
 

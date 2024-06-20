@@ -8,13 +8,13 @@ public class MainMenuView {
     
     /** Instance variables */
     /** JPanel for the MainMenuView */
-    private JPanel mainMenuViewPanel = new JPanel(new GridBagLayout());
+    private final JPanel mainMenuViewPanel = new JPanel(new GridBagLayout());
 
     /** JButton to change the view to counterView */
-    private JButton checkInCounterButton = new JButton("Staff");
+    private final JButton checkInCounterButton = new JButton("Staff");
 
     /** JButton to change the view to checkInOptionView */
-    private JButton checkInKioskButton = new JButton("Kiosk");
+    private final JButton checkInKioskButton = new JButton("Kiosk");
 
     /** Method to place the components on the panel */
     public MainMenuView() {

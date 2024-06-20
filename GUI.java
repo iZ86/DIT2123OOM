@@ -7,23 +7,23 @@ import java.awt.event.ItemListener;
 /** This class is the GUI of the program, it creates a window to display all the necessary view classes. */
 public class GUI {
     /** The JFrame of the GUI, creates a window for the program. */
-    private JFrame GUI;
+    private final JFrame GUI;
     /** The GUI view panel that will occupy the JFrame, it uses a CardLayout to switch to other view panels. */
-    private JPanel GUIViewPanel;
+    private final JPanel GUIViewPanel;
     /** The main menu view. */
-    private MainMenuView mainMenuView;
+    private final MainMenuView mainMenuView;
     /** The counter view. */
-    private CounterView counterView;
+    private final CounterView counterView;
     /** The check in option view. */
-    private CheckInOptionView checkInOptionView;
+    private final CheckInOptionView checkInOptionView;
     /** The check in view. */
-    private CheckInView checkInView;
+    private final CheckInView checkInView;
     /** The boarding pass view. */
-    private BoardingPassView boardingPassView;
+    private final BoardingPassView boardingPassView;
     /** The done view. */
-    private DoneView doneView;
+    private final DoneView doneView;
     /** The locked booking number view. */
-    private LockedBookingNumberView lockedBookingNumberView;
+    private final LockedBookingNumberView lockedBookingNumberView;
     /** Index used to access mainMenuView in the GUIViewPanel. */
     public static final String MAINMENUVIEWINDEX = "MainMenuView";
     /** Index used to access counterView in the GUIViewPanel. */

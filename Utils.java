@@ -91,7 +91,7 @@ public class Utils {
 
 
     /** random object used to decide which random data should be used. */
-    private Random random;
+    private final Random random;
 
 
     /** Creates a new Utils object used for utilities in this project. */

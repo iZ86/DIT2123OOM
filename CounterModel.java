@@ -5,7 +5,7 @@ public class CounterModel {
     /** Staff object that holds all the staff data. */
     private Staff staff;
     /** Utils for getting random information. */
-    private Utils utils;
+    private final Utils utils;
 
     public CounterModel() {
         utils = new Utils();
