@@ -37,7 +37,7 @@ public class BoardingPassView {
         JPanel panelForBoardingPassView = new JPanel(new GridBagLayout());
 
         JPanel informationAreaPanel = new JPanel(new GridBagLayout());
-        informationAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()," Boarding Pass Details  ", TitledBorder.LEFT,TitledBorder.TOP));
+        informationAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Boarding Pass Details  ", TitledBorder.LEFT, TitledBorder.TOP));
         informationAreaPanel.setPreferredSize(new Dimension(350, 200));
 
         panelForBoardingPassView.add(informationAreaPanel);
@@ -80,10 +80,10 @@ public class BoardingPassView {
         constraintsForPanel.gridy = 1;
 
         JPanel panelForBagAreaPanel = new JPanel(new GridBagLayout());
-        panelForBagAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()," Baggage Details  ", TitledBorder.LEFT,TitledBorder.TOP));
+        panelForBagAreaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Baggage Details  ", TitledBorder.LEFT, TitledBorder.TOP));
         panelForBagAreaPanel.setPreferredSize(new Dimension(350, 200));
         constraintsForPanel.insets = new Insets(20, 0, 0, 0);
-        panelForBoardingPassView.add(panelForBagAreaPanel,constraintsForPanel);
+        panelForBoardingPassView.add(panelForBagAreaPanel, constraintsForPanel);
 
         // Checks if the passenger has any number of bags.
         // If got adds it to the view.
@@ -102,14 +102,14 @@ public class BoardingPassView {
         constraintsForButton.insets = new Insets(10, 10, 0, 0);
         constraintsForButton.anchor = GridBagConstraints.CENTER;
 
-        panelForBoardingPassView.add(previousBoardingPassButton,constraintsForButton);
-        panelForBoardingPassView.add(nextBoardingPassButton,constraintsForButton);
+        panelForBoardingPassView.add(previousBoardingPassButton, constraintsForButton);
+        panelForBoardingPassView.add(nextBoardingPassButton, constraintsForButton);
 
         constraintsForButton.gridy = 7;
         panelForBoardingPassView.add(doneButton, constraintsForButton);
 
         constraintsForButton.gridy = 8;
-        panelForBoardingPassView.add(printBoardingPassButton,constraintsForButton);
+        panelForBoardingPassView.add(printBoardingPassButton, constraintsForButton);
 
         boardingPassViewPanel.add(panelForBoardingPassView);
     }

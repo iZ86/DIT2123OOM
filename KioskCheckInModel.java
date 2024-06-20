@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class KioskCheckInModel {
     /** Questions to ask users regarding their baggage. */
-    private static final String[] QUESTIONS = new String[]{
+    private static final String[] QUESTIONS = new String[] {
             "1. Have you packed your baggage yourself?",
             "2. Has anyone asked you to carry anything on board for them?",
             "3. Have you left your baggage unattended at any time?",
@@ -34,12 +34,12 @@ public class KioskCheckInModel {
      * the key will be the bookingNumber, but the value will always be null.
      * HashMap is used for faster look up.
      */
-    public HashMap<String, String> checkedInBookingNumbers = new HashMap<>();
+    private HashMap<String, String> checkedInBookingNumbers = new HashMap<>();
     /** HashMap to hold all the bookingNumber that cannot be checked in,
      * due to being locked for various reasons,
      * the key will be the bookingNumber, but the value will always be null.
      * HashMap is used for faster look up. */
-    public HashMap<String, String> lockedBookingNumbers = new HashMap<>();
+    private HashMap<String, String> lockedBookingNumbers = new HashMap<>();
 
     public KioskCheckInModel() {
         // An edge case fix for now.
@@ -53,7 +53,7 @@ public class KioskCheckInModel {
     /** Setups up the bookingInformationData. */
     private void setupBookingInformationData() {
         for (int i = 0; i < Utils.NUMBEROFDATA; i++) {
-            bookingInformationData.put(Utils.BOOKINGNUMBERS[i], new BookingInformation(Utils.BOOKINGNUMBERS[i], Utils.PASSPORTNUMBERS[i], Utils.FULLNAME[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", utils.generateRandomGateNumber(), Utils.BOARDINGTIMES[i]));
+            bookingInformationData.put(Utils.BOOKINGNUMBERS[i], new BookingInformation(Utils.BOOKINGNUMBERS[i], Utils.PASSPORTNUMBERS[i], Utils.FULLNAME[i], Utils.SEATNUMBERS[i], Utils.DESTINATIONS[i], "Ready", Utils.BOARDINGGATES[i], Utils.BOARDINGTIMES[i]));
         }
     }
 

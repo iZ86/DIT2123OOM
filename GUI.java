@@ -62,7 +62,6 @@ public class GUI {
 
     /** Sets up the GUIViewPanel. */
     private void setupGUI() {
-        // TODO: Commented first, since they do not exist yet.
         GUIViewPanel.add(mainMenuView.getMainMenuViewPanel(), MAINMENUVIEWINDEX);
         GUIViewPanel.add(counterView.getCounterViewPanel(), COUNTERVIEWINDEX);
         GUIViewPanel.add(checkInOptionView.getCheckInOptionViewPanel(), CHECKINOPTIONVIEWINDEX);
@@ -120,73 +119,57 @@ public class GUI {
 
     /** Adds an ActionListener to ALL checkInCounterButton in all the view objects. */
     public void addAllCheckInCounterButtonsListener(ActionListener listenForAllCheckInCounterButtons) {
-        // TODO: Find all the view classes that have checkInCounterButton and adds the ActionListener to them.
         mainMenuView.addCheckInCounterButtonListener(listenForAllCheckInCounterButtons);
     }
 
     /** Adds an ActionListener to ALL checkInKioskButton in all the view objects. */
     public void addAllCheckInKioskButtonsListener(ActionListener listenForAllCheckInKioskButtons) {
-        // TODO: Find all the view classes that have checkInKioskButton and adds the ActionListener to them.
-        // MainMenuView.
         mainMenuView.addCheckInKioskButtonListener(listenForAllCheckInKioskButtons);
         checkInView.addCheckInKioskButtonListener(listenForAllCheckInKioskButtons);
     }
 
     /** Adds an ActionListener to ALL singleCheckInButton in all the view objects. */
     public void addAllSingleCheckInButtonsListener(ActionListener listenForAllSingleCheckInButtons) {
-        // TODO: Find all the view classes that have singleCheckInButton and adds the ActionListener to them.
-        // CheckInOptionView.
         checkInOptionView.addSingleButtonListener(listenForAllSingleCheckInButtons);
     }
 
     /** Adds an ActionListener to ALL groupCheckInButton in all the view objects. */
     public void addAllGroupCheckInButtonsListener(ActionListener listenForAllGroupCheckInButtons) {
-        // TODO: Find all the view classes that have groupCheckInButton and adds the ActionListener to them.
-        // CheckInOptionView.
         checkInOptionView.addGroupButtonListener(listenForAllGroupCheckInButtons);
     }
 
     /** Adds an ActionListener to ALL previousPassengerButton in all the view objects. */
     public void addAllPreviousPassengerButtonsListener(ActionListener listenForAllPreviousPassengerButtons) {
-        // TODO: Find all the view classes that have previousPassengerButton and adds the ActionListener to them.
         checkInView.addPreviousPassengerButtonListener(listenForAllPreviousPassengerButtons);
     }
 
     /** Adds an ActionListener to ALL nextPassengerButton in all the view objects. */
     public void addAllNextPassengerButtonsListener(ActionListener listenForAllNextPassengerButtons) {
-        // TODO: Find all the view classes that have nextPassengerButton and adds the ActionListener to them.
         checkInView.addNextPassengerButtonListener(listenForAllNextPassengerButtons);
     }
 
     /** Adds an ActionListener to ALL checkInButton in all the view objects. */
     public void addAllCheckInButtonsListener(ActionListener listenForAllCheckInButtons) {
-        // TODO: Find all the view classes that have checkInButton and adds the ActionListener to them.
         checkInView.addCheckInButtonListener(listenForAllCheckInButtons);
     }
 
     /** Adds an ActionListener to ALL previousBoardingPassButton in all the view objects. */
     public void addAllPreviousBoardingPassButtonsListener(ActionListener listenForAllPreviousBoardingPassButtons) {
-        // TODO: Find all the view classes that have previousBoardingPassButton and adds the ActionListener to them.
         boardingPassView.addPreviousBoardingPassButtonListener(listenForAllPreviousBoardingPassButtons);
     }
 
     /** Adds an ActionListener to ALL nextBoardingPassButton in all the view objects. */
     public void addAllNextBoardingPassButtonsListener(ActionListener listenForAllNextBoardingPassButtons) {
-        // TODO: Find all the view classes that have nextBoardingPassButton and adds the ActionListener to them.
         boardingPassView.addNextBoardingPassButtonListener(listenForAllNextBoardingPassButtons);
     }
 
     /** Adds an ActionListener to ALL printBoardingPassButton in all the view objects. */
     public void addAllPrintBoardingPassButtonsListener(ActionListener listenForAllPrintBoardingPassButtons) {
-        // TODO: Find all the view classes that have printBoardingPassButton and adds the ActionListener to them.
         boardingPassView.addPrintBoardingPassButtonListener(listenForAllPrintBoardingPassButtons);
     }
 
     /** Adds an ActionListener to ALL mainMenuButton in all the view objects. */
     public void addAllMainMenuButtonsListener(ActionListener listenForAllMainMenuButtons) {
-        // TODO: Find all the view classes that have mainMenuButton and adds the ActionListener to them.
-        // CounterView.
-        // CheckInOptionView.
         checkInOptionView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         counterView.addMainMenuButtonListener(listenForAllMainMenuButtons);
         checkInView.addMainMenuButtonListener(listenForAllMainMenuButtons);
