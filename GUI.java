@@ -57,7 +57,7 @@ public class GUI {
         GUI.add(GUIViewPanel);
 
         GUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GUI.setSize(new Dimension(400, 600));
+        GUI.setSize(new Dimension(400, 800));
     }
 
     /** Sets up the GUIViewPanel. */
