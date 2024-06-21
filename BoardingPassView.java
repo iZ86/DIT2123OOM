@@ -12,11 +12,11 @@ public class BoardingPassView {
     /** JButton to show the previous passenger's and their bag's data,
      * this button won't be displayed if the passenger is the first passenger on the list.
      */
-    private JButton previousBoardingPassButton = new JButton("< ~ ~ ~");
+    private JButton previousBoardingPassButton = new JButton("< < <");
     /** JButton to show the next passenger's and their bag's data,
      * this button won't be displayed if the passenger is the last passenger on the list.
      */
-    private JButton nextBoardingPassButton = new JButton("~ ~ ~ >");
+    private JButton nextBoardingPassButton = new JButton("> > >");
     /** JButton that saves a PDF file of the BoardingPassView. */
     private JButton printBoardingPassButton = new JButton("Print");
     /** JButton that changes the view to the doneView. */
@@ -103,13 +103,13 @@ public class BoardingPassView {
                 StringBuilder specialNeedsDetails = new StringBuilder();
 
                 if (kioskCheckInModel.isRequireWheelchair()) {
-                    specialNeedsDetails.append("Wheelchair assistance required");
+                    specialNeedsDetails.append(" Wheelchair ");
                 }
                 if (kioskCheckInModel.isBlind()) {
-                    specialNeedsDetails.append("Passenger is blind");
+                    specialNeedsDetails.append(" Blindness ");
                 }
                 if (kioskCheckInModel.isDeaf()) {
-                    specialNeedsDetails.append("Passenger is deaf");
+                    specialNeedsDetails.append(" Deafness ");
                 }
                 if (kioskCheckInModel.isOtherSpecialAccommodation()) {
                     specialNeedsDetails.append(kioskCheckInModel.getOtherSpecialAccommodationDetails());
@@ -291,7 +291,7 @@ public class BoardingPassView {
             labelForPassengerPageIndex.setFont(new Font("Verdana", Font.PLAIN, 13));
 
             int horizontalSizeOfButton = 18;
-            int verticalSizeOfButton = 4;
+            int verticalSizeOfButton = 10;
 
             GridBagConstraints constraintsForNextButton = new GridBagConstraints();
             GridBagConstraints constraintsForPreviousButton = new GridBagConstraints();
@@ -307,7 +307,7 @@ public class BoardingPassView {
             constraintsForPreviousButton.ipady = verticalSizeOfButton;
 
             constraintsForPreviousButton.insets = new Insets(0, 0, 0, 0);
-            constraintsForNextButton.insets = new Insets(0, 10, 0, 0);
+            constraintsForNextButton.insets = new Insets(0, 0, 0, 0);
             constraintsForNextAndPreviousButtonPanel.insets = new Insets(15, 0, 10, 0);
             constraintsForDoneButton.insets = new Insets(0, 10, 0, 10);
             constraintsForPassengerIndexLabel.insets = new Insets(0, 0, 0, 0);
@@ -325,6 +325,9 @@ public class BoardingPassView {
             constraintsForNextAndPreviousButtonPanel.gridy = 2;
             constraintsForNextAndPreviousButtonPanel.gridx = 0;
 
+            nextBoardingPassButton.setFont(new Font("Verdana",Font.BOLD,10));
+            previousBoardingPassButton.setFont(new Font("Verdana",Font.BOLD,10));
+
             constraintsForOtherButtonPanel.gridy = 4;
             constraintsForOtherButtonPanel.gridx = 0;
 
@@ -339,6 +342,9 @@ public class BoardingPassView {
 
             constraintsForDoneButton.gridx = 0;
             constraintsForDoneButton.gridy = 0;
+
+            doneButton.setPreferredSize(new Dimension(100, 35));
+            doneButton.setFont(new Font("Lucida Sans", Font.BOLD, 12));
             panelForOtherButtons.add(doneButton, constraintsForDoneButton);
 
             informationPageButtonPanel.add(labelForPassengerPageIndex, constraintsForPassengerIndexLabel);

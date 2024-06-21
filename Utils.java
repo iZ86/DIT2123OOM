@@ -32,11 +32,11 @@ public class Utils {
     /** A constant array of boarding times, used for randomized data. */
     public static final String[] BOARDINGTIMES = new String[]{
             LocalDate.now().plusDays(1) + " 00:20",
-            LocalDate.now().plusDays(1) + "00:20",
-            LocalDate.now().plusDays(1) + "00:20",
-            LocalDate.now().plusDays(1) + "00:20",
-            LocalDate.now().plusDays(1) + "18:00",
-            LocalDate.now().plusDays(1) + "04:35"
+            LocalDate.now().plusDays(1) + " 00:20",
+            LocalDate.now().plusDays(1) + " 00:20",
+            LocalDate.now().plusDays(1) + " 00:20",
+            LocalDate.now().plusDays(1) + " 18:00",
+            LocalDate.now().plusDays(1) + " 04:35"
     };
 
 

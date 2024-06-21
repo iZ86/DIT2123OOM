@@ -58,6 +58,7 @@ public class GUI {
 
         GUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GUI.setSize(new Dimension(400, 800));
+        GUI.setResizable(false);
     }
 
     /** Sets up the GUIViewPanel. */

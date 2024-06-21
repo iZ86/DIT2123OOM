@@ -176,29 +176,36 @@ public class CheckInView {
         JPanel bagCheckInQuestionsPanel = setupBagCheckInQuestionsPanel();
         JPanel numberOfBagsSpinnerPanel = setupNumberOfBagsSpinnerPanel();
 
+        JLabel titleLabel = new JLabel("Check-In View");
+        titleLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+
+        GridBagConstraints constraintsForTitlePanel = new GridBagConstraints();
+        constraintsForTitlePanel.gridx = 0;
+        constraintsForTitlePanel.gridy = 0;
+        constraintsForTitlePanel.insets = new Insets(0, 0, 20, 0);
+
         // Text Field Panel
         GridBagConstraints constraintsForTextFieldPanel = new GridBagConstraints();
         constraintsForTextFieldPanel.gridx = 0;
-        constraintsForTextFieldPanel.gridy = 0;
+        constraintsForTextFieldPanel.gridy = 1;
         constraintsForTextFieldPanel.insets = new Insets(0, 0, 20, 0);
 
         // Special Accommodation inputs.
         GridBagConstraints constraintsForSpecialAccommodationInputPanel = new GridBagConstraints();
         constraintsForSpecialAccommodationInputPanel.gridx = 0;
-        constraintsForSpecialAccommodationInputPanel.gridy = 1;
+        constraintsForSpecialAccommodationInputPanel.gridy = 2;
         constraintsForSpecialAccommodationInputPanel.insets = new Insets(0, 0, 20, 0);
 
         // Number Of Bags Spinner.
         GridBagConstraints constraintsForNumberOfBagsSpinnerPanel = new GridBagConstraints();
         constraintsForNumberOfBagsSpinnerPanel.gridx = 0;
-        constraintsForNumberOfBagsSpinnerPanel.gridy = 2;
+        constraintsForNumberOfBagsSpinnerPanel.gridy = 3;
         constraintsForNumberOfBagsSpinnerPanel.insets = new Insets(0, 0, 20, 0);
 
         // Questions panel.
         GridBagConstraints constraintsForBagCheckInQuestionsPanel = new GridBagConstraints();
         constraintsForBagCheckInQuestionsPanel.gridx = 0;
-        constraintsForBagCheckInQuestionsPanel.gridy = 3;
-
+        constraintsForBagCheckInQuestionsPanel.gridy = 4;
 
         contentPanel.add(textFieldPanel, constraintsForTextFieldPanel);
         contentPanel.add(specialAccommodationInputPanel, constraintsForSpecialAccommodationInputPanel);
@@ -222,7 +229,7 @@ public class CheckInView {
 
         GridBagConstraints constraintsForScrollPane = new GridBagConstraints();
         constraintsForScrollPane.gridx = 0;
-        constraintsForScrollPane.gridy = 0;
+        constraintsForScrollPane.gridy = 1;
 
         constraintsForScrollPane.ipadx = 367;
         constraintsForScrollPane.ipady = 500;
@@ -231,8 +238,9 @@ public class CheckInView {
         JPanel buttonPanel = setupViewButtonPanel();
 
         GridBagConstraints constraintsForButtonPanel = new GridBagConstraints();
-        constraintsForButtonPanel.gridy = 1;
+        constraintsForButtonPanel.gridy = 2;
 
+        checkInViewPanel.add(titleLabel, constraintsForTitlePanel);
         checkInViewPanel.add(scrollPane, constraintsForScrollPane);
         checkInViewPanel.add(buttonPanel, constraintsForButtonPanel);
     }
@@ -464,8 +472,6 @@ public class CheckInView {
     private JPanel setupViewTextFieldPanel() {
         int horizontalSizeOfTextField = 185;
         int verticalSizeOfTextField = 8;
-
-        //TODO: Change Font For ALL Warning Message & MainMenu, LastPage, CheckIn Button
 
         JPanel textFieldPanel = new JPanel(new GridBagLayout());
         Font labelFont = new Font("Verdana", Font.PLAIN, 12);
@@ -700,6 +706,7 @@ public class CheckInView {
             JPanel bagCheckInQuestionPanel = new JPanel(new GridBagLayout());
             JPanel bagCheckInQuestionRadioButtonPanel = new JPanel(new GridBagLayout());
             JLabel bagCheckInQuestionLabel = new JLabel(String.format(CSSFORMAT, 250, kioskCheckInModel.getBagCheckInQuestions(i)));
+            bagCheckInQuestionLabel.setFont(new Font("Lucida Sans", Font.BOLD, 13));
 
             // Adding the Question answer checkboxes to bagCheckInQuestionCheckBoxPanel.
 
@@ -718,8 +725,6 @@ public class CheckInView {
             GridBagConstraints constraintsForBagCheckInQuestionLabel = new GridBagConstraints();
             constraintsForBagCheckInQuestionLabel.gridx = 0;
             constraintsForBagCheckInQuestionLabel.gridy = 0;
-
-
 
             if (warnUnansweredQuestions[i]) {
                 JLabel warnUnansweredQuestionLabel = new JLabel("Please answer this question!");
@@ -784,7 +789,7 @@ public class CheckInView {
         constraintsForCheckInButton.ipady = verticalSizeOfButton;
 
         // Adjust insets for spacing between next and previous buttons
-        constraintsForPreviousButton.insets = new Insets(10, 0, 10, 0); // Add spacing of 10 pixels to the right
+        constraintsForPreviousButton.insets = new Insets(10, 10, 10, 0); // Add spacing of 10 pixels to the right
         constraintsForNextButton.insets = new Insets(10, 10, 10, 0); // Add spacing of 10 pixels to the left
         constraintsForNextAndPreviousButtonPanel.insets = new Insets(15, 0, 10, 0);
         constraintsForBackToCheckInOptionView.insets = new Insets(0, 10, 0, 10);
