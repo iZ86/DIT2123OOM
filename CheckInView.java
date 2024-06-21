@@ -24,13 +24,13 @@ public class CheckInView {
     /** JButton that changes the CheckInView to display the previous Passenger information.
      * This button will not be displayed when showing the FIRST Passenger's data.
      */
-    private final JButton previousPassengerButton = new JButton("< ~ ~ ~");
+    private final JButton previousPassengerButton = new JButton("< < <");
     /** JButton that changes the CheckInView to display an empty CheckInView,
      * if the Passenger information hasn't been added yet.
      * Otherwise, shows the Passenger information that has been added.
      * This button will not be displayed when showing the LAST Passenger data.
      */
-    private final JButton nextPassengerButton = new JButton("~ ~ ~ >");
+    private final JButton nextPassengerButton = new JButton("> > >");
     /** JButton that checks in all the Passengers and their data,
      * changing the view to the BoardingPassView.
      * For user to check in, once all sufficient data is added.
@@ -462,13 +462,14 @@ public class CheckInView {
 
     /** Sets up the JTextField, JLabel and adjusting micro position for JLabel and JTextFields. */
     private JPanel setupViewTextFieldPanel() {
-        int horizontalSizeOfTextField = 180;
+        int horizontalSizeOfTextField = 185;
         int verticalSizeOfTextField = 8;
 
         //TODO: Change Font For ALL Warning Message & MainMenu, LastPage, CheckIn Button
 
         JPanel textFieldPanel = new JPanel(new GridBagLayout());
         Font labelFont = new Font("Verdana", Font.PLAIN, 12);
+        Font warningFont = new Font("Corbel",Font.BOLD,12);
 
         JLabel bookingNumberLabel = new JLabel("Booking Number");
         bookingNumberLabel.setFont(labelFont);
@@ -495,12 +496,16 @@ public class CheckInView {
 
         if (warnAlreadyCheckedInBookingNumber) {
             bookingNumberWarningLabel = setupWarningJLabel("Already checked in");
+            bookingNumberWarningLabel.setFont(warningFont);
         } else if (warnInvalidBookingNumber) {
             bookingNumberWarningLabel = setupWarningJLabel("Invalid Booking Number");
+            bookingNumberWarningLabel.setFont(warningFont);
         } else if (warnEmptyBookingNumberInput) {
             bookingNumberWarningLabel = setupWarningJLabel("Empty Field");
+            bookingNumberWarningLabel.setFont(warningFont);
         } else if (warnSameBookingNumber) {
             bookingNumberWarningLabel = setupWarningJLabel("Cannot check in the same booking number");
+            bookingNumberWarningLabel.setFont(warningFont);
         } else {
             bookingNumberWarningLabel = null;
         }
@@ -528,8 +533,10 @@ public class CheckInView {
 
         if (warnInvalidPassportNumber) {
             passportNumberWarningLabel = setupWarningJLabel("Invalid Passport Number");
+            passportNumberWarningLabel.setFont(warningFont);
         } else if (warnEmptyPassportNumberInput) {
             passportNumberWarningLabel = setupWarningJLabel("Empty Field");
+            passportNumberWarningLabel.setFont(warningFont);
         } else {
             passportNumberWarningLabel = null;
         }
@@ -561,8 +568,10 @@ public class CheckInView {
 
         if (warnInvalidFullName) {
             fullNameWarningLabel = setupWarningJLabel("Invalid Full Name");
+            fullNameWarningLabel.setFont(warningFont);
         } else if (warnEmptyFullNameInput) {
             fullNameWarningLabel = setupWarningJLabel("Empty Field");
+            fullNameWarningLabel.setFont(warningFont);
         } else {
             fullNameWarningLabel = null;
         }
@@ -596,7 +605,7 @@ public class CheckInView {
 
         JPanel specialAccommodationInputPanel = new JPanel(new GridBagLayout());
 
-        int horizontalSizeOfSpecialNeedsTextField = 10;
+        int horizontalSizeOfSpecialNeedsTextField = 185;
         int verticalSizeOfSpecialNeedsTextField = 8;
 
         JLabel labelForSpecialNeeds = new JLabel("Any Special Needs?");
@@ -634,14 +643,13 @@ public class CheckInView {
         constraintsForOthersJCheckBox.gridy = 2;
         constraintsForOthersJCheckBox.gridx = 0;
         constraintsForOthersJCheckBox.anchor = GridBagConstraints.WEST;
-        constraintsForOthersJCheckBox.insets = new Insets(5, 5, 5, 10);
+        constraintsForOthersJCheckBox.insets = new Insets(7, 5, 5, 10);
 
         GridBagConstraints constraintsForOtherNeedsTextField = new GridBagConstraints();
         constraintsForOtherNeedsTextField.gridy = 2;
         constraintsForOtherNeedsTextField.gridx = 1;
         constraintsForOtherNeedsTextField.gridwidth = 2;
         constraintsForOtherNeedsTextField.anchor = GridBagConstraints.WEST;
-        constraintsForOtherNeedsTextField.fill = GridBagConstraints.HORIZONTAL;
         constraintsForOtherNeedsTextField.ipady = verticalSizeOfSpecialNeedsTextField;
         constraintsForOtherNeedsTextField.ipadx = horizontalSizeOfSpecialNeedsTextField;
         constraintsForOtherNeedsTextField.insets = new Insets(5, 0, 0, 0);
@@ -715,6 +723,7 @@ public class CheckInView {
 
             if (warnUnansweredQuestions[i]) {
                 JLabel warnUnansweredQuestionLabel = new JLabel("Please answer this question!");
+                warnUnansweredQuestionLabel.setFont(new Font("Corbel", Font.BOLD,13));
                 warnUnansweredQuestionLabel.setForeground(Color.RED);
                 GridBagConstraints constraintsForWarnUnansweredQuestionLabel = new GridBagConstraints();
                 constraintsForWarnUnansweredQuestionLabel.gridx = 0;
@@ -747,9 +756,10 @@ public class CheckInView {
         JPanel panelForNextAndPreviousButton = new JPanel(new GridBagLayout());
         JPanel panelForOtherButtons = new JPanel(new GridBagLayout());
         JLabel labelForPassengerPageIndex = new JLabel("Passenger " + (checkInViewPagingIndex + 1) + " / " + kioskCheckInModel.getNumberOfPassengers());
+        labelForPassengerPageIndex.setFont(new Font("Verdana", Font.PLAIN, 13));
 
         int horizontalSizeOfButton = 18;
-        int verticalSizeOfButton = 4;
+        int verticalSizeOfButton = 10;
 
         GridBagConstraints constraintsForNextButton = new GridBagConstraints();
         GridBagConstraints constraintsForPreviousButton = new GridBagConstraints();
@@ -774,8 +784,8 @@ public class CheckInView {
         constraintsForCheckInButton.ipady = verticalSizeOfButton;
 
         // Adjust insets for spacing between next and previous buttons
-        constraintsForPreviousButton.insets = new Insets(0, 0, 0, 0); // Add spacing of 10 pixels to the right
-        constraintsForNextButton.insets = new Insets(0, 10, 0, 0); // Add spacing of 10 pixels to the left
+        constraintsForPreviousButton.insets = new Insets(10, 0, 10, 0); // Add spacing of 10 pixels to the right
+        constraintsForNextButton.insets = new Insets(10, 10, 10, 0); // Add spacing of 10 pixels to the left
         constraintsForNextAndPreviousButtonPanel.insets = new Insets(15, 0, 10, 0);
         constraintsForBackToCheckInOptionView.insets = new Insets(0, 10, 0, 10);
         constraintsForPassengerIndexLabel.insets = new Insets(20, 0, 0, 0);
@@ -818,6 +828,14 @@ public class CheckInView {
                 panelForNextAndPreviousButton.add(nextPassengerButton, constraintsForNextButton);
             }
         }
+
+        nextPassengerButton.setFont(new Font("Verdana",Font.BOLD,10));
+        previousPassengerButton.setFont(new Font("Verdana",Font.BOLD,10));
+
+        mainMenuButton.setFont(new Font("Lucida Sans",Font.BOLD,12));
+        checkInKioskButton.setFont(new Font("Lucida Sans",Font.BOLD,12));
+        checkInButton.setFont(new Font("Lucida Sans",Font.BOLD,12));
+        checkInButton.setForeground(Color.RED.brighter());
 
         panelForOtherButtons.add(mainMenuButton, constraintsForMainMenuButton);
         panelForOtherButtons.add(checkInKioskButton, constraintsForBackToCheckInOptionView);
