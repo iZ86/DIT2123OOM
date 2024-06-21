@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Random;
 
 /** This class represents the utilities for this project,
@@ -30,7 +31,12 @@ public class Utils {
 
     /** A constant array of boarding times, used for randomized data. */
     public static final String[] BOARDINGTIMES = new String[]{
-            "00:20", "00:20", "00:20", "00:20", "18:00", "04:35"
+            LocalDate.now().plusDays(1) + " 00:20",
+            LocalDate.now().plusDays(1) + "00:20",
+            LocalDate.now().plusDays(1) + "00:20",
+            LocalDate.now().plusDays(1) + "00:20",
+            LocalDate.now().plusDays(1) + "18:00",
+            LocalDate.now().plusDays(1) + "04:35"
     };
 
 
