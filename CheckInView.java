@@ -152,6 +152,7 @@ public class CheckInView {
         setWarnInvalidBookingNumber(false);
         setWarnEmptyBookingNumberInput(false);
         setWarnAlreadyCheckedInBookingNumber(false);
+        setWarnSameBookingNumber(false);
         setWarnInvalidPassportNumber(false);
         setWarnEmptyPassportNumberInput(false);
         setWarnInvalidFullName(false);
