@@ -62,7 +62,7 @@ public class BoardingPassView {
             constraintsForLabel.anchor = GridBagConstraints.CENTER;
             constraintsForLabel.insets = new Insets(5, 0, 5, 0);
 
-            JLabel nameLabel = new JLabel("Mr / Ms " + kioskCheckInModel.getFullName()+",");
+            JLabel nameLabel = new JLabel("Mr / Ms " + kioskCheckInModel.getFullName() + ",");
             nameLabel.setFont(labelFont);
             JLabel bookingIdLabel = new JLabel("Booking ID");
             bookingIdLabel.setFont(labelFont);
@@ -126,18 +126,18 @@ public class BoardingPassView {
 
             JPanel panelForBagAreaPanel = new JPanel(new GridBagLayout());
 
-            TitledBorder BagTitledBorder;
+            TitledBorder bagTitledBorder;
             if (hasSpecialNeeds) {
-                BagTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), " Baggage Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
-                BagTitledBorder.setTitleColor(Color.RED.darker());
+                bagTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), " Baggage Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
+                bagTitledBorder.setTitleColor(Color.RED.darker());
             } else {
-                BagTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Baggage Details ", TitledBorder.LEFT, TitledBorder.TOP,new Font("Verdana", Font.PLAIN, 12));
+                bagTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Baggage Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
             }
 
-            panelForBagAreaPanel.setBorder(BagTitledBorder);
+            panelForBagAreaPanel.setBorder(bagTitledBorder);
             panelForBagAreaPanel.setPreferredSize(new Dimension(350, 190));
             constraintsForPanel.insets = new Insets(15, 0, 0, 0);
-            panelForBoardingPassView.add(panelForBagAreaPanel,constraintsForPanel);
+            panelForBoardingPassView.add(panelForBagAreaPanel, constraintsForPanel);
 
             GridBagConstraints constraintsForBagLabel = new GridBagConstraints();
             constraintsForBagLabel.anchor = GridBagConstraints.WEST;
@@ -200,15 +200,15 @@ public class BoardingPassView {
 
             JPanel flightDetailsPanel = new JPanel(new GridBagLayout());
 
-            TitledBorder FlightTitledBorder;
+            TitledBorder flightTitledBorder;
             if (hasSpecialNeeds) {
-                FlightTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), " Flight Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
-                FlightTitledBorder.setTitleColor(Color.RED.darker());
+                flightTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.RED), " Flight Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
+                flightTitledBorder.setTitleColor(Color.RED.darker());
             } else {
-                FlightTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Flight Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
+                flightTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), " Flight Details ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12));
             }
 
-            flightDetailsPanel.setBorder(FlightTitledBorder);
+            flightDetailsPanel.setBorder(flightTitledBorder);
             flightDetailsPanel.setPreferredSize(new Dimension(350, 165));
 
             GridBagConstraints constraintsForFlightLabel = new GridBagConstraints();
@@ -325,8 +325,8 @@ public class BoardingPassView {
             constraintsForNextAndPreviousButtonPanel.gridy = 2;
             constraintsForNextAndPreviousButtonPanel.gridx = 0;
 
-            nextBoardingPassButton.setFont(new Font("Verdana",Font.BOLD,10));
-            previousBoardingPassButton.setFont(new Font("Verdana",Font.BOLD,10));
+            nextBoardingPassButton.setFont(new Font("Verdana", Font.BOLD, 10));
+            previousBoardingPassButton.setFont(new Font("Verdana", Font.BOLD, 10));
 
             constraintsForOtherButtonPanel.gridy = 4;
             constraintsForOtherButtonPanel.gridx = 0;
