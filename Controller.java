@@ -670,13 +670,15 @@ public class Controller {
             tempInvalidBookingNumberData[index] = false;
             tempWarnSameBookingNumber[index] = false;
         } else if (warning == 1) {
-            // Warn invalid booking number and remove other booking number warnings.
+            // Warn invalid booking number and remove other booking number warnings and other warnings.
             tempInvalidBookingNumberData[index] = true;
 
             tempWarnEmptyBookingNumberData[index] = false;
             tempWarnAlreadyCheckedInBookingNumber[index] = false;
             tempWarnSameBookingNumber[index] = false;
 
+            setPassportNumberWarning(0, index);
+            setFullNameWarning(0, index);
         } else if (warning == 2) {
             // Warn empty booking number and remove other booking number warnings.
             tempWarnEmptyBookingNumberData[index] = true;
