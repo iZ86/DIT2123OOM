@@ -8,19 +8,19 @@ public class BoardingPassView {
     /** JPanel for BoardingPassView. */
     private final JPanel BOARDINGPASSVIEWPANEL =  new JPanel();
     /** The model that holds the passenger and their bag data. */
-    private KioskCheckInModel kioskCheckInModel;
+    private final KioskCheckInModel kioskCheckInModel;
     /** JButton to show the previous passenger's and their bag's data,
      * this button won't be displayed if the passenger is the first passenger on the list.
      */
-    private JButton previousBoardingPassButton = new JButton("< < <");
+    private final JButton previousBoardingPassButton = new JButton("< < <");
     /** JButton to show the next passenger's and their bag's data,
      * this button won't be displayed if the passenger is the last passenger on the list.
      */
-    private JButton nextBoardingPassButton = new JButton("> > >");
+    private final JButton nextBoardingPassButton = new JButton("> > >");
     /** JButton that saves a PDF file of the BoardingPassView. */
-    private JButton printBoardingPassButton = new JButton("Print");
+    private final JButton printBoardingPassButton = new JButton("Print");
     /** JButton that changes the view to the doneView. */
-    private JButton doneButton = new JButton("DONE");
+    private final JButton doneButton = new JButton("DONE");
     /** Paging index for boarding pass view. */
     private int boardingPassViewPagingIndex;
 
