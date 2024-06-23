@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /** This class represents the view to show the boarding pass. */
 public class BoardingPassView {
     /** JPanel for BoardingPassView. */
-    private final JPanel BOARDINGPASSVIEWPANEL =  new JPanel();
+    private final JPanel boardingPassViewPanel =  new JPanel();
     /** The model that holds the passenger and their bag data. */
     private final KioskCheckInModel kioskCheckInModel;
     /** JButton to show the previous passenger's and their bag's data,
@@ -352,22 +352,22 @@ public class BoardingPassView {
             constraintsForPanel.gridy = 3;
             panelForBoardingPassView.add(informationPageButtonPanel, constraintsForPanel);
 
-            BOARDINGPASSVIEWPANEL.add(panelForBoardingPassView);
+            boardingPassViewPanel.add(panelForBoardingPassView);
         }
 
     }
 
     /** Updates the view. */
     public void updateView() {
-        BOARDINGPASSVIEWPANEL.removeAll();
+        boardingPassViewPanel.removeAll();
         setupViewPanel();
-        BOARDINGPASSVIEWPANEL.revalidate();
-        BOARDINGPASSVIEWPANEL.repaint();
+        boardingPassViewPanel.revalidate();
+        boardingPassViewPanel.repaint();
     }
 
     /** Returns the boardingPassViewPanel. */
     public JPanel getBoardingPassViewPanel() {
-        return BOARDINGPASSVIEWPANEL;
+        return boardingPassViewPanel;
     }
 
     /** Returns boardingPassViewPagingIndex. */
