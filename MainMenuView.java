@@ -3,7 +3,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-
+/** This class represents the main menu view. */
 public class MainMenuView {
     
     /** Instance variables */
@@ -85,6 +85,7 @@ public class MainMenuView {
         buttonAreaPanel.add(checkInKioskButton, buttonConstraintsForTitlePanel);
     }
 
+    /** Returns the mainMenuViewPanel. */
     public JPanel getMainMenuViewPanel() {
         return mainMenuViewPanel;    
     }

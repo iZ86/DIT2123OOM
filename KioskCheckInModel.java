@@ -1,5 +1,8 @@
 import java.util.HashMap;
 
+/** This class represents the model for the AeroCheck kiosk check in,
+ * storing all the necessary data for check ins.
+ */
 public class KioskCheckInModel {
     /** Questions to ask users regarding their baggage. */
     private static final String[] QUESTIONS = new String[] {
@@ -41,8 +44,8 @@ public class KioskCheckInModel {
      * HashMap is used for faster look up. */
     private HashMap<String, String> lockedBookingNumbers = new HashMap<>();
 
+    /** Creates the model for AeroCheck Kiosk. */
     public KioskCheckInModel() {
-        // An edge case fix for now.
         passengers = null;
         numberOfPassengers = 0;
         passengerIndex = 0;

@@ -77,20 +77,10 @@ public class GUI {
         GUI.setVisible(true);
     }
 
-    /** Terminates the program and closes the GUI. */
-    public void exit() {
-        GUI.dispose();
-    }
-
     /** Changes the view of the CardLayout in GUIViewPanel. */
     public void changeView(String index) {
         CardLayout cl = (CardLayout) (GUIViewPanel.getLayout());
         cl.show(GUIViewPanel, index);
-    }
-
-    /** Returns the mainMenuView. */
-    public MainMenuView getMainMenuView() {
-        return mainMenuView;
     }
 
     /** Returns the counterView. */

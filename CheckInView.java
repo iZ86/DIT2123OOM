@@ -672,6 +672,7 @@ public class CheckInView {
     }
 
 
+    /** Sets up spinner panel. */
     private JPanel setupNumberOfBagsSpinnerPanel() {
         JPanel numberOfBagsSpinnerPanel = new JPanel(new GridBagLayout());
 
@@ -698,6 +699,7 @@ public class CheckInView {
         return numberOfBagsSpinnerPanel;
     }
 
+    /** Sets up bag check in questions JPanel. */
     private JPanel setupBagCheckInQuestionsPanel() {
 
         JPanel bagCheckInQuestionsPanel = new JPanel(new GridBagLayout());

@@ -539,7 +539,7 @@ public class Controller {
     }
 
     /** Caches the checkInView data inputted by the user into tempPassengersData. */
-    public void cacheCheckInViewData(CheckInView checkInView) {
+    private void cacheCheckInViewData(CheckInView checkInView) {
 
         String bookingNumber = checkInView.getBookingNumberFromTextField();
         String passportNumber = checkInView.getPassportNumberFromTextField();
@@ -593,7 +593,7 @@ public class Controller {
     /** Loads the cache at index tempPassengersData that was saved by checkInView data,
      * if there isn't any, nothing is loaded.
      */
-    public void loadCacheCheckInViewData(CheckInView checkInView) {
+    private void loadCacheCheckInViewData(CheckInView checkInView) {
 
         // When checkInView.resetView() method is called, it modifies the numberOfBagsSpanner to 0.
         // This causes the tempWarnQuestionNotAnsweredData[checkInViewPagingIndex] to be overridden to all false.
@@ -654,7 +654,7 @@ public class Controller {
     }
 
     /** This method sets the booking number warning, that should be shown. */
-    public void setBookingNumberWarning(int warning, int index) {
+    private void setBookingNumberWarning(int warning, int index) {
         if (warning == 0) {
             // Remove all warnings.
             tempWarnAlreadyCheckedInBookingNumber[index] = false;
@@ -695,7 +695,7 @@ public class Controller {
     }
 
     /** This method sets the passport number warning that should be shown. */
-    public void setPassportNumberWarning(int warning, int index) {
+    private void setPassportNumberWarning(int warning, int index) {
         if (warning == 0) {
             // Remove all passport warnings.
             tempWarnEmptyPassportNumberData[index] = false;
@@ -712,7 +712,7 @@ public class Controller {
     }
 
     /** This method sets the full name warning that should be shown. */
-    public void setFullNameWarning(int warning, int index) {
+    private void setFullNameWarning(int warning, int index) {
         if (warning == 0) {
             // Remove all warnings.
             tempWarnEmptyFullNameData[index] = false;

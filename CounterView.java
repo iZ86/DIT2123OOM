@@ -3,9 +3,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-/* This class represents the view for showing the user their designated physical counter, after choosing to check in physically. */
+/** This class represents the view for showing the user their designated physical counter, after choosing to check in physically. */
 public class CounterView {
-    /* JPanel for the CounterView. */
+    /** JPanel for the CounterView. */
     private final JPanel counterViewPanel = new JPanel(new GridBagLayout());
 
     /** The model that holds the staff and counter information. */

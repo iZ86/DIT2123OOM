@@ -4,7 +4,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-/* This class represents the view for choosing the check in options, this allows the user to choose between single and group check in. */
+/** This class represents the view for choosing the check in options, this allows the user to choose between single and group check in. */
 public class CheckInOptionView {
     
     /** JPanel for the checkInOptionView */
@@ -131,6 +131,7 @@ public class CheckInOptionView {
     public void setWarnMinimumNumberOfPassengers(boolean warnMinimumNumberOfPassengers) {
         this.warnMinimumNumberOfPassengers = warnMinimumNumberOfPassengers;
     }
+
     /** Returns the CheckInOptionViewPanel */
     public JPanel getCheckInOptionViewPanel() {
         return checkInOptionViewPanel;
@@ -145,6 +146,7 @@ public class CheckInOptionView {
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers.setValue(numberOfPassengers);
     }
+
     /** Adds an ActionListener to the JButton mainMenuButton */
     public void addMainMenuButtonListener(ActionListener listenForMainMenuButton) {
         mainMenuButton.addActionListener(listenForMainMenuButton);

@@ -1,3 +1,5 @@
+
+/** This class represents the data stored for all the passengers. */
 public class Passenger {
     /** Passport number of the passenger. */
     private String passportNumber;

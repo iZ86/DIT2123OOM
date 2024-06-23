@@ -6,8 +6,6 @@ import java.util.TreeMap;
 
 /** This class represents the view to show the user that their booking numbers has been locked. */
 public class LockedBookingNumberView {
-    /** CSS used to wrap String in JLabels. */
-    private static final String CSSFORMAT = "<html><body style='width: %1spx; text-align: center;'>%1s";
     /** JPanel for LockedBookingNumberView. */
     private final JPanel lockedBookingNumberViewPanel = new JPanel(new GridBagLayout());
     /** List of locked booking numbers, key is the booking numbers, value is always null.
@@ -17,6 +15,8 @@ public class LockedBookingNumberView {
     /** Main menu button. */
     private final JButton mainMenuButton = new JButton("Main Menu");
 
+
+    /** Creates the view for showing booking numbers that are locked. */
     public LockedBookingNumberView() {
         setupViewPanel();
     }
