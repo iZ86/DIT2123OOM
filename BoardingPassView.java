@@ -17,8 +17,6 @@ public class BoardingPassView {
      * this button won't be displayed if the passenger is the last passenger on the list.
      */
     private final JButton nextBoardingPassButton = new JButton("> > >");
-    /** JButton that saves a PDF file of the BoardingPassView. */
-    private final JButton printBoardingPassButton = new JButton("Print");
     /** JButton that changes the view to the doneView. */
     private final JButton doneButton = new JButton("DONE");
     /** Paging index for boarding pass view. */
@@ -390,11 +388,6 @@ public class BoardingPassView {
     /** Adds an ActionListener to nextBoardingPassButton. */
     public void addNextBoardingPassButtonListener(ActionListener listenForNextBoardingPassButton) {
         nextBoardingPassButton.addActionListener(listenForNextBoardingPassButton);
-    }
-
-    /** Adds an ActionListener to printBoardingPassButton. */
-    public void addPrintBoardingPassButtonListener(ActionListener listenForPrintBoardingPassButton) {
-        printBoardingPassButton.addActionListener(listenForPrintBoardingPassButton);
     }
 
     /** Adds an ActionListener to doneButton. */

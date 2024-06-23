@@ -164,11 +164,6 @@ public class GUI {
         boardingPassView.addNextBoardingPassButtonListener(listenForAllNextBoardingPassButtons);
     }
 
-    /** Adds an ActionListener to ALL printBoardingPassButton in all the view objects. */
-    public void addAllPrintBoardingPassButtonsListener(ActionListener listenForAllPrintBoardingPassButtons) {
-        boardingPassView.addPrintBoardingPassButtonListener(listenForAllPrintBoardingPassButtons);
-    }
-
     /** Adds an ActionListener to ALL mainMenuButton in all the view objects. */
     public void addAllMainMenuButtonsListener(ActionListener listenForAllMainMenuButtons) {
         checkInOptionView.addMainMenuButtonListener(listenForAllMainMenuButtons);

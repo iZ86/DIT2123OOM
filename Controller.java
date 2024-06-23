@@ -61,9 +61,8 @@ public class Controller {
         gui.addAllCheckInButtonsListener(new CheckInButtonListener());
         gui.addAllPreviousBoardingPassButtonsListener(new PreviousBoardingPassButtonListener());
         gui.addAllNextBoardingPassButtonsListener(new NextBoardingPassButtonListener());
-        gui.addAllPrintBoardingPassButtonsListener(new PrintBoardingPassButtonListener());
         gui.addAllMainMenuButtonsListener(new MainMenuButtonListener());
-        gui.addDoneButtonListener(new homeButtonListener());
+        gui.addDoneButtonListener(new DoneButtonListener());
     }
 
     /** Adds the ItemListeners to the GUI respectively. */
@@ -438,13 +437,6 @@ public class Controller {
         }
     }
 
-    public class PrintBoardingPassButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-
     /** This class changes the view to mainMenuView. */
     public class MainMenuButtonListener implements ActionListener {
         @Override
@@ -454,7 +446,7 @@ public class Controller {
     }
 
     /** This class changes the view to doneView. */
-    public class homeButtonListener implements ActionListener {
+    public class DoneButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             gui.changeView(GUI.DONEVIEWINDEX);
